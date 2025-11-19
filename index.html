@@ -7,10 +7,9 @@
     <title>VANN VIRAKBOTH | Professional Web Services</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
         :root {
             --bg-dark: #020617;
@@ -25,13 +24,7 @@
             --glass-blur: blur(20px);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         /* Hide custom cursor on mobile default */
         body {
             font-family: 'Outfit', sans-serif;
@@ -44,666 +37,151 @@
             background-size: 40px 40px;
         }
 
-        /* --- NAV BAR (PC & MOBILE UNIFIED) --- */
+        /* --- 1. NAVBAR (PC & MOBILE) --- */
         nav {
-            position: fixed;
-            top: 20px;
-            left: 50%;
+            position: fixed; 
+            top: 20px; 
+            left: 50%; 
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 1100px;
+            width: 90%; 
+            max-width: 1100px; 
             padding: 0.8rem 2rem;
-            display: flex;
-            justify-content: space-between;
+            display: flex; 
+            justify-content: space-between; 
             align-items: center;
-            z-index: 9999;
-            transition: 0.4s;
+            z-index: 9999; 
+            transition: 0.4s; 
             border-radius: 50px;
             /* Glass Effect */
-            background: rgba(20, 20, 30, 0.6);
-            backdrop-filter: blur(20px);
+            background: rgba(20, 20, 30, 0.7); 
+            backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            background: linear-gradient(to right, #fff, #cbd5e1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links>li>a {
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links>li>a:hover,
-        .nav-links>li>a.active {
-            color: #fff;
-            text-shadow: 0 0 15px var(--primary);
-        }
-
+        .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; background: linear-gradient(to right, #fff, #cbd5e1); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+        .nav-links > li > a { font-weight: 500; color: rgba(255, 255, 255, 0.7); font-size: 0.95rem; text-decoration: none; transition: all 0.3s ease; }
+        .nav-links > li > a:hover, .nav-links > li > a.active { color: #fff; text-shadow: 0 0 15px var(--primary); }
+        
         /* Dropdown */
-        .dropdown {
-            position: relative;
-        }
-
+        .dropdown { position: relative; }
         .dropdown-content {
-            position: absolute;
-            top: 150%;
-            right: 0;
-            min-width: 200px;
-            background: rgba(15, 15, 20, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            padding: 10px 0;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            list-style: none;
+            position: absolute; top: 150%; right: 0; min-width: 200px;
+            background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 10px 0;
+            opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; list-style: none;
         }
+        .dropdown:hover .dropdown-content { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-content li { display: block; }
+        .dropdown-content a { display: block; padding: 10px 20px; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; white-space: nowrap; text-decoration: none; }
+        .dropdown-content a:hover { color: var(--primary); background: rgba(255,255,255,0.05); padding-left: 25px; }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: white; }
 
-        .dropdown:hover .dropdown-content {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+        /* --- 2. HERO SECTION --- */
+        header { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 5% 50px; }
+        .hero-container { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; gap: 2rem; }
+        
+        .hero-text { flex: 1; opacity: 0; animation: slideInLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.2s; }
+        .hero-img { flex: 1; display: flex; justify-content: center; perspective: 1200px; opacity: 0; animation: slideInRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.4s; }
 
-        .dropdown-content li {
-            display: block;
-        }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
 
-        .dropdown-content a {
-            display: block;
-            padding: 10px 20px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            transition: 0.3s;
-            white-space: nowrap;
-            text-decoration: none;
-        }
+        .glass-badge { display: inline-block; padding: 6px 16px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 30px; margin-bottom: 1.5rem; font-size: 0.8rem; color: var(--primary); backdrop-filter: blur(10px); font-weight: 700; letter-spacing: 1px; }
+        
+        .hero-text h1 { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; background: linear-gradient(to bottom, #ffffff, #94a3b8); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-text p { color: var(--text-muted); margin-bottom: 2rem; max-width: 550px; font-size: 1.1rem; }
 
-        .dropdown-content a:hover {
-            color: var(--primary);
-            background: rgba(255, 255, 255, 0.05);
-            padding-left: 25px;
-        }
+        .trust-stats { display: flex; gap: 30px; margin-bottom: 2.5rem; }
+        .stat-item h4 { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0; }
+        .stat-item p { font-size: 0.85rem; color: var(--text-muted); }
 
-        .hamburger {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: white;
-        }
-
-        /* --- HERO SECTION --- */
-        header {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 120px 5% 50px;
-        }
-
-        .hero-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 1200px;
-            gap: 2rem;
-        }
-
-        .hero-text {
-            flex: 1;
-            opacity: 0;
-            animation: slideInLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.2s;
-        }
-
-        .hero-img {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            perspective: 1200px;
-            opacity: 0;
-            animation: slideInRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.4s;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .glass-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 30px;
-            margin-bottom: 1.5rem;
-            font-size: 0.8rem;
-            color: var(--primary);
-            backdrop-filter: blur(10px);
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .hero-text h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to bottom, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-text p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 550px;
-            font-size: 1.1rem;
-        }
-
-        .trust-stats {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 2.5rem;
-        }
-
-        .stat-item h4 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 0;
-        }
-
-        .stat-item p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .btn-glass {
-            display: inline-block;
-            padding: 14px 35px;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(12px);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .btn-primary-glass {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(217, 70, 239, 0.9));
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-outline-glass {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            margin-left: 15px;
-        }
-
-        .img-glass-card {
-            width: 420px;
-            height: 500px;
-            background: var(--glass-bg);
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(15px);
-            border-radius: 30px;
-            padding: 15px;
-            position: relative;
-            transition: transform 0.1s;
-        }
-
-        .img-glass-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
-        }
-
-        .float-label {
-            position: absolute;
-            bottom: 30px;
-            left: -20px;
-            background: rgba(10, 10, 10, 0.85);
-            padding: 12px 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .check-icon {
-            width: 35px;
-            height: 35px;
-            background: var(--cyan);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.9rem;
-        }
+        .btn-glass { display: inline-block; padding: 14px 35px; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; backdrop-filter: blur(12px); position: relative; overflow: hidden; text-align: center; cursor: pointer; text-decoration: none; }
+        .btn-primary-glass { background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(217, 70, 239, 0.9)); border: 1px solid rgba(255, 255, 255, 0.3); color: white; box-shadow: 0 0 30px rgba(99, 102, 241, 0.3); }
+        .btn-outline-glass { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white; margin-left: 15px; }
+        
+        .img-glass-card { width: 420px; height: 500px; background: var(--glass-bg); border: var(--glass-border); box-shadow: var(--glass-shadow); backdrop-filter: blur(15px); border-radius: 30px; padding: 15px; position: relative; transition: transform 0.1s; }
+        .img-glass-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 20px; }
+        
+        .float-label { position: absolute; bottom: 30px; left: -20px; background: rgba(10, 10, 10, 0.85); padding: 12px 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); display: flex; align-items: center; gap: 12px; }
+        .check-icon { width: 35px; height: 35px; background: var(--cyan); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; }
 
         /* --- TOGGLE & GRID --- */
-        .toggle-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 3rem;
-        }
+        .toggle-wrapper { display: flex; justify-content: center; margin-bottom: 3rem; }
+        .toggle-switch { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50px; padding: 5px; display: inline-flex; position: relative; }
+        .toggle-btn { padding: 10px 30px; border-radius: 40px; border: none; background: transparent; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.3s; position: relative; z-index: 2; }
+        .toggle-btn.active { color: white; }
+        .toggle-glider { position: absolute; height: calc(100% - 10px); width: 50%; top: 5px; left: 5px; background: var(--primary); border-radius: 40px; z-index: 1; transition: transform 0.4s; }
 
-        .toggle-switch {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            padding: 5px;
-            display: inline-flex;
-            position: relative;
-        }
+        section { padding: 6rem 4%; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-size: 2.8rem; text-align: center; margin-bottom: 1rem; color: white; font-weight: 800; }
+        .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1rem; }
+        
+        .grid-3, .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .portfolio-grid { display: none; animation: fadeIn 0.5s ease; }
+        .portfolio-grid.active { display: grid; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .toggle-btn {
-            padding: 10px 30px;
-            border-radius: 40px;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-            z-index: 2;
-        }
-
-        .toggle-btn.active {
-            color: white;
-        }
-
-        .toggle-glider {
-            position: absolute;
-            height: calc(100% - 10px);
-            width: 50%;
-            top: 5px;
-            left: 5px;
-            background: var(--primary);
-            border-radius: 40px;
-            z-index: 1;
-            transition: transform 0.4s;
-        }
-
-        section {
-            padding: 6rem 4%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.8rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: white;
-            font-weight: 800;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            font-size: 1rem;
-        }
-
-        .grid-3,
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .portfolio-grid {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .portfolio-grid.active {
-            display: grid;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            border: var(--glass-border);
-            border-radius: 24px;
-            overflow: hidden;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .template-preview {
-            height: 220px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-        }
-
-        .template-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-
-        .glass-card:hover .template-preview img {
-            transform: scale(1.05);
-        }
-
-        .card-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .tag {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            margin-right: 5px;
-            color: var(--cyan);
-        }
-
-        .btn-link {
-            display: block;
-            margin-top: 15px;
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: none;
-        }
+        .glass-card { background: var(--glass-bg); border: var(--glass-border); border-radius: 24px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; }
+        .glass-card:hover { transform: translateY(-10px); border-color: rgba(255, 255, 255, 0.4); }
+        .template-preview { height: 220px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; }
+        .template-preview img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .glass-card:hover .template-preview img { transform: scale(1.05); }
+        .card-content { padding: 1.5rem; flex-grow: 1; }
+        .tag { font-size: 0.75rem; padding: 4px 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin-right: 5px; color: var(--cyan); }
+        .btn-link { display:block; margin-top:15px; color:var(--primary); font-weight: 600; text-decoration: none; }
 
         /* --- BACKGROUND DECORATION --- */
-        .blob {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            z-index: -2;
-            opacity: 0.3;
-        }
-
-        .blob-1 {
-            top: -10%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: var(--primary);
-        }
-
-        .blob-2 {
-            bottom: -10%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: var(--accent);
-        }
-
-        .cubes-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .cube {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            animation: floatUp 20s infinite linear;
-        }
-
-        @keyframes floatUp {
-            from {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            to {
-                transform: translateY(-10vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
+        .blob { position: fixed; border-radius: 50%; filter: blur(100px); z-index: -2; opacity: 0.3; }
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: var(--primary); }
+        .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: var(--accent); }
+        .cubes-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+        .cube { position: absolute; background: rgba(255,255,255,0.03); border-radius: 10px; animation: floatUp 20s infinite linear; }
+        @keyframes floatUp { from { transform: translateY(100vh) rotate(0deg); opacity:0; } 50% { opacity: 1; } to { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
         /* --- MODALS --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 100000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: 0.3s;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background: rgba(20, 20, 30, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            padding: 2.5rem;
-            width: 90%;
-            max-width: 1000px;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-            transform: scale(0.9);
-            transition: 0.3s;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-content.preview-mode {
-            width: 95%;
-            height: 90vh;
-            max-width: 1400px;
-            padding: 0;
-            background: #000;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 1.5rem;
-            color: #ccc;
-            cursor: pointer;
-            z-index: 5;
-        }
-
-        .preview-mode .close-modal {
-            top: 15px;
-            right: 25px;
-            background: rgba(0, 0, 0, 0.5);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 100000; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: rgba(20, 20, 30, 0.8); border: 1px solid rgba(255,255,255,0.2); border-radius: 25px; padding: 2.5rem; width: 90%; max-width: 1000px; max-height: 85vh; overflow-y: auto; position: relative; transform: scale(0.9); transition: 0.3s; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-content.preview-mode { width: 95%; height: 90vh; max-width: 1400px; padding: 0; background: #000; }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; color: #ccc; cursor: pointer; z-index: 5; }
+        .preview-mode .close-modal { top: 15px; right: 25px; background: rgba(0,0,0,0.5); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: 1px solid rgba(255,255,255,0.2); }
 
         /* --- CURSOR (PC ONLY) --- */
         @media (min-width: 769px) {
-            * {
-                cursor: none;
-            }
-
-            .cursor-dot,
-            .cursor-outline {
-                position: fixed;
-                pointer-events: none;
-                transform: translate(-50%, -50%);
-                z-index: 9999;
-                border-radius: 50%;
-            }
-
-            .cursor-dot {
-                width: 8px;
-                height: 8px;
-                background: var(--cyan);
-            }
-
-            .cursor-outline {
-                width: 40px;
-                height: 40px;
-                border: 1px solid var(--primary);
-                transition: width 0.2s, height 0.2s, background 0.2s;
-            }
+            * { cursor: none; }
+            .cursor-dot, .cursor-outline { position: fixed; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999; border-radius: 50%; }
+            .cursor-dot { width: 8px; height: 8px; background: var(--cyan); }
+            .cursor-outline { width: 40px; height: 40px; border: 1px solid var(--primary); transition: width 0.2s, height 0.2s, background 0.2s; }
         }
 
         /* --- MOBILE RESPONSIVE FIXES --- */
         @media (max-width: 992px) {
-            .hero-container {
-                flex-direction: column-reverse;
-                text-align: center;
-                padding-top: 2rem;
-            }
-
-            .hero-text {
-                padding-right: 0;
-            }
-
-            .hero-text h1 {
-                font-size: 3rem;
-            }
-
-            .trust-stats {
-                justify-content: center;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .grid-3,
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .img-glass-card {
-                width: 100%;
-                max-width: 400px;
-                height: auto;
-                aspect-ratio: 4/5;
-            }
+            .hero-container { flex-direction: column-reverse; text-align: center; padding-top: 2rem; }
+            .hero-text { padding-right: 0; }
+            .hero-text h1 { font-size: 3rem; }
+            .trust-stats { justify-content: center; }
+            .hero-buttons { justify-content: center; }
+            .grid-3, .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+            .img-glass-card { width: 100%; max-width: 400px; height: auto; aspect-ratio: 4/5; }
         }
 
         @media (max-width: 768px) {
-
             /* 1. NAV BAR FLOATING ON MOBILE */
-            nav {
-                width: 90%;
-                top: 20px;
-                border-radius: 50px;
+            nav { 
+                width: 90%; 
+                top: 20px; 
+                border-radius: 50px; 
                 padding: 10px 20px;
                 background: rgba(20, 20, 30, 0.7);
-                border: 1px solid rgba(255, 255, 255, 0.15);
+                border: 1px solid rgba(255,255,255,0.15);
             }
-
-            .logo {
-                font-size: 1.2rem;
-            }
-
-            .hamburger {
-                display: block;
-                font-size: 1.3rem;
-            }
+            
+            .logo { font-size: 1.2rem; }
+            .hamburger { display: block; font-size: 1.3rem; }
 
             /* Mobile Menu Dropdown */
             .nav-links {
@@ -723,86 +201,34 @@
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.3s ease;
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             }
+            .nav-links.active { transform: translateY(0); opacity: 1; visibility: visible; }
 
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
+            /* 2. HIDE PC HERO IMAGE */
+            .hero-img { display: none !important; }
 
-            /* 2. TYPOGRAPHY SIZING */
-            .hero-text h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
-            }
-
-            /* Smaller H1 */
-            .hero-text p {
-                font-size: 0.95rem;
-                padding: 0 10px;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .section-subtitle {
-                font-size: 0.9rem;
-            }
-
-            /* 3. LAYOUT & GRID */
-            header {
-                padding-top: 100px;
-            }
-
-            .grid-3,
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            /* Stack Cards */
-
-            .btn-glass {
-                width: 100%;
-                max-width: 100%;
-                padding: 12px;
-                font-size: 0.9rem;
-            }
-
-            .btn-outline-glass {
-                margin-left: 0;
-                margin-top: 10px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-                padding: 0 10%;
-            }
+            /* 3. TYPOGRAPHY & SPACING */
+            header { padding-top: 100px; min-height: auto; padding-bottom: 20px; }
+            .hero-text h1 { font-size: 2.2rem; line-height: 1.2; margin-bottom: 1rem; }
+            .hero-text p { font-size: 0.95rem; padding: 0 10px; margin-bottom: 1.5rem; }
+            .section-title { font-size: 2rem; }
+            
+            /* 4. LAYOUT ADJUSTMENTS */
+            .grid-3, .portfolio-grid { grid-template-columns: 1fr; gap: 1.5rem; } /* Stack Cards 1 Column */
+            
+            .btn-glass { width: 100%; max-width: 100%; padding: 12px; font-size: 0.9rem; }
+            .btn-outline-glass { margin-left: 0; margin-top: 10px; }
+            .hero-buttons { flex-direction: column; width: 100%; padding: 0 10%; }
+            .toggle-wrapper { margin-bottom: 2rem; }
 
             /* Pricing Cards */
-            .pricing-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
+            .pricing-container { flex-direction: column; align-items: center; }
+            .contact-grid { grid-template-columns: 1fr; }
 
             /* Modal Adjustments */
-            .modal-content {
-                padding: 1.5rem;
-                width: 95%;
-            }
-
-            .toggle-btn {
-                padding: 8px 20px;
-                font-size: 0.85rem;
-            }
+            .modal-content { padding: 1.5rem; width: 95%; }
+            .dropdown:hover .dropdown-content { position: relative; opacity: 1; visibility: visible; top:0; background: transparent; border:none; box-shadow:none; }
         }
     </style>
 </head>
@@ -822,15 +248,11 @@
             <li><a href="#home" onclick="toggleMenu()">Home</a></li>
             <li><a href="#templates" onclick="toggleMenu()">Showcase</a></li>
             <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">More <i class="fa-solid fa-chevron-down"
-                        style="font-size: 0.7rem; margin-left: 5px;"></i></a>
+                <a href="javascript:void(0)" class="dropbtn">More <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i></a>
                 <ul class="dropdown-content">
-                    <li><a href="javascript:void(0)" onclick="openModal('modal-process'); toggleMenu()">How It Works</a>
-                    </li>
-                    <li><a href="javascript:void(0)" onclick="openModal('modal-pricing'); toggleMenu()">Affordable
-                            Pricing</a></li>
-                    <li><a href="javascript:void(0)" onclick="openModal('modal-contact'); toggleMenu()">Start Your
-                            Project</a></li>
+                    <li><a href="javascript:void(0)" onclick="openModal('modal-process'); toggleMenu()">How It Works</a></li>
+                    <li><a href="javascript:void(0)" onclick="openModal('modal-pricing'); toggleMenu()">Affordable Pricing</a></li>
+                    <li><a href="javascript:void(0)" onclick="openModal('modal-contact'); toggleMenu()">Start Your Project</a></li>
                 </ul>
             </li>
         </ul>
@@ -842,41 +264,26 @@
             <div class="hero-text">
                 <span class="glass-badge">🚀 GET HIRED FASTER</span>
                 <h1>Get Your Dream <br> <span style="color: var(--primary);">Portfolio Website</span></h1>
-                <p>We build stunning, high-performance personal websites for students and professionals in just 48
-                    hours.</p>
-
+                <p>We build stunning, high-performance personal websites for students and professionals in just 48 hours.</p>
+                
                 <div class="trust-stats">
-                    <div class="stat-item">
-                        <h4>50+</h4>
-                        <p>Clients</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>48h</h4>
-                        <p>Delivery</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>100%</h4>
-                        <p>Quality</p>
-                    </div>
+                    <div class="stat-item"><h4>50+</h4><p>Clients</p></div>
+                    <div class="stat-item"><h4>48h</h4><p>Delivery</p></div>
+                    <div class="stat-item"><h4>100%</h4><p>Quality</p></div>
                 </div>
 
                 <div class="hero-buttons">
                     <a href="#templates" class="btn-glass btn-primary-glass">Pick a Design</a>
-                    <a href="javascript:void(0)" onclick="openModal('modal-process')"
-                        class="btn-glass btn-outline-glass">How it Works</a>
+                    <a href="javascript:void(0)" onclick="openModal('modal-process')" class="btn-glass btn-outline-glass">How it Works</a>
                 </div>
             </div>
-
+            
             <div class="hero-img" id="tilt-card">
                 <div class="img-glass-card">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
-                        alt="Showcase">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop" alt="Showcase">
                     <div class="float-label">
                         <div class="check-icon"><i class="fa-solid fa-check"></i></div>
-                        <div>
-                            <h5 style="color: white; font-size: 0.85rem;">Verified Pro</h5>
-                            <p style="color: #cbd5e1; font-size: 0.65rem;">High Quality</p>
-                        </div>
+                        <div><h5 style="color: white; font-size: 0.85rem;">Verified Pro</h5><p style="color: #cbd5e1; font-size: 0.65rem;">High Quality</p></div>
                     </div>
                 </div>
             </div>
@@ -896,67 +303,15 @@
         </div>
 
         <div id="grid-simple" class="portfolio-grid active">
-            <div class="glass-card">
-                <div class="template-preview"><img
-                        src="https://images.unsplash.com/photo-1517292987719-0369a794ec0f?q=80&w=1000&auto=format&fit=crop"
-                        alt="Resume"></div>
-                <div class="card-content">
-                    <div style="margin-bottom:10px;"><span class="tag">Resume</span></div>
-                    <h3>The Minimalist</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')"
-                        class="btn-link">View Details →</a>
-                </div>
-            </div>
-            <div class="glass-card">
-                <div class="template-preview"><img
-                        src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=1000&auto=format&fit=crop"
-                        alt="VCard"></div>
-                <div class="card-content">
-                    <div style="margin-bottom:10px;"><span class="tag">Bio Link</span></div>
-                    <h3>Digital Card</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')"
-                        class="btn-link">View Details →</a>
-                </div>
-            </div>
-            <div class="glass-card">
-                <div class="template-preview"><img
-                        src="https://plus.unsplash.com/premium_photo-1685086785636-2a1a4e51c5aa?q=80&w=1000&auto=format&fit=crop"
-                        alt="Blog"></div>
-                <div class="card-content">
-                    <div style="margin-bottom:10px;"><span class="tag">Blog</span></div>
-                    <h3>Simple Blog</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')"
-                        class="btn-link">View Details →</a>
-                </div>
-            </div>
+            <div class="glass-card"><div class="template-preview"><img src="https://images.unsplash.com/photo-1517292987719-0369a794ec0f?q=80&w=1000&auto=format&fit=crop" alt="Resume"></div><div class="card-content"><div style="margin-bottom:10px;"><span class="tag">Resume</span></div><h3>The Minimalist</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')" class="btn-link">View Details →</a></div></div>
+            <div class="glass-card"><div class="template-preview"><img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=1000&auto=format&fit=crop" alt="VCard"></div><div class="card-content"><div style="margin-bottom:10px;"><span class="tag">Bio Link</span></div><h3>Digital Card</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')" class="btn-link">View Details →</a></div></div>
+            <div class="glass-card"><div class="template-preview"><img src="https://plus.unsplash.com/premium_photo-1685086785636-2a1a4e51c5aa?q=80&w=1000&auto=format&fit=crop" alt="Blog"></div><div class="card-content"><div style="margin-bottom:10px;"><span class="tag">Blog</span></div><h3>Simple Blog</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')" class="btn-link">View Details →</a></div></div>
         </div>
 
         <div id="grid-pro" class="portfolio-grid">
-            <div class="glass-card" style="border-color: rgba(217, 70, 239, 0.3);">
-                <div class="template-preview"><img src="image/Taylor.png" alt="Business"></div>
-                <div class="card-content">
-                    <div style="margin-bottom:10px;"><span class="tag" style="color:var(--accent)">Agency</span></div>
-                    <h3>The Executive</h3><a href="Taylor.html" onclick="openModal('modal-taylor')" class="btn-link"
-                        style="color:var(--accent)">View Details →</a>
-                </div>
-            </div>
-            <div class="glass-card" style="border-color: rgba(217, 70, 239, 0.3);">
-                <div class="template-preview"><img
-                        src="https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=1000&auto=format&fit=crop"
-                        alt="Creative"></div>
-                <div class="card-content">
-                    <div style="margin-bottom:10px;"><span class="tag" style="color:var(--accent)">3D</span></div>
-                    <h3>The Visionary</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')"
-                        class="btn-link" style="color:var(--accent)">View Details →</a>
-                </div>
-            </div>
-            <div class="glass-card" style="border-color: rgba(217, 70, 239, 0.3);">
-                <div class="template-preview"><img
-                        src="https://images.unsplash.com/photo-1481487484168-9b9307a5273d?q=80&w=1000&auto=format&fit=crop"
-                        alt="Store"></div>
-                <div class="card-content">
-                    <div style="margin-bottom:10px;"><span class="tag" style="color:var(--accent)">Shop</span></div>
-                    <h3>Pro Store</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')" class="btn-link"
-                        style="color:var(--accent)">View Details →</a>
-                </div>
-            </div>
+            <div class="glass-card" style="border-color: rgba(217, 70, 239, 0.3);"><div class="template-preview"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop" alt="Business"></div><div class="card-content"><div style="margin-bottom:10px;"><span class="tag" style="color:var(--accent)">Agency</span></div><h3>The Executive</h3><a href="javascript:void(0)" onclick="openModal('modal-taylor')" class="btn-link" style="color:var(--accent)">View Details →</a></div></div>
+            <div class="glass-card" style="border-color: rgba(217, 70, 239, 0.3);"><div class="template-preview"><img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=1000&auto=format&fit=crop" alt="Creative"></div><div class="card-content"><div style="margin-bottom:10px;"><span class="tag" style="color:var(--accent)">3D</span></div><h3>The Visionary</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')" class="btn-link" style="color:var(--accent)">View Details →</a></div></div>
+            <div class="glass-card" style="border-color: rgba(217, 70, 239, 0.3);"><div class="template-preview"><img src="https://images.unsplash.com/photo-1481487484168-9b9307a5273d?q=80&w=1000&auto=format&fit=crop" alt="Store"></div><div class="card-content"><div style="margin-bottom:10px;"><span class="tag" style="color:var(--accent)">Shop</span></div><h3>Pro Store</h3><a href="javascript:void(0)" onclick="openModal('modal-contact')" class="btn-link" style="color:var(--accent)">View Details →</a></div></div>
         </div>
     </section>
 
@@ -965,27 +320,9 @@
             <span class="close-modal" onclick="closeModalBtn('modal-process')">&times;</span>
             <h2 class="section-title" style="font-size:2rem;">How It Works</h2>
             <div class="grid-3">
-                <div class="glass-card">
-                    <div class="card-content" style="text-align: center;"><i class="fa-solid fa-layer-group"
-                            style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                        <h3>01. Choose</h3>
-                        <p style="color: var(--text-muted); font-size:0.9rem;">Pick your favorite design.</p>
-                    </div>
-                </div>
-                <div class="glass-card">
-                    <div class="card-content" style="text-align: center;"><i class="fa-solid fa-file-pen"
-                            style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                        <h3>02. Send Info</h3>
-                        <p style="color: var(--text-muted); font-size:0.9rem;">Send resume & photos.</p>
-                    </div>
-                </div>
-                <div class="glass-card">
-                    <div class="card-content" style="text-align: center;"><i class="fa-solid fa-rocket"
-                            style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                        <h3>03. Go Live</h3>
-                        <p style="color: var(--text-muted); font-size:0.9rem;">Website ready in 48h.</p>
-                    </div>
-                </div>
+                <div class="glass-card"><div class="card-content" style="text-align: center;"><i class="fa-solid fa-layer-group" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i><h3>01. Choose</h3><p style="color: var(--text-muted); font-size:0.9rem;">Pick your favorite design.</p></div></div>
+                <div class="glass-card"><div class="card-content" style="text-align: center;"><i class="fa-solid fa-file-pen" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i><h3>02. Send Info</h3><p style="color: var(--text-muted); font-size:0.9rem;">Send resume & photos.</p></div></div>
+                <div class="glass-card"><div class="card-content" style="text-align: center;"><i class="fa-solid fa-rocket" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i><h3>03. Go Live</h3><p style="color: var(--text-muted); font-size:0.9rem;">Website ready in 48h.</p></div></div>
             </div>
         </div>
     </div>
@@ -996,32 +333,14 @@
             <h2 class="section-title" style="font-size:2rem;">Pricing</h2>
             <div class="pricing-container">
                 <div class="pricing-card">
-                    <div style="text-align: center;">
-                        <h3 style="color: var(--text-muted); font-size: 1.1rem;">Simple</h3>
-                        <div class="price-tag" style="font-size:3rem;">$15</div>
-                    </div>
-                    <ul class="check-list" style="font-size:0.9rem;">
-                        <li>Single Page</li>
-                        <li>Mobile Ready</li>
-                        <li>3 Days</li>
-                    </ul>
-                    <a href="javascript:void(0)" onclick="closeModalBtn('modal-pricing'); openModal('modal-contact')"
-                        class="btn-glass btn-outline-glass" style="width:100%; margin:0;">Order</a>
+                    <div style="text-align: center;"><h3 style="color: var(--text-muted); font-size: 1.1rem;">Simple</h3><div class="price-tag" style="font-size:3rem;">$15</div></div>
+                    <ul class="check-list" style="font-size:0.9rem;"><li>Single Page</li><li>Mobile Ready</li><li>3 Days</li></ul>
+                    <a href="javascript:void(0)" onclick="closeModalBtn('modal-pricing'); openModal('modal-contact')" class="btn-glass btn-outline-glass" style="width:100%; margin:0;">Order</a>
                 </div>
                 <div class="pricing-card featured">
-                    <div style="text-align: center;">
-                        <h3 style="color: var(--accent); font-size: 1.1rem;">Pro</h3>
-                        <div class="price-tag"
-                            style="font-size:3rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                            $28</div>
-                    </div>
-                    <ul class="check-list" style="font-size:0.9rem;">
-                        <li>5 Pages</li>
-                        <li>Glass 3D</li>
-                        <li>48 Hours</li>
-                    </ul>
-                    <a href="javascript:void(0)" onclick="closeModalBtn('modal-pricing'); openModal('modal-contact')"
-                        class="btn-glass btn-primary-glass" style="width:100%; margin:0;">Order</a>
+                    <div style="text-align: center;"><h3 style="color: var(--accent); font-size: 1.1rem;">Pro</h3><div class="price-tag" style="font-size:3rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">$28</div></div>
+                    <ul class="check-list" style="font-size:0.9rem;"><li>5 Pages</li><li>Glass 3D</li><li>48 Hours</li></ul>
+                    <a href="javascript:void(0)" onclick="closeModalBtn('modal-pricing'); openModal('modal-contact')" class="btn-glass btn-primary-glass" style="width:100%; margin:0;">Order</a>
                 </div>
             </div>
         </div>
@@ -1032,16 +351,8 @@
             <span class="close-modal" onclick="closeModalBtn('modal-contact')">&times;</span>
             <h2 class="section-title" style="font-size:2rem;">Contact</h2>
             <div class="contact-grid">
-                <div>
-                    <div class="icon-box"><i class="fa-brands fa-telegram"></i></div>
-                    <h4>Telegram</h4>
-                    <p style="color: var(--text-muted); font-size:0.9rem;">@vannvirakboth</p>
-                </div>
-                <div>
-                    <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
-                    <h4>Phone</h4>
-                    <p style="color: var(--text-muted); font-size:0.9rem;">0964600759</p>
-                </div>
+                <div><div class="icon-box"><i class="fa-brands fa-telegram"></i></div><h4>Telegram</h4><p style="color: var(--text-muted); font-size:0.9rem;">@vannvirakboth</p></div>
+                <div><div class="icon-box"><i class="fa-solid fa-phone"></i></div><h4>Phone</h4><p style="color: var(--text-muted); font-size:0.9rem;">0964600759</p></div>
             </div>
         </div>
     </div>
@@ -1049,56 +360,52 @@
     <div id="modal-taylor" class="modal-overlay" onclick="closeModal(event, 'modal-taylor')">
         <div class="modal-content preview-mode">
             <span class="close-modal" onclick="closeModalBtn('modal-taylor')">&times;</span>
-            <iframe style="width:100%; height:100%; border:none; border-radius: 20px;"
-                srcdoc='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Taylor</title><style>body{margin:0;background:#111;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;}h1{color:#d4af37;}</style></head><body><h1>Taylor Consultant Demo</h1></body></html>'></iframe>
+            <iframe style="width:100%; height:100%; border:none; border-radius: 20px;" srcdoc='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Taylor</title><style>body{margin:0;background:#111;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;}h1{color:#d4af37;}</style></head><body><h1>Taylor Consultant Demo</h1></body></html>'></iframe>
         </div>
     </div>
 
-    <footer>
-        <p style="font-size:0.8rem;">© 2025 VANN VIRAKBOTH</p>
-    </footer>
+    <footer><p style="font-size:0.8rem;">© 2025 VANN VIRAKBOTH</p></footer>
 
     <script>
         // Modal & Toggle Logic
         function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeModal(e, id) { if (e.target.id === id) closeModalBtn(id); }
+        function closeModal(e, id) { if(e.target.id === id) closeModalBtn(id); }
         function closeModalBtn(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
         function toggleMenu() { document.querySelector('.nav-links').classList.toggle('active'); }
-
+        
         // Switch Tabs
         function switchTab(type) {
             const s = document.getElementById('grid-simple'), p = document.getElementById('grid-pro'), g = document.getElementById('glider'), btns = document.querySelectorAll('.toggle-btn');
-            if (type === 'simple') { s.classList.add('active'); p.classList.remove('active'); g.style.transform = 'translateX(0)'; btns[0].classList.add('active'); btns[1].classList.remove('active'); }
+            if(type === 'simple') { s.classList.add('active'); p.classList.remove('active'); g.style.transform = 'translateX(0)'; btns[0].classList.add('active'); btns[1].classList.remove('active'); }
             else { s.classList.remove('active'); p.classList.add('active'); g.style.transform = 'translateX(100%)'; btns[0].classList.remove('active'); btns[1].classList.add('active'); }
         }
 
         // Cursor Effect (PC Only)
-        if (window.innerWidth > 768) {
+        if(window.innerWidth > 768) {
             const dot = document.querySelector('.cursor-dot'), outline = document.querySelector('.cursor-outline');
             window.addEventListener("mousemove", (e) => {
                 dot.style.left = `${e.clientX}px`; dot.style.top = `${e.clientY}px`;
                 outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
             });
         }
-
+        
         // 3D Tilt (PC Only)
         const tilt = document.getElementById('tilt-card');
         document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 900) {
-                const x = (window.innerWidth / 2 - e.pageX) / 30, y = (window.innerHeight / 2 - e.pageY) / 30;
+            if(window.innerWidth > 900) {
+                const x = (window.innerWidth/2 - e.pageX)/30, y = (window.innerHeight/2 - e.pageY)/30;
                 tilt.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
             }
         });
 
         // Floating Cubes
         const container = document.getElementById('cubes');
-        for (let i = 0; i < 15; i++) {
+        for(let i=0; i<15; i++) {
             let li = document.createElement('li'); li.className = 'cube';
-            let size = Math.random() * 80 + 20; li.style.width = `${size}px`; li.style.height = `${size}px`;
-            li.style.left = `${Math.random() * 90}%`; li.style.animationDuration = `${Math.random() * 15 + 10}s`;
-            li.style.animationDelay = `${Math.random() * 5}s`; container.appendChild(li);
+            let size = Math.random()*80+20; li.style.width = `${size}px`; li.style.height = `${size}px`;
+            li.style.left = `${Math.random()*90}%`; li.style.animationDuration = `${Math.random()*15+10}s`;
+            li.style.animationDelay = `${Math.random()*5}s`; container.appendChild(li);
         }
     </script>
 </body>
-
 </html>
