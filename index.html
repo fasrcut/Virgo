@@ -29,7 +29,7 @@
             --glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.01) 100%);
             --glass-border: 1px solid rgba(255, 255, 255, 0.12);
             --glass-border-highlight: 1px solid rgba(255, 255, 255, 0.3);
-            --glass-shadow: 
+            --glass-shadow:
                 0 20px 50px rgba(0, 0, 0, 0.5),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2),
                 inset 0 -1px 0 rgba(0, 0, 0, 0.3);
@@ -53,29 +53,52 @@
         }
 
         /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
 
-        /* --- NEW DYNAMIC BACKGROUND --- */
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* --- BACKGROUND --- */
         .bg-universe {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
             z-index: -1;
             overflow: hidden;
-            background: 
-                radial-gradient(at 0% 0%, rgba(76, 29, 149, 0.3) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.3) 0, transparent 50%), 
+            background:
+                radial-gradient(at 0% 0%, rgba(76, 29, 149, 0.3) 0, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.3) 0, transparent 50%),
                 radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.3) 0, transparent 50%);
             background-size: 200% 200%;
             animation: bg-shift 20s ease infinite;
         }
 
         @keyframes bg-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Floaty Shapes */
@@ -89,18 +112,37 @@
             animation: float-liquid infinite ease-in-out;
             z-index: -1;
         }
-        .shape-square { border-radius: 15%; }
-        .shape-circle { border-radius: 50%; }
-        .shape-pill { border-radius: 50px; }
 
-        @keyframes float-liquid {
-            0% { transform: translateY(0) rotate(0deg) translateX(0); }
-            33% { transform: translateY(-40px) rotate(10deg) translateX(20px); }
-            66% { transform: translateY(20px) rotate(-5deg) translateX(-10px); }
-            100% { transform: translateY(0) rotate(0deg) translateX(0); }
+        .shape-square {
+            border-radius: 15%;
         }
 
-        /* Mouse Spotlight */
+        .shape-circle {
+            border-radius: 50%;
+        }
+
+        .shape-pill {
+            border-radius: 50px;
+        }
+
+        @keyframes float-liquid {
+            0% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+            }
+
+            33% {
+                transform: translateY(-40px) rotate(10deg) translateX(20px);
+            }
+
+            66% {
+                transform: translateY(20px) rotate(-5deg) translateX(-10px);
+            }
+
+            100% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+            }
+        }
+
         .spotlight {
             position: fixed;
             width: 400px;
@@ -123,6 +165,7 @@
             border-radius: 24px;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
+
         .glass-panel:hover {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
             border-color: rgba(255, 255, 255, 0.3);
@@ -137,215 +180,475 @@
             filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.3));
         }
 
-        .section-padding { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
-        .section-title { font-size: 2.8rem; margin-bottom: 1rem; text-align: center; font-weight: 700; z-index: 2; position: relative; }
-        .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 4rem; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        .section-padding {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        /* --- LIQUID GLASS NAVBAR (UPDATED) --- */
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 700;
+            z-index: 2;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- LIQUID GLASS NAVBAR --- */
         .navbar {
-            position: fixed; 
-            top: 25px; 
-            left: 50%; 
-            width: 90%; 
-            max-width: 1000px; 
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            width: 90%;
+            max-width: 1000px;
             padding: 15px 35px;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             z-index: 1000;
             border-radius: 100px;
-            
-            /* Liquid Glass Effect */
-            background: rgba(255, 255, 255, 0.06); /* Brighter base */
-            backdrop-filter: blur(25px) saturate(150%); /* Liquid blur */
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(25px) saturate(150%);
             -webkit-backdrop-filter: blur(25px) saturate(150%);
-            
-            /* The "Water Drop" Border */
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.5); /* Top Highlight */
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            
-            /* Depth Shadow */
-            box-shadow: 
-                0 15px 40px rgba(0, 0, 0, 0.3), 
-                inset 0 4px 20px rgba(255, 255, 255, 0.1); /* Inner Glow */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), inset 0 4px 20px rgba(255, 255, 255, 0.1);
         }
 
-        .logo { font-weight: 800; font-size: 1.6rem; letter-spacing: 1px; color: white; text-shadow: 0 0 15px rgba(255,255,255,0.5); }
-        
-        /* Links are hidden, only button remains based on request */
-        .nav-links { display: none; } 
-        
-        .btn-glass-nav {
-            background: rgba(255, 255, 255, 0.15); 
-            border: 1px solid rgba(255, 255, 255, 0.3); 
-            border-top: 1px solid rgba(255, 255, 255, 0.6);
-            color: white; padding: 12px 28px; border-radius: 50px; 
-            font-weight: 600; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .logo {
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
-        .btn-glass-nav:hover { 
-            background: rgba(255, 255, 255, 0.3); 
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); 
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 500;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links a:hover {
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .btn-glass-nav {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-glass-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
         }
 
         /* --- HERO --- */
         .hero-wrapper {
-            min-height: 100vh; padding-top: 140px; padding-bottom: 50px; padding-left: 5%; padding-right: 5%;
-            display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; max-width: 1300px; margin: 0 auto;
+            min-height: 100vh;
+            padding-top: 140px;
+            padding-bottom: 50px;
+            padding-left: 5%;
+            padding-right: 5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            max-width: 1300px;
+            margin: 0 auto;
         }
-        .hero-top-row { display: flex; align-items: center; justify-content: space-between; gap: 3rem; margin-bottom: 4rem; }
-        .hero-text h1 { font-size: 4.2rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -1px; }
-        
+
+        .hero-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .hero-text h1 {
+            font-size: 4.2rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
         .glass-pill {
-            background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); color: #a78bfa;
-            padding: 8px 20px; border-radius: 30px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.5rem;
-            display: inline-block; backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #a78bfa;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
         }
-        
+
         .btn-primary {
             background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            color: white; border: none; padding: 16px 40px;
-            border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 1rem;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
-            position: relative; overflow: hidden;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+
         .btn-primary::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
-            opacity: 0; transform: scale(0.5); transition: 0.5s;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: 0.5s;
         }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(139, 92, 246, 0.6); }
-        .btn-primary:hover::after { opacity: 1; transform: scale(1); }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.6);
+        }
+
+        .btn-primary:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
 
         /* Stats Bar */
         .hero-stats-bar {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 100%);
-            backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px; padding: 2.5rem; margin-bottom: 2rem;
-            display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;
-            position: relative; overflow: hidden;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
         }
+
         .hero-stats-bar::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
             animation: shimmer 8s infinite;
         }
-        @keyframes shimmer { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
 
-        .hero-tech-marquee {
-            margin-top: auto; width: 100%; padding: 25px 0; 
-            border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
-            background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); overflow: hidden;
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            20% {
+                left: 100%;
+            }
+
+            100% {
+                left: 100%;
+            }
         }
-        .marquee-content { display: flex; gap: 4rem; animation: marquee 30s linear infinite; width: max-content; }
-        .tech-item { display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-weight: 600; font-size: 1.1rem; opacity: 0.8; }
-        .tech-item i { font-size: 1.5rem; color: white; filter: drop-shadow(0 0 8px rgba(255,255,255,0.4)); }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- CONTACT & PORTFOLIO --- */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
-        .img-wrapper {
-            width: 100%; height: 220px; overflow: hidden; border-radius: 12px; position: relative; margin-bottom: 1.2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
         }
-        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
-        .glass-panel:hover .img-wrapper img { transform: scale(1.08); }
 
-        .contact-cards-row { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; margin-top: 3rem; width: 100%; }
-        .contact-action-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 2.5rem 3rem;
-            border-radius: 24px; min-width: 280px; text-decoration: none; color: white; transition: 0.4s;
-            display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;
+        .img-wrapper {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            border-radius: 12px;
+            position: relative;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s;
+        }
+
+        .glass-panel:hover .img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .contact-cards-row {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 3rem;
+            width: 100%;
+        }
+
+        .contact-action-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem 3rem;
+            border-radius: 24px;
+            min-width: 280px;
+            text-decoration: none;
+            color: white;
+            transition: 0.4s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
         .contact-action-card:hover {
-            border-color: var(--secondary); background: rgba(6, 182, 212, 0.05); transform: translateY(-10px);
+            border-color: var(--secondary);
+            background: rgba(6, 182, 212, 0.05);
+            transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
         }
+
         .icon-circle {
-            width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.05);
-            display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
-            font-size: 1.8rem; color: var(--secondary); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
         }
-        .contact-action-card:hover .icon-circle { background: var(--secondary); color: white; box-shadow: 0 0 20px var(--secondary); }
+
+        .contact-action-card:hover .icon-circle {
+            background: var(--secondary);
+            color: white;
+            box-shadow: 0 0 20px var(--secondary);
+        }
 
         .filter-tabs-container {
-            background: rgba(0,0,0,0.2); padding: 6px; border-radius: 60px; border: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 3rem; display: inline-flex; backdrop-filter: blur(10px); position: relative; z-index: 2;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 3rem;
+            display: inline-flex;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
         }
+
         .filter-tabs button {
-            background: transparent; border: none; color: var(--text-muted); padding: 12px 35px; cursor: pointer;
-            font-weight: 600; position: relative; transition: 0.3s; z-index: 2; border-radius: 50px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px 35px;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+            transition: 0.3s;
+            z-index: 2;
+            border-radius: 50px;
         }
-        .filter-tabs button.active { color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+
+        .filter-tabs button.active {
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
         .active-tab-bg {
-            position: absolute; inset: 0; background: var(--primary); border-radius: 50px; z-index: -1;
+            position: absolute;
+            inset: 0;
+            background: var(--primary);
+            border-radius: 50px;
+            z-index: -1;
             box-shadow: 0 5px 15px rgba(139, 92, 246, 0.5);
         }
-        
-        footer { border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 8rem; background: rgba(0, 0, 0, 0.4); padding: 4rem 5% 2rem; backdrop-filter: blur(15px); }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 8rem;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4rem 5% 2rem;
+            backdrop-filter: blur(15px);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
         /* ==========================================
-           MOBILE OPTIMIZATION (Display Phone Only)
+           MOBILE OPTIMIZATION (Display Phone)
            ========================================== */
         @media (max-width: 768px) {
-            /* 1. Hide Stats & Marquee */
-            .hero-stats-bar, .hero-tech-marquee {
+
+            /* 1. HIDE STATS & FLOATING OBJECTS */
+            .hero-stats-bar {
                 display: none !important;
             }
 
-            /* 2. Global Layout Adjustments */
-            .section-padding { padding: 50px 20px; }
-            .section-title { font-size: 2rem; }
-            
-            /* 3. Navbar Compact */
-            .navbar { width: 95%; padding: 10px 15px; top: 15px; }
-            .logo { font-size: 1.3rem; }
-            .btn-glass-nav { padding: 8px 20px; font-size: 0.85rem; }
+            .floater {
+                display: none !important;
+            }
 
-            /* 4. Hero Section Fixes */
-            .hero-wrapper { 
-                padding-top: 100px; 
-                text-align: center; 
-                height: auto; 
-                min-height: auto; 
-                padding-bottom: 40px; 
+            /* 2. LAYOUT FIXES */
+            .section-padding {
+                padding: 50px 20px;
             }
-            .hero-top-row { 
-                flex-direction: column-reverse; /* Text above image? No, Image top usually better or standard reverse */
-                gap: 2rem; 
-                margin-bottom: 0; 
+
+            .section-title {
+                font-size: 2rem;
             }
-            /* Fix Text Size */
-            .hero-text h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-            .hero-text p { font-size: 1rem; max-width: 100%; margin-bottom: 1.5rem; }
-            
-            /* Fix Button Alignment */
+
+            .navbar {
+                width: 95%;
+                padding: 10px 15px;
+                top: 15px;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .btn-glass-nav {
+                padding: 8px 20px;
+                font-size: 0.85rem;
+            }
+
+            /* 3. HERO SECTION STACKING (Column Reverse: Image Top, Text Bottom) */
+            .hero-wrapper {
+                padding-top: 100px;
+                text-align: center;
+                height: auto;
+                min-height: auto;
+                padding-bottom: 40px;
+            }
+
+            .hero-top-row {
+                flex-direction: column-reverse;
+                gap: 2rem;
+                margin-bottom: 0;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+                max-width: 100%;
+                margin-bottom: 1.5rem;
+            }
+
+            /* Center Buttons */
             .hero-top-row div[style*="justify-content: flex-start"] {
                 justify-content: center !important;
             }
 
-            /* 5. Hero Card Size Fix (Fit Screen) */
+            /* Hero Card Sizing */
             .glass-panel[style*="height: 450px"] {
                 height: auto !important;
                 aspect-ratio: 1/1;
                 max-width: 100% !important;
                 width: 100% !important;
             }
+
             .glass-panel[style*="height: 450px"] img {
                 height: 200px !important;
             }
 
-            /* 6. Portfolio & Contact Grids */
-            .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .contact-cards-row { flex-direction: column; gap: 1.5rem; }
-            .contact-action-card { min-width: 100%; padding: 2rem; }
+            /* Grids */
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
 
-            /* 7. Footer */
-            .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
-            .footer-grid .logo { justify-content: center; display: flex; }
+            .contact-cards-row {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .contact-action-card {
+                min-width: 100%;
+                padding: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .footer-grid .logo {
+                justify-content: center;
+                display: flex;
+            }
         }
     </style>
 </head>
@@ -369,7 +672,7 @@
             return (
                 <div className="bg-universe">
                     {shapes.map((s, i) => (
-                        <div key={i} className={`floater ${s.type}`} style={{width: s.w, height: s.h, top: s.top, left: s.left, animationDelay: s.delay, animationDuration: s.dur}}></div>
+                        <div key={i} className={`floater ${s.type}`} style={{ width: s.w, height: s.h, top: s.top, left: s.left, animationDelay: s.delay, animationDuration: s.dur }}></div>
                     ))}
                 </div>
             );
@@ -410,28 +713,25 @@
                 y.set(event.clientY - rect.top - rect.height / 2);
             }
 
-            // MARQUEE DATA REMOVED BUT KEPT IN FUNCTION FOR STRUCTURE IF NEEDED
-            // (Not rendered below)
-
             return (
                 <section className="hero-wrapper">
                     <div className="hero-top-row">
-                        <div style={{flex: 1}}>
+                        <div style={{ flex: 1 }}>
                             <span className="glass-pill">✨ OPEN FOR OPPORTUNITIES</span>
-                            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} className="hero-text">
+                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="hero-text">
                                 <h1>High-End <br /><span className="gradient-text">Digital Solutions.</span></h1>
                             </motion.div>
-                            <p style={{color:'var(--text-muted)', fontSize:'1.2rem', marginBottom:'2.5rem', lineHeight:'1.7', maxWidth:'550px'}}>
-                                I engineer high-performance web applications with React & Laravel. 
+                            <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginBottom: '2.5rem', lineHeight: '1.7', maxWidth: '550px' }}>
+                                I engineer high-performance web applications with React & Laravel.
                                 Transforming complex backend logic into seamless, liquid user experiences.
                             </p>
-                            <div style={{display:'flex', gap:'20px', justifyContent: 'flex-start'}}>
+                            <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-start' }}>
                                 <a href="#contact"><button className="btn-primary">Start Project</button></a>
                                 <a href="#showcase"><button className="btn-glass-nav">My Work</button></a>
                             </div>
                         </div>
 
-                        <div style={{flex: 1, display:'flex', justifyContent:'center'}}>
+                        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
                             <motion.div
                                 className="glass-panel"
                                 style={{ width: '100%', maxWidth: '400px', height: '450px', cursor: 'pointer', rotateX, rotateY, perspective: 1000, padding: '20px' }}
@@ -443,39 +743,37 @@
                                     <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e', boxShadow: '0 0 10px #ffbd2e' }}></div>
                                     <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f', boxShadow: '0 0 10px #27c93f' }}></div>
                                 </div>
-                                <div style={{width: '100%', height: '300px', borderRadius: '12px', overflow: 'hidden', position: 'relative'}}>
-                                    <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=1000" 
-                                        style={{width:'100%', height:'100%', objectFit:'cover'}} />
-                                    <div style={{position:'absolute', inset:0, background:'linear-gradient(to top, rgba(0,0,0,0.8), transparent)'}}></div>
-                                    <div style={{position:'absolute', bottom:'20px', left:'20px'}}>
-                                        <div style={{fontSize:'0.8rem', color:'#6366f1', fontWeight:'bold', textShadow:'0 0 10px rgba(0,0,0,0.8)'}}>LATEST DEPLOYMENT</div>
-                                        <div style={{fontSize:'1.5rem', fontWeight:'bold'}}>E-Commerce API</div>
+                                <div style={{ width: '100%', height: '300px', borderRadius: '12px', overflow: 'hidden', position: 'relative' }}>
+                                    <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=1000"
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}></div>
+                                    <div style={{ position: 'absolute', bottom: '20px', left: '20px' }}>
+                                        <div style={{ fontSize: '0.8rem', color: '#6366f1', fontWeight: 'bold', textShadow: '0 0 10px rgba(0,0,0,0.8)' }}>LATEST DEPLOYMENT</div>
+                                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>E-Commerce API</div>
                                     </div>
                                 </div>
-                                <div style={{marginTop:'20px', display:'flex', justifyContent:'space-between', fontSize:'0.9rem', color:'#94a3b8'}}>
+                                <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#94a3b8' }}>
                                     <span><i className="fa-solid fa-code-branch"></i> main</span>
-                                    <span><i className="fa-solid fa-circle-check" style={{color:'#27c93f'}}></i> Live</span>
+                                    <span><i className="fa-solid fa-circle-check" style={{ color: '#27c93f' }}></i> Live</span>
                                     <span>45ms latency</span>
                                 </div>
                             </motion.div>
                         </div>
                     </div>
 
-                    <motion.div initial={{opacity:0, y:40}} animate={{opacity:1, y:0}} transition={{delay:0.3}} className="hero-stats-bar">
-                         {[
+                    <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="hero-stats-bar">
+                        {[
                             { num: '5+', label: 'Years Experience' },
                             { num: '100%', label: 'Client Satisfaction' },
                             { num: '50+', label: 'Projects Shipped' },
                             { num: '24/7', label: 'Server Uptime' },
                         ].map((stat, i) => (
-                            <div key={i} style={{textAlign:'center', flex:1, minWidth:'150px'}}>
-                                <div style={{fontSize:'2.5rem', fontWeight:'800', color:'white', marginBottom:'0.2rem', textShadow:'0 0 25px var(--primary-glow)'}}>{stat.num}</div>
-                                <div style={{ color: 'var(--text-muted)', fontWeight: '500', fontSize:'0.9rem' }}>{stat.label}</div>
+                            <div key={i} style={{ textAlign: 'center', flex: 1, minWidth: '150px' }}>
+                                <div style={{ fontSize: '2.5rem', fontWeight: '800', color: 'white', marginBottom: '0.2rem', textShadow: '0 0 25px var(--primary-glow)' }}>{stat.num}</div>
+                                <div style={{ color: 'var(--text-muted)', fontWeight: '500', fontSize: '0.9rem' }}>{stat.label}</div>
                             </div>
                         ))}
                     </motion.div>
-
-                    {/* TECH MARQUEE REMOVED AS REQUESTED */}
                 </section>
             );
         }
@@ -486,26 +784,20 @@
             const [projects, setProjects] = useState([]);
 
             useEffect(() => {
-                // Data
                 const rawProjects = [
                     { id: 1, type: 'simple', title: 'Resume Pro', price: '$18', img: 'https://images.unsplash.com/photo-1517292987719-0369a794ec0f?q=80&w=1000', link: '#' },
                     { id: 2, type: 'simple', title: 'V-Card', price: '$18', img: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=1000', link: '#' },
-                    
-                    // ID 3: Taylor
                     { id: 3, type: 'pro', title: 'Taylor', price: '$28', img: 'image/Taylor.png', link: 'Taylor.html' },
-
                     { id: 4, type: 'pro', title: 'E-Commerce API', price: '$28', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000', link: '#' },
                     { id: 5, type: 'pro', title: 'Crypto Wallet', price: '$28', img: 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=1000', link: '#' },
                     { id: 6, type: 'simple', title: 'Blog Clean', price: '$18', img: 'https://images.unsplash.com/photo-1499750310159-5b600aaf032d?q=80&w=1000', link: '#' },
                 ];
-                
-                // Shuffle Logic
+
                 const shuffled = [...rawProjects];
                 for (let i = shuffled.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                 }
-                
                 setProjects(shuffled);
             }, []);
 
@@ -514,7 +806,7 @@
             return (
                 <section id="showcase" className="section-padding">
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3rem' }}>
-                        <motion.h2 {...fadeInUp} className="section-title">Selected Works</motion.h2>
+                        <motion.h2 {...fadeInUp} className="section-title">Selected Portfolios</motion.h2>
                         <motion.div {...fadeInUp} className="filter-tabs-container">
                             {['all', 'simple', 'pro'].map((tab) => (
                                 <div className="filter-tabs" key={tab}>
@@ -565,30 +857,30 @@
         // --- CONTACT ---
         const Contact = () => (
             <section id="contact" className="section-padding">
-                <div className="glass-panel contact-wrapper-centered" style={{padding: '4rem 2rem'}}>
+                <div className="glass-panel contact-wrapper-centered" style={{ padding: '4rem 2rem' }}>
                     <h2 className="section-title">Let's Work Together</h2>
-                    <p className="section-subtitle" style={{marginBottom:'1rem'}}>
-                        Have a project in mind? I'm available for freelance work.<br/>
+                    <p className="section-subtitle" style={{ marginBottom: '1rem' }}>
+                        Have a project in mind? I'm available for freelance work.<br />
                         Contact me directly via Telegram or Phone.
                     </p>
-                    
+
                     <div className="contact-cards-row">
                         <a href="https://t.me/both889" target="_blank" className="contact-action-card">
                             <div className="icon-circle">
                                 <i className="fa-brands fa-telegram"></i>
                             </div>
-                            <h3 style={{fontSize: '1.5rem', marginBottom:'0.5rem'}}>Telegram Chat</h3>
-                            <span style={{color:'var(--text-muted)', fontSize:'1.1rem'}}>@both889</span>
-                            <span style={{marginTop:'1rem', color:'var(--secondary)', fontSize:'0.9rem', fontWeight:'bold'}}>Click to Open <i className="fa-solid fa-arrow-up-right-from-square"></i></span>
+                            <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Telegram Chat</h3>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>@both889</span>
+                            <span style={{ marginTop: '1rem', color: 'var(--secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>Click to Open <i className="fa-solid fa-arrow-up-right-from-square"></i></span>
                         </a>
 
                         <a href="tel:0964600759" className="contact-action-card">
                             <div className="icon-circle">
                                 <i className="fa-solid fa-phone"></i>
                             </div>
-                            <h3 style={{fontSize: '1.5rem', marginBottom:'0.5rem'}}>Phone Call</h3>
-                            <span style={{color:'var(--text-muted)', fontSize:'1.1rem'}}>096 460 0759</span>
-                            <span style={{marginTop:'1rem', color:'var(--secondary)', fontSize:'0.9rem', fontWeight:'bold'}}>Click to Call <i className="fa-solid fa-phone-flip"></i></span>
+                            <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Phone Call</h3>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>096 460 0759</span>
+                            <span style={{ marginTop: '1rem', color: 'var(--secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>Click to Call <i className="fa-solid fa-phone-flip"></i></span>
                         </a>
                     </div>
                 </div>
@@ -597,8 +889,8 @@
 
         const Navbar = () => (
             <motion.nav initial={{ y: -100, x: "-50%" }} animate={{ y: 0, x: "-50%" }} className="navbar">
-                <div className="logo">VIRGO<span style={{ color: 'var(--primary)' }}>.PRO</span></div>
-                
+                <div className="logo">VIRGO<span style={{ color: 'var(--primary)' }}>PRO</span></div>
+
                 <a href="#contact"><button className="btn-glass-nav">Hire Me</button></a>
             </motion.nav>
         );
@@ -612,7 +904,7 @@
                     <HeroSection />
                     <Portfolio />
                     <Contact />
-                    <footer style={{textAlign:'center', padding:'2rem', color:'var(--text-muted)', marginTop:'4rem', borderTop:'1px solid rgba(255,255,255,0.05)'}}>
+                    <footer style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)', marginTop: '4rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                         &copy; 2025 VIRGO.PRO. All rights reserved.
                     </footer>
                 </div>
@@ -623,4 +915,5 @@
         root.render(<App />);
     </script>
 </body>
+
 </html>
