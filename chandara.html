@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/simple-lightbox/2.14.2/simple-lightbox.min.css" />
 
@@ -139,6 +141,34 @@
             background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
+        }
+
+        /* UPDATED: Style សម្រាប់ប៊ូតុង Go Back */
+        .go-back-btn {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.03);
+            transition: 0.3s;
+        }
+        
+        .go-back-btn:hover {
+            color: white;
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateX(-3px);
+        }
+
+        .nav-left-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         .nav-links {
@@ -672,6 +702,15 @@
                 font-size: 1.5rem;
             }
 
+            .go-back-btn {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .nav-left-group {
+                gap: 10px;
+            }
+
             /* Adjust tab buttons on mobile */
             .tab-buttons {
                 flex-wrap: wrap;
@@ -777,7 +816,13 @@
     <div class="bg-mesh"></div>
 
     <nav>
-        <div class="logo">CHAN DARA</div>
+        <div class="nav-left-group">
+            <a href="javascript:void(0)" onclick="history.back()" class="go-back-btn">
+                <i class="fa-solid fa-arrow-left"></i> Go Back
+            </a>
+            <div class="logo">CHAN DARA</div>
+        </div>
+
         <ul class="nav-links">
             <li><a href="#home" class="active">Home</a></li>
             <li><a href="#about">About</a></li>
@@ -808,7 +853,7 @@
             </div>
             <div class="hero-img hidden">
                 <div class="img-wrapper">
-                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAPEBAQDxAPEA8QEA8QFxUSEA8REA8QFhEWFhYVFRUYHSggGBolGxUWITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OFxAQFy0lHSAtLS0tLS0tKy0tLS0rLS0rLS0tLS0tLS0tLS0tKy0tLS0tLS0rLS0tLS0tLSstKy0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAAAQIEAwUGBwj/xAA9EAACAQICBggDBwQABwAAAAAAAQIDEQQhBRIxQVFhBhMiMnGBkaGxwfAHFCNSYnLRQpKi4RUzQ4KywvH/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQIDBP/EACMRAQEAAgMAAgICAwAAAAAAAAABAhEDITESQVGBEyIEM0L/2gAMAwEAAhEDEQA/APQkiSIokjL3pDEMIaJESQQxiGgGhiRIqAYAiBjRCpVjCLlJqMYq7bdklxbOC6QfabRotww0etkrrWeUE+PFi0k29BKtbSVCDtOtSi+DnC/pc8C0t0txmJb6ytUs/wClT1IeGrHI0sqj35+5n5LqPpeGkqLV4zi1xTTXqZ4VU9n/ANPmrCV5ReUpw5xbizpdGdIMVhnFwqzlC+al2k3stfcWXZfi90QHm+iPtHgpJYiM4wayerezv9fE73Rmk6OJpqpRqRnF8GrxfBrcypcfuLYwAMgAABAMApAAAIBiCkAwAiIkxBSAACqKJIRJBTQ0JDQRJDQkNBKYxDAkMQwhhKSSu8kswOD+07pA6NJYem7Sq31nvVNbfV5eTFWRzf2i9MPvMnh6En1EJZtN/jS4/tOBnK+30RKV2/mzHUqqPN/P5mEtPVb4JcwSW+T8skQipPvXV9i3v+C3hqUb9pIgy4GMU755c5ZexexNRNdh6yeTaaa9H/oyxwMdXswguck5PyX1tMMcHU3Xa4KnC3wLLpLLVKpTlTipN61Kb4XcJLcbHQWksRg6irYetZPbGV9SceElbP2NvR0DKphajcWnFXiv1M5bD/hSaqSlG3B5eae30NW9M4yy9Pd+ifSinj4Oy1KsbXhdPzT3o6E8J0PiHQqwxOGnFuLV45xUlvVnlmuZ7fo/EqtSp1I7JxjLmrrYyY5bdc8ddxnAkBpzRAdhAAhgFIQwCkAAAmRJMQWEAAFUkSRBE0FNEiKJBEhiGgUwAaCGMQwgnKybexJs8A6UaQeJxNWq3e8pW4Rgnke0dLsX1OCxE07NU2vBvL5ngFbPvdmF7834fyTJfpWqS3LPnnb/AGQULO+2XDhzf8GWdltyvu4EYK7stnzMsHHLPa368vA2WjYNdppN7Fwvx8v4MWEwUpyUYq+aXm9iOo0do5Snu6ui4xX6p7W/ric8q64Y77bLo5ofrpNzvZJbvb65na0NAwStGFvIxdEsMo01J96d6nk+77HZ4RRtmXHHfqZ8nx8c1S0K1lklwND0p6D08TBuC1aiTs+PJno1WC3FatSRq46c5ybfONPBzw1SVOaknF2kuW5riep/ZppVyhOg3dU2mv2yvmvO78HyRW6f6ETTrRXaWT5p7Pc1f2ZYlRxTpv8A6lOy8deLt/5epiXt6J3jY9aAjB5LwXwJHd5wKwwAiAAFIBiCgQxMBMiSYgsIAAKoomiCJIKkhoQ0ETGRQ0BJDRFEkEMYhhHKfaNjacMJKlN9qray5J3z5ZHiWIqq907vjw8D037Q6ir4h0Wlqwp2bavq77o8xq4aVPs2vzydzEstrXJjcZFZRd8sr73my/gcJKTSis37c2bDRGinNa0lbfyiuLOo0bopXso5fG25/MzlmYce+6waMwUcPSlWabdtWHGUpZXNnSwepTjSv+JLbzqT2vyV/REMS5OorQdSGHzeztVXmvTb6EdG6Tl1uvVpS1YKT2PvO3wWX/cc3fx6FgKKjGy3JRXhFW+RtaaaRzejekFCdo3cXl3k1fzOho1rrKzR1nTy5bWFMHIxpg2XbGmk6T01OjOP5nFea7XyPPuiFFx0lGK2/jLwsro9E0znqrcu0+TbUY+qc/Q47oDS19I1527kKnk3Uivkc/8Ap68P9dr01AgQHd5gAAAhDEFAhiABMYgpMQxMLCAAG1USSIkkGkhiQ0ESQyJIIYxDBUhiAI806ZxVPE1py2y1beGqvm/Y4+tHrM9ss+Cy8EeidNsAsRVWT6uEVGUlt12m15JJeqOUoaOSSjdO2snberu31yPLesnr6ywjL0dw7lBblfzb+vrh0da1Ck2leTVkltd8klzezzKuh6NoRsvq5saDVSq284ULeDq2ul5J38WuBaxPGoxFeOHgoSa19ss9s3t8r+yM+gNOYOFoTqwUm2+1bOW2/wAfYvYvRP3p2aSyzy7sf5ZqMR0BwtSSc+spyW9NuLWz4DGd9mfnTrZYPDV1rU1F8428dxsNHxcFqmlwGjnSrRdCKVGS1ZxUpaqaWU4prJ7nxvc6KjFa6TaR0nrhl1GSrXUItvdmaGt0spQdpQn42yNrpatTprWnKKjzZqcHpLD1XnOkoxeUW4603xttS5fTm+zHHc3ov+M0a8cnJSnKLSas9VbF6Z+LZR+zbCOMsXOXe6xU/NdqXvL2NzpCtR6uVRKD1E5XSV7JNu3oLoRhurw92rSqylVfjKTy9LCd5R184q6IAA7PMBMYmFIAAAEMQAIYgpCY2IiwgACqojQkMNJIkiKGESQ0RJICQ0RGESQSeTsIkEaj7oqkq8Z3tKaV96/BpJP2ZzWnNEQwUY1dbWTq06ey2UpZt+CudlCP4s1xUJebuv8A1MGltHwxNKVKexyT8GmmvgYywl9dcc7Oo5W/U0nbOWyK4ybyRm0XRlGMYLbnJt75t3lJ8XczVMK9btbIXSXPe3z3eF+Jnw+Tucm5W5wFFQSW2+be9s2bUeBrsLUTLqkjrHnz7qUmoq9kivhe1UzSfirlLEY5ym4RfdyfiWdGvtbSb3U+OpWfE4KErprL4Gjr9GaEu/ShUTu+1FX9TosRU1ZcmRjK41Fxysjn6OiKGGpzVKGqpN3jrScdm5N2T8De6Po6kFH8qivSK+dzHXo6zitzkm/JlyksvO5cY1llvHSSGAG3IXCwCCkAAACAAoEMTATENkSNQAABVBEkRGiqkiRFEkAxoSGESGiKGBJEiBIIw1MpxfHWj7XXwfqZHHO4Tje3Jk7Ac7XfbqrhOT9yMIXMWNlq15v9UvS5OnUszzbdtdLThqLWclFbW3sSLuAxsJK8ZwmuMWmjDK0oWaTTyOU0roeVKp12GqToN5vUs4Sf6oPJmt6ZmPzurW605ga0XOpQllN3aSWtF79VkdDYmtnHVnKV9rVreLKGBx2Pttp1rZ9lxhN+EZ5f5F1adxEdtCd7/lgrv+4m567/AMHJrXVdMoPU7bWtbdsRWhibZGLC18RUUZVI06ae1JuUn57F7lmlTjrKy2yt7N/I1748utWyrVBXV3v+BmhkswA7SOdO4NiAAAAAAAQAAAFAmAECZEchBqEAAFURoiiSKqSGiJICQ0RGESQyKJAMkiI0EMlcigBpymk5fiz/AHP4mNTI42d6knxk37kLni329M8bGhib5MuwpxqKzzRo1IuYPFarzNzJjLD8LE9CTTvBq3HYWcPoyUc6kr23LZ5mejj427yHPEueUdnE3dRPnyebZqUHPJZRW1/JFtQStbYr/wAFPD4txtGUcrf0/wAF6lNSV452yfFPmbwuN8cspYkAhnRgAFwAAAQDEABQACIAAEwpMQMQaAgAKookiCJIqpDREkgiQyJIBokRGghkiKMWJxdOkr1JKK57fQGmdsp4/Gxpxd3m07Le/wDRpMR0kc5NUYOMF/XNd58Ir55msxGMlNtyd2zjnya8dceO/YlPO45zKk6hljO6PO6M0agXbeRGlTbNngqCKb0yaPwm93NzGnZGCjFIuQZqRxyyQsPAYhRxXVp9+g5tbuxNJP8AzfoTmjnejWKdbSdd3yp0HBf3xNY9ZRnW8cr+I7GrVs2mlkymsfCU9RZtK7tsXBXK2mcW1Pq4Zzk/RcSpTo2XVU223/zJb89qvxO3JnrqMcfHubq+9I60lCmlL8zW5cuZco1dZ252SNfXUKSUY5S5bR6Opyi5TbaurWfDlz5mZld9rljjrcbbq+BBqxmoZJIlWhdX3o7acJn2rAAGXUgAAoIsbIsLAJjEFIBXAKoEkRQ0VpMZEkENEhRV8i9Qw6WbzfsWTbGWcxV40nwJKky+RdM18XH+WqDotnE9KK8/vE6cYrVgo3k882k7RXpmei6hz+ntHRdXWf8AXFebWT9rHPln9enXg5P7duClVksszJCeRuMXoV7Y5/Ep/cpLJqx4rHr3tSebLFLLwLMMEy2sDeLVgb0tYXCXjct0qVjPoyF6a42JSja5uTpyuXdSoxM8Y22sqQrPcRacu9Jv4DbNn5ZsTiLpxi7yeXga3AUqWAlKa706c9ZvOUpa0WvmXVKMFdnI1sc8VjHBPsqLS4d6NzUurLWscd7n02uJxNVUZ17/AI1eUYQ/S5Pd4LPyN1gaMcNQc5y3LN7W/wCbmrr4d1MRh4LuUIub/e8l7XLWl/xMRh6C7tOLrS4OT7ME/wDJ+SMS+1u96x/f6WtE0ddurN3bbf7VwLMca6lZRgrwi7N8FbK3N/Ar6Sn1dNUaVutqZK+yMf6pPl/pFrRuD6qMUm3Le3tb3t8zpjvxyy17f03EJXzM8StTRYgeqPFVWtCz5GMtYuOSZVM12wu4BMZFkbFxAAaJiYyLCkAARVAkiKGaVNDIokgjPh9pdjIoUJZlqLOkeXPus6Zkg7oruTW665bfTeZIy2NbHv4kY0yFDpBhnUoNw79Ptrmt69PgbAcOBMpuaXG/GyuK0dj9Zas1ZrI2MacZCxui1Go7K2/xQoUWjySWdV7LlL3D+6RFGklsMqE4iwmSVGOqmYa3AzJmOaJSesLi1sE2zKyviqqimF3tpdO45xi1fkUuiUIrrKkl2nfPkt3qUtMV+slyRstD0+rWry92YyrtJrF0Wg5KSnN95u/luRewdLXqSqPfaK8EavCrVjZZNm0w9TVjbhkXFyz+1XD0Our1qkvzdXH9MIZe8rv0NzSXaa4ZGLBU1HPcTwmSed2223zvsXJHfin248mW1+BmgzBAzRPQ8tSrK8WULmx3GtkZydeINiADLsBAIKGJg2IigBAGtNfBk0AGlSQxgEoovMvQADo8lZYjas/H0f8ADACMsy2ZDiwAMsGkKWtHWW2PwNa4gBw5J278d6RcDFIAMOkQuAAYaKRqNKz7LGAax9cvg6KqV4Qk2lKe1beJ6JozRkIq6hFc2k2/NgB14JNWs/5OVjarCreo/wBsRPBQe5Lwy+AAd7JXj+VQxGGcac3F5qMnnyXIp6OneK8EAEmMnjpMrcbts4GeAAac2WJr66tJ+IwM5N8XrEAAZegCAAqImAEWI3AAI6af/9k="
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80"
                         alt="Chan Dara Profile">
                 </div>
             </div>
@@ -821,8 +866,7 @@
                 <div>
                     <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">About Me</h2>
                     <p style="color: #cbd5e1; margin-bottom: 1.5rem;">
-                        I am a dedicated software developer with a background in Computer Science. My journey started
-                        with
+                        I am a dedicated software developer with a background in Computer Science. My journey started with
                         simple HTML pages and has grown into full-stack application development.
                         <br><br>
                         I love solving complex problems and turning ideas into reality using code. Whether it's a simple
@@ -1065,8 +1109,21 @@
                 <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
                     alt="Coding Setup">
             </a>
-
-
+            <a href="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                    alt="Graphic Design">
+            </a>
+            <a href="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"
+                class="gallery-item item-tall">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"
+                    alt="Project Screenshot">
+            </a>
+            <a href="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                class="gallery-item item-wide">
+                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                    alt="Team Collaboration">
+            </a>
         </div>
     </section>
 
