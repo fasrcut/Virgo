@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Taylor Sweet - Pro Developer</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,11 +35,15 @@
             scroll-behavior: smooth;
         }
 
-        body {
+        /* --- FIX SCROLLING ISSUE HERE --- */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden; /* បិទការ Scroll ឆ្វេងស្តាំដាច់ខាត */
             background-color: var(--bg-dark);
             color: var(--text-white);
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            position: relative;
         }
 
         h1, h2, h3, h4, .logo {
@@ -167,6 +171,21 @@
             cursor: pointer;
         }
 
+        /* --- SECTIONS GENERAL --- */
+        section { 
+            padding: 100px 10%; 
+            width: 100%;
+            overflow-x: hidden; /* Essential to stop animation overflow */
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-align: center;
+            font-weight: 700;
+        }
+        .section-title span { color: var(--primary); }
+
         /* --- HERO SECTION --- */
         .hero {
             min-height: 100vh;
@@ -258,16 +277,6 @@
             transition: 0.5s;
         }
         .image-card:hover img { transform: scale(1.05); }
-
-        /* --- SECTIONS --- */
-        section { padding: 100px 10%; }
-        .section-title {
-            font-size: 3rem;
-            margin-bottom: 60px;
-            text-align: center;
-            font-weight: 700;
-        }
-        .section-title span { color: var(--primary); }
 
         /* --- ABOUT --- */
         .about-container {
@@ -373,12 +382,23 @@
         .socials a:hover { background: var(--primary); }
 
         /* =========================================
-           RESPONSIVE DESIGN (ALL PHONES FIX)
+           RESPONSIVE DESIGN (SCROLL FIX & LAYOUT)
            ========================================= */
         @media (max-width: 991px) {
             
+            /* Prevent Horizontal Scroll specifically on Mobile */
+            html, body {
+                width: 100%;
+                overflow-x: hidden;
+                position: relative;
+            }
+
             /* Reset Section Padding */
-            section { padding: 60px 20px; }
+            section { 
+                padding: 60px 20px; 
+                width: 100%;
+                overflow-x: hidden;
+            }
             
             /* Header Mobile */
             header { width: 95%; padding: 12px 20px; }
@@ -395,69 +415,55 @@
 
             /* --- HERO SECTION FIX --- */
             .hero { 
-                /* This calculates the exact viewport height minus the browser bar */
-                height: 100dvh; 
+                height: 100dvh; /* Fit exact viewport height */
                 min-height: 100dvh; 
-                
-                /* Adjust Padding to fit content nicely */
                 padding-top: 75px; 
                 padding-bottom: 20px; 
-                
                 display: flex;
                 flex-direction: column;
-                justify-content: center; /* Center Vertical */
+                justify-content: center; 
                 align-items: center;
-                overflow: hidden; /* Prevent scrolling */
+                overflow: hidden;
             }
 
             .hero-container { 
                 display: flex; 
                 flex-direction: column; 
-                gap: 10px; /* Minimal gap */
+                gap: 10px; 
                 width: 100%;
+                max-width: 100%;
                 height: 100%;
                 justify-content: center;
+                overflow-x: hidden; /* Prevent inner overflow */
             }
             
-            /* 1. Responsive Image Size */
             .image-card { 
                 order: 1; 
-                /* Height relative to screen height (max 25%) */
                 height: 25vh; 
-                width: auto; /* Auto width to keep aspect ratio */
+                width: auto; 
                 aspect-ratio: 4/5;
                 margin: 0 auto 10px;
                 border-radius: 100px 100px 20px 20px; 
+                max-width: 100%; /* Ensure image doesn't break width */
             }
 
-            /* 2. Text Content */
             .hero-text { 
                 order: 2; 
                 text-align: center;
+                width: 100%;
+                padding: 0 10px;
             }
             
-            .hero-text h3 { font-size: 0.9rem; margin-bottom: 5px; letter-spacing: 1px; }
-            
-            .hero-text h1 { 
-                font-size: 2.2rem; /* Smaller font */
-                line-height: 1.1;
-                margin-bottom: 8px; 
-            }
-            
-            .hero-text .typing-container { 
-                justify-content: center; 
-                font-size: 1.1rem; 
-                margin-bottom: 10px; 
-            }
-            
-            /* Truncate Text if screen is too small */
+            .hero-text h3 { font-size: 0.9rem; margin-bottom: 5px; }
+            .hero-text h1 { font-size: 2.2rem; line-height: 1.1; margin-bottom: 8px; }
+            .hero-text .typing-container { justify-content: center; font-size: 1.1rem; margin-bottom: 10px; }
             .hero-text p { 
                 margin: 0 auto 15px; 
                 font-size: 0.85rem; 
                 line-height: 1.4;
-                max-width: 90%; 
+                max-width: 95%; 
                 display: -webkit-box;
-                -webkit-line-clamp: 3; /* Limit to 3 lines */
+                -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
@@ -465,7 +471,6 @@
             .cta-group { justify-content: center; }
             .btn-primary { padding: 10px 25px; font-size: 0.9rem; }
 
-            /* Go Back Button - Fixed at bottom */
             .go-back-btn {
                 top: auto;
                 bottom: 20px;
@@ -477,17 +482,14 @@
                 font-size: 0.8rem;
             }
             
-            /* General Mobile Layouts */
             .about-container, .timeline-grid, .skills-wrapper { grid-template-columns: 1fr; gap: 30px; }
             .stats-grid { gap: 15px; }
             .section-title { font-size: 2rem; margin-bottom: 30px; }
         }
 
-        /* Extra Small Phones (iPhone SE, Fold) */
         @media (max-width: 380px) {
             .hero-text h1 { font-size: 1.8rem; }
             .image-card { height: 22vh; }
-            .hero-text p { -webkit-line-clamp: 2; } /* Show only 2 lines on very small screens */
         }
     </style>
 </head>
