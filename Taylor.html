@@ -373,15 +373,15 @@
         .socials a:hover { background: var(--primary); }
 
         /* =========================================
-           RESPONSIVE DESIGN (FIX FOR ALL PHONES)
+           RESPONSIVE DESIGN (ALL PHONES FIX)
            ========================================= */
         @media (max-width: 991px) {
             
             /* Reset Section Padding */
             section { padding: 60px 20px; }
             
-            /* Navigation (Hamburger Menu) */
-            header { width: 95%; padding: 15px 20px; }
+            /* Header Mobile */
+            header { width: 95%; padding: 12px 20px; }
             .menu-icon { display: block; }
             .navbar {
                 position: absolute; top: 100%; left: 0; width: 100%;
@@ -393,70 +393,79 @@
             .navbar.active { display: flex; }
             .btn-nav { display: none; }
 
-            /* --- KEY FIXES FOR MOBILE HERO --- */
+            /* --- HERO SECTION FIX --- */
             .hero { 
-                padding-top: 85px; /* Reduced from 140px to fit better */
-                padding-bottom: 20px;
-                height: auto;
-                min-height: 100dvh; /* Dynamic Viewport Height for modern phones */
+                /* This calculates the exact viewport height minus the browser bar */
+                height: 100dvh; 
+                min-height: 100dvh; 
+                
+                /* Adjust Padding to fit content nicely */
+                padding-top: 75px; 
+                padding-bottom: 20px; 
+                
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* Center Vertical */
                 align-items: center;
+                overflow: hidden; /* Prevent scrolling */
             }
 
             .hero-container { 
                 display: flex; 
                 flex-direction: column; 
-                gap: 15px; /* Tight gap */
+                gap: 10px; /* Minimal gap */
                 width: 100%;
+                height: 100%;
+                justify-content: center;
             }
             
-            /* 1. Compact Image on Top */
+            /* 1. Responsive Image Size */
             .image-card { 
                 order: 1; 
-                width: 200px; /* FIXED SIZE that fits all phones */
-                height: 250px; 
-                margin: 0 auto;
-                border-radius: 100px 100px 20px 20px; /* Adjust radius for smaller size */
+                /* Height relative to screen height (max 25%) */
+                height: 25vh; 
+                width: auto; /* Auto width to keep aspect ratio */
+                aspect-ratio: 4/5;
+                margin: 0 auto 10px;
+                border-radius: 100px 100px 20px 20px; 
             }
 
-            /* 2. Text Below - Compact */
+            /* 2. Text Content */
             .hero-text { 
                 order: 2; 
                 text-align: center;
-                margin-top: 0;
             }
             
-            .hero-text h3 { font-size: 1rem; margin-bottom: 5px; }
+            .hero-text h3 { font-size: 0.9rem; margin-bottom: 5px; letter-spacing: 1px; }
             
             .hero-text h1 { 
-                font-size: 2.5rem; 
+                font-size: 2.2rem; /* Smaller font */
                 line-height: 1.1;
-                margin-bottom: 10px; 
+                margin-bottom: 8px; 
             }
             
             .hero-text .typing-container { 
                 justify-content: center; 
-                font-size: 1.2rem; 
-                margin-bottom: 15px; 
+                font-size: 1.1rem; 
+                margin-bottom: 10px; 
             }
             
+            /* Truncate Text if screen is too small */
             .hero-text p { 
-                margin: 0 auto 20px; 
-                font-size: 0.9rem; 
-                line-height: 1.5;
-                max-width: 90%; /* Ensure text doesn't hit edges */
+                margin: 0 auto 15px; 
+                font-size: 0.85rem; 
+                line-height: 1.4;
+                max-width: 90%; 
+                display: -webkit-box;
+                -webkit-line-clamp: 3; /* Limit to 3 lines */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
             
             .cta-group { justify-content: center; }
-            .btn-primary { padding: 12px 30px; font-size: 0.9rem; }
+            .btn-primary { padding: 10px 25px; font-size: 0.9rem; }
 
-            /* Other Sections */
-            .about-container, .timeline-grid, .skills-wrapper { grid-template-columns: 1fr; gap: 30px; }
-            .stats-grid { gap: 15px; }
-            .stat-box { padding: 15px; }
-            .stat-box h2 { font-size: 2rem; }
-            .section-title { font-size: 2rem; margin-bottom: 30px; }
-
-            /* Go Back Button - Bottom Center */
+            /* Go Back Button - Fixed at bottom */
             .go-back-btn {
                 top: auto;
                 bottom: 20px;
@@ -464,13 +473,21 @@
                 transform: translateX(-50%);
                 width: max-content;
                 background: var(--primary);
+                padding: 10px 20px;
+                font-size: 0.8rem;
             }
+            
+            /* General Mobile Layouts */
+            .about-container, .timeline-grid, .skills-wrapper { grid-template-columns: 1fr; gap: 30px; }
+            .stats-grid { gap: 15px; }
+            .section-title { font-size: 2rem; margin-bottom: 30px; }
         }
 
-        /* Extra Small Phones (iPhone SE, Fold Phones) */
+        /* Extra Small Phones (iPhone SE, Fold) */
         @media (max-width: 380px) {
-            .hero-text h1 { font-size: 2.2rem; }
-            .image-card { width: 180px; height: 220px; }
+            .hero-text h1 { font-size: 1.8rem; }
+            .image-card { height: 22vh; }
+            .hero-text p { -webkit-line-clamp: 2; } /* Show only 2 lines on very small screens */
         }
     </style>
 </head>
