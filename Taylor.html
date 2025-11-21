@@ -17,13 +17,14 @@
         :root {
             --bg-dark: #0a0a0a;
             --text-white: #ffffff;
-            --text-grey: #9ca3af;
+            --text-grey: #d1d5db; /* Made lighter for better readability */
             --primary: #ff4d4d;
             --accent: #ff9f43;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-hover: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-hover: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.15);
             --gradient-text: linear-gradient(45deg, #ff4d4d, #ff9f43);
+            --nav-glass: rgba(20, 20, 20, 0.6); /* Darker glass for Nav */
         }
 
         * {
@@ -35,12 +36,13 @@
             scroll-behavior: smooth;
         }
 
-        /* --- FIX SCROLLING ISSUE & BACKGROUND VISIBILITY --- */
         html, body {
             width: 100%;
             max-width: 100%;
-            overflow-x: hidden; /* បិទការ Scroll ឆ្វេងស្តាំ */
+            overflow-x: hidden;
             background-color: var(--bg-dark);
+            /* Added a subtle gradient to the whole body background */
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a, #0a0a0a); 
             color: var(--text-white);
             font-family: 'Inter', sans-serif;
             position: relative;
@@ -78,37 +80,36 @@
             box-shadow: 0 10px 20px rgba(255, 77, 77, 0.4);
         }
 
-        /* --- ANIMATED BACKGROUND SHAPES (RESTORED) --- */
+        /* --- ANIMATED BACKGROUND SHAPES (Made brighter) --- */
         .background-shapes {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Updated z-index to 0 to make sure it shows above the body black background */
-            z-index: 0; 
+            z-index: 0;
             overflow: hidden;
             pointer-events: none;
         }
 
         .shape {
             position: absolute;
-            filter: blur(120px);
-            opacity: 0.4;
+            filter: blur(90px); /* Reduced blur slightly for more color pop */
+            opacity: 0.5; /* Increased opacity */
             border-radius: 50%;
             animation: floatShape 10s infinite alternate;
         }
 
-        .shape-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: var(--primary); }
-        .shape-2 { bottom: 10%; right: -5%; width: 400px; height: 400px; background: var(--accent); animation-delay: -5s; }
-        .shape-3 { top: 40%; left: 40%; width: 300px; height: 300px; background: #7d3cff; opacity: 0.2; animation-duration: 15s; }
+        .shape-1 { top: -5%; left: -5%; width: 600px; height: 600px; background: radial-gradient(circle, var(--primary), transparent); }
+        .shape-2 { bottom: 0%; right: -10%; width: 500px; height: 500px; background: radial-gradient(circle, var(--accent), transparent); animation-delay: -5s; }
+        .shape-3 { top: 40%; left: 30%; width: 400px; height: 400px; background: radial-gradient(circle, #7d3cff, transparent); opacity: 0.3; animation-duration: 15s; }
 
         @keyframes floatShape {
             0% { transform: translate(0, 0) rotate(0deg); }
             100% { transform: translate(50px, 50px) rotate(20deg); }
         }
 
-        /* --- HEADER & NAV --- */
+        /* --- FLOATING GLASS NAVBAR --- */
         header {
             position: fixed;
             top: 20px;
@@ -120,11 +121,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /* z-index must be higher than background (0) */
-            z-index: 1000; 
-            background: rgba(10, 10, 10, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
+            z-index: 1000;
+            
+            /* Glass Effect Enhanced */
+            background: var(--nav-glass);
+            backdrop-filter: blur(25px); /* Stronger Blur */
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Drop shadow for "floating" look */
             border-radius: 50px;
             transition: 0.3s;
         }
@@ -165,7 +169,6 @@
         }
         .btn-nav:hover { background: var(--primary); color: white; }
 
-        /* Menu Icon for Mobile */
         .menu-icon {
             display: none;
             color: white;
@@ -178,7 +181,6 @@
             padding: 100px 10%; 
             width: 100%;
             overflow-x: hidden; 
-            /* Important: Position relative and z-index 2 ensures text is ABOVE the background shapes */
             position: relative;
             z-index: 2;
         }
@@ -263,6 +265,13 @@
         }
         .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255, 77, 77, 0.5); }
 
+        /* --- IMAGE FLOATING ANIMATION --- */
+        @keyframes floatImage {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); } /* Floats up 20px */
+            100% { transform: translateY(0); }
+        }
+
         .image-card {
             position: relative;
             width: 400px;
@@ -274,14 +283,15 @@
             z-index: 2;
             transition: 0.5s;
             margin: 0 auto; 
+            /* Add Animation Here */
+            animation: floatImage 4s ease-in-out infinite;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Deep shadow */
         }
         .image-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
         }
-        .image-card:hover img { transform: scale(1.05); }
 
         /* --- ABOUT --- */
         .about-container {
@@ -394,26 +404,15 @@
         .socials a:hover { background: var(--primary); }
 
         /* =========================================
-           RESPONSIVE DESIGN (ALL PHONES FIX)
+           RESPONSIVE DESIGN (BIGGER MOBILE + COLOR FIX)
            ========================================= */
         @media (max-width: 991px) {
             
-            /* Prevent Horizontal Scroll specifically on Mobile */
-            html, body {
-                width: 100%;
-                overflow-x: hidden;
-                position: relative;
-            }
-
-            /* Reset Section Padding */
-            section { 
-                padding: 60px 20px; 
-                width: 100%;
-                overflow-x: hidden;
-            }
+            html, body { width: 100%; overflow-x: hidden; position: relative; }
+            section { padding: 60px 25px; /* Increased padding */ width: 100%; overflow-x: hidden; }
             
             /* Header Mobile */
-            header { width: 95%; padding: 12px 20px; }
+            header { width: 90%; padding: 15px 25px; }
             .menu-icon { display: block; }
             .navbar {
                 position: absolute; top: 100%; left: 0; width: 100%;
@@ -425,11 +424,11 @@
             .navbar.active { display: flex; }
             .btn-nav { display: none; }
 
-            /* --- HERO SECTION FIX --- */
+            /* --- HERO SECTION BIGGER --- */
             .hero { 
                 height: 100dvh; 
                 min-height: 100dvh; 
-                padding-top: 75px; 
+                padding-top: 90px; 
                 padding-bottom: 20px; 
                 display: flex;
                 flex-direction: column;
@@ -441,68 +440,68 @@
             .hero-container { 
                 display: flex; 
                 flex-direction: column; 
-                gap: 10px; 
+                gap: 25px; /* Increased Gap */
                 width: 100%;
-                max-width: 100%;
                 height: 100%;
                 justify-content: center;
-                overflow-x: hidden; 
             }
             
-            /* Compact Image Size */
+            /* 1. Bigger Image */
             .image-card { 
                 order: 1; 
-                height: 25vh; 
-                width: auto; 
-                aspect-ratio: 4/5;
-                margin: 0 auto 10px;
-                border-radius: 100px 100px 20px 20px; 
-                max-width: 100%; 
+                /* Increased size */
+                height: 320px; 
+                width: 260px; 
+                margin: 0 auto 15px;
+                border-radius: 120px 120px 25px 25px; 
             }
 
-            .hero-text { 
-                order: 2; 
-                text-align: center;
-                width: 100%;
-                padding: 0 10px;
+            /* 2. Bigger Text */
+            .hero-text { order: 2; text-align: center; width: 100%; padding: 0 15px; }
+            
+            .hero-text h3 { 
+                font-size: 1rem; 
+                margin-bottom: 10px; 
+                letter-spacing: 2px; 
             }
             
-            .hero-text h3 { font-size: 0.9rem; margin-bottom: 5px; }
-            .hero-text h1 { font-size: 2.2rem; line-height: 1.1; margin-bottom: 8px; }
-            .hero-text .typing-container { justify-content: center; font-size: 1.1rem; margin-bottom: 10px; }
+            .hero-text h1 { 
+                font-size: 3.2rem; /* Much Bigger Font */
+                line-height: 1.1; 
+                margin-bottom: 15px; 
+            }
+            
+            .hero-text .typing-container { 
+                justify-content: center; 
+                font-size: 1.4rem; /* Bigger Typing Text */
+                margin-bottom: 15px; 
+            }
+            
             .hero-text p { 
-                margin: 0 auto 15px; 
-                font-size: 0.85rem; 
-                line-height: 1.4;
+                margin: 0 auto 25px; 
+                font-size: 1rem; /* Readable size */
+                line-height: 1.6;
                 max-width: 95%; 
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
+                display: block; /* Show full text */
+                -webkit-line-clamp: unset;
             }
             
             .cta-group { justify-content: center; }
-            .btn-primary { padding: 10px 25px; font-size: 0.9rem; }
+            .btn-primary { 
+                padding: 15px 35px; /* Bigger Button */
+                font-size: 1rem; 
+            }
 
             .go-back-btn {
-                top: auto;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: max-content;
-                background: var(--primary);
-                padding: 10px 20px;
-                font-size: 0.8rem;
+                bottom: 30px;
+                padding: 12px 30px;
+                font-size: 1rem;
             }
-            
-            .about-container, .timeline-grid, .skills-wrapper { grid-template-columns: 1fr; gap: 30px; }
-            .stats-grid { gap: 15px; }
-            .section-title { font-size: 2rem; margin-bottom: 30px; }
         }
 
         @media (max-width: 380px) {
-            .hero-text h1 { font-size: 1.8rem; }
-            .image-card { height: 22vh; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .image-card { height: 280px; width: 230px; }
         }
     </style>
 </head>
