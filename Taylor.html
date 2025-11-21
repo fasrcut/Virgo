@@ -35,11 +35,11 @@
             scroll-behavior: smooth;
         }
 
-        /* --- FIX SCROLLING ISSUE HERE --- */
+        /* --- FIX SCROLLING ISSUE & BACKGROUND VISIBILITY --- */
         html, body {
             width: 100%;
             max-width: 100%;
-            overflow-x: hidden; /* បិទការ Scroll ឆ្វេងស្តាំដាច់ខាត */
+            overflow-x: hidden; /* បិទការ Scroll ឆ្វេងស្តាំ */
             background-color: var(--bg-dark);
             color: var(--text-white);
             font-family: 'Inter', sans-serif;
@@ -78,14 +78,15 @@
             box-shadow: 0 10px 20px rgba(255, 77, 77, 0.4);
         }
 
-        /* --- ANIMATED BACKGROUND SHAPES --- */
+        /* --- ANIMATED BACKGROUND SHAPES (RESTORED) --- */
         .background-shapes {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            /* Updated z-index to 0 to make sure it shows above the body black background */
+            z-index: 0; 
             overflow: hidden;
             pointer-events: none;
         }
@@ -119,7 +120,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
+            /* z-index must be higher than background (0) */
+            z-index: 1000; 
             background: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
@@ -175,7 +177,10 @@
         section { 
             padding: 100px 10%; 
             width: 100%;
-            overflow-x: hidden; /* Essential to stop animation overflow */
+            overflow-x: hidden; 
+            /* Important: Position relative and z-index 2 ensures text is ABOVE the background shapes */
+            position: relative;
+            z-index: 2;
         }
 
         .section-title {
@@ -372,7 +377,14 @@
         .client-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
 
         /* --- FOOTER --- */
-        footer { padding: 50px 10%; background: #050505; text-align: center; border-top: 1px solid var(--glass-border); }
+        footer { 
+            padding: 50px 10%; 
+            background: #050505; 
+            text-align: center; 
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
+        }
         .socials { margin-bottom: 20px; }
         .socials a {
             display: inline-flex; width: 40px; height: 40px; border-radius: 50%;
@@ -382,7 +394,7 @@
         .socials a:hover { background: var(--primary); }
 
         /* =========================================
-           RESPONSIVE DESIGN (SCROLL FIX & LAYOUT)
+           RESPONSIVE DESIGN (ALL PHONES FIX)
            ========================================= */
         @media (max-width: 991px) {
             
@@ -415,7 +427,7 @@
 
             /* --- HERO SECTION FIX --- */
             .hero { 
-                height: 100dvh; /* Fit exact viewport height */
+                height: 100dvh; 
                 min-height: 100dvh; 
                 padding-top: 75px; 
                 padding-bottom: 20px; 
@@ -434,9 +446,10 @@
                 max-width: 100%;
                 height: 100%;
                 justify-content: center;
-                overflow-x: hidden; /* Prevent inner overflow */
+                overflow-x: hidden; 
             }
             
+            /* Compact Image Size */
             .image-card { 
                 order: 1; 
                 height: 25vh; 
@@ -444,7 +457,7 @@
                 aspect-ratio: 4/5;
                 margin: 0 auto 10px;
                 border-radius: 100px 100px 20px 20px; 
-                max-width: 100%; /* Ensure image doesn't break width */
+                max-width: 100%; 
             }
 
             .hero-text { 
