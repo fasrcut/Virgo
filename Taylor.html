@@ -56,16 +56,11 @@
         .go-back-btn {
             position: fixed;
             top: 30px;
-            /* ចម្ងាយពីលើ */
             left: 30px;
-            /* ចម្ងាយពីឆ្វេង */
             z-index: 10000;
-            /* នៅលើគេបង្អស់ */
             padding: 12px 25px;
             background: rgba(255, 255, 255, 0.1);
-            /* ផ្ទៃថ្លា */
             backdrop-filter: blur(15px);
-            /* ធ្វើឲ្យព្រិលខាងក្រោយ */
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             color: white;
@@ -82,7 +77,6 @@
             background: var(--primary);
             border-color: var(--primary);
             transform: translateY(3px);
-            /* ចុះក្រោមបន្តិចពេល Hover */
             box-shadow: 0 10px 20px rgba(255, 77, 77, 0.4);
         }
 
@@ -602,25 +596,67 @@
             background: var(--primary);
         }
 
-        /* Responsive */
+        /* --------------------------------------- */
+        /* --- RESPONSIVE (MOBILE TWEAKS) --- */
+        /* --------------------------------------- */
         @media (max-width: 991px) {
 
-            .hero-container,
+            /* Layout & Containers */
+            .hero {
+                padding-top: 100px; /* ទម្លាក់ចុះក្រោម Menu Bar បន្តិច */
+                align-items: flex-start; /* ដាក់វាឱ្យនៅជិតខាងលើ ជាជាងកណ្តាល */
+            }
+
+            .hero-container {
+                /* ប្តូរមកប្រើ Grid 2 Columns វិញ: ឆ្វេង(អក្សរ) ស្តាំ(រូប) */
+                grid-template-columns: 1.5fr 1fr; 
+                gap: 10px;
+                align-items: start;
+            }
+
             .about-container,
             .timeline-grid,
             .skills-wrapper {
                 grid-template-columns: 1fr;
             }
 
+            /* Text Adjustments (ឱ្យតូចជាងមុន ដើម្បីដាក់គៀនរូបបាន) */
+            .hero-text {
+                padding-right: 5px;
+            }
+
+            .hero-text h3 {
+                font-size: 0.9rem;
+                margin-top: 10px; /* គម្លាតពីលើ */
+            }
+
             .hero-text h1 {
-                font-size: 3.5rem;
+                font-size: 2.2rem; /* បន្ថយទំហំចំណងជើង */
+                margin-bottom: 10px;
             }
 
+            .typing-container {
+                font-size: 1rem;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
+            }
+
+            .hero-text p {
+                font-size: 0.8rem; /* បន្ថយទំហំអក្សរពិពណ៌នា */
+                line-height: 1.4;
+                margin-bottom: 20px;
+            }
+
+            /* Image Adjustments (ដាក់នៅខាងស្តាំ និងតូច) */
+            .image-card {
+                display: block; /* បង្ហាញរូបភាពវិញ */
+                width: 100%;
+                height: 200px; /* កំណត់កំពស់ឱ្យតូច */
+                border-radius: 80px 80px 10px 10px; /* កែ Border radius ឱ្យសម */
+            }
+
+            /* Navbar & Buttons */
             .navbar {
-                display: none;
-            }
-
-            .hero-img-wrapper {
                 display: none;
             }
 
@@ -631,7 +667,10 @@
                 font-size: 0.8rem;
             }
 
-            /* Smaller on mobile */
+            .btn-primary {
+                padding: 10px 20px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
