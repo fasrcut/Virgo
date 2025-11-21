@@ -50,24 +50,17 @@
             overflow-x: hidden;
             position: relative;
             cursor: default;
+            /* Hide scrollbar for Firefox */
+            scrollbar-width: none;
+            /* Hide scrollbar for IE and Edge */
+            -ms-overflow-style: none;
         }
 
-        /* --- SCROLLBAR --- */
+        /* --- HIDE SCROLLBAR (Chrome, Safari, Opera) --- */
         ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
+            display: none;
+            width: 0px;
+            background: transparent;
         }
 
         /* --- BACKGROUND --- */
@@ -533,7 +526,7 @@
 
             border-radius: 60px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.1rem;
             display: inline-flex;
             backdrop-filter: blur(10px);
             position: relative;
@@ -585,8 +578,8 @@
         }
 
         /* ==========================================
-           MOBILE OPTIMIZATION (Display Phone Only)
-           ========================================== */
+            MOBILE OPTIMIZATION (Display Phone Only)
+            ========================================== */
         @media (max-width: 768px) {
 
             /* 1. HIDE HERO SECTION ENTIRELY */
@@ -632,11 +625,13 @@
             }
 
             .contact-cards-row {
+
                 flex-direction: column;
                 gap: 1.5rem;
             }
 
             .contact-action-card {
+
                 min-width: 100%;
                 padding: 2rem;
             }
@@ -721,15 +716,19 @@
                         <div style={{ flex: 1 }}>
                             <span className="glass-pill">✨ OPEN FOR OPPORTUNITIES</span>
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="hero-text">
-                                <h1>High-End <br /><span className="gradient-text">Digital Solutions.</span></h1>
+                                <h1>Your Dream <br /><span className="gradient-text">Portfolio</span></h1>
                             </motion.div>
                             <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginBottom: '2.5rem', lineHeight: '1.7', maxWidth: '550px' }}>
-                                I engineer high-performance web applications with React & Laravel.
-                                Transforming complex backend logic into seamless, liquid user experiences.
+                                Are you looking to stand out in the job market? A standard resume is often not enough. I specialize in building stunning Personal Portfolio Websites that showcase your skills and achievements in the best light.
+                            </p>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginBottom: '2.5rem', lineHeight: '1.7', maxWidth: '550px' }}>
+                                We have Professional Portfolio & CV Services.
                             </p>
                             <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-start' }}>
-                                <a href="#contact"><button className="btn-primary">Start Project</button></a>
-                                <a href="#showcase"><button className="btn-glass-nav">My Work</button></a>
+                                <a href="#contact"><button className="btn-primary">Contact Me</button></a>
+                                <a href="#showcase"><button className="btn-glass-nav">Portfolios</button></a>
+                                <a href="https://www.cvhub.lol/"><button className="btn-glass-nav">CV Temple Web</button></a>
+
                             </div>
                         </div>
 
@@ -765,9 +764,10 @@
 
                     <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="hero-stats-bar">
                         {[
-                            { num: '5+', label: 'Years Experience' },
+
                             { num: '100%', label: 'Client Satisfaction' },
-                            { num: '50+', label: 'Projects Shipped' },
+                            { num: 'Code', label: 'Make by' },
+                            { num: '20+', label: 'Projects Shipped' },
                             { num: '24/7', label: 'Server Uptime' },
                         ].map((stat, i) => (
                             <div key={i} style={{ textAlign: 'center', flex: 1, minWidth: '150px' }}>
@@ -776,7 +776,7 @@
                             </div>
                         ))}
                     </motion.div>
-                </section>
+                </section >
             );
         }
 
@@ -859,7 +859,7 @@
         // --- CONTACT ---
         const Contact = () => (
             <section id="contact" className="section-padding">
-                <div className="glass-panel contact-wrapper-centered" style={{ padding: '4rem 2rem' }}>
+                <div className="glass-panel contact-wrapper-centered" style={{ padding: '3rem 2rem' }}>
                     <h2 className="section-title">Let's Work Together</h2>
                     <p className="section-subtitle" style={{ marginBottom: '1rem' }}>
                         Have a project in mind? I'm available for freelance work.<br />
@@ -906,9 +906,7 @@
                     <HeroSection />
                     <Portfolio />
                     <Contact />
-                    <footer style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)', marginTop: '4rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                        &copy; 2025 VIRGO.PRO. All rights reserved.
-                    </footer>
+
                 </div>
             );
         }
