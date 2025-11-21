@@ -457,62 +457,46 @@
            MOBILE OPTIMIZATION (UPDATED)
            ========================================== */
         @media (max-width: 768px) {
+            /* 1. COLLAPSE HERO SECTION COMPLETELY */
             .hero-wrapper {
-                display: flex !important;
-                padding-top: 120px;
-                padding-bottom: 0px !important; /* Removed bottom padding for tighter spacing */
-                min-height: auto;
+                /* Reduce height to almost nothing since content is gone */
+                min-height: 0 !important;
+                height: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: hidden;
             }
 
             .hero-top-row {
-                flex-direction: column;
-                margin-bottom: 0.5rem !important; /* Minimum margin */
-                text-align: center;
-                gap: 1rem;
+                display: none !important; /* Hide the layout container */
             }
 
-            /* 1. STRICTLY ONE LINE TEXT (UPDATED) */
-            .hero-text h1 {
-                font-size: 1.5rem !important; /* Reduced font size to fit one line */
-                line-height: 1;
-                margin-bottom: 0.5rem;
-                white-space: nowrap !important; /* Force one line */
-                width: 100%;
-                overflow: hidden; /* Safety */
-            }
-            
-            /* 2. TIGHTER SPACING FOR PARAGRAPH */
-            .hero-wrapper p {
-                font-size: 0.9rem !important;
-                line-height: 1.4;
-                margin-bottom: 0.5rem !important; /* Reduced margin bottom */
+            /* 2. HIDE SPECIFIC TEXT AND ELEMENTS */
+            .hero-text,          /* "Your Dream Portfolio" */
+            .hero-wrapper p,     /* All descriptions */
+            .glass-pill,         /* "Open for opportunities" */
+            .hero-buttons-container, /* The buttons */
+            .hero-right-col,     /* The 3D Image */
+            .hero-stats-bar {    /* Stats */
+                display: none !important;
             }
 
-            /* 3. PULL UP "SELECTED PORTFOLIOS" */
+            /* 3. ADJUST SHOWCASE SPACING */
+            /* Pull "Selected Portfolios" up to sit under the Navbar */
             #showcase {
-                padding-top: 0 !important; /* Remove top padding */
+                padding-top: 110px !important; /* Space for fixed navbar + small gap */
                 margin-top: 0 !important;
             }
 
             /* 4. SMALLER SECTION TITLE */
             .section-title {
-                font-size: 1.4rem !important; /* Smaller size */
+                font-size: 1.4rem !important; 
                 margin-bottom: 1rem !important;
-            }
-
-            /* HIDE THE OLD BUTTON ROW ON MOBILE (MOVED TO DROPDOWN) */
-            .hero-buttons-container {
-                display: none !important;
             }
 
             /* SHOW THE DROPDOWN TRIGGER */
             .mobile-more-wrapper {
                 display: block !important;
-            }
-
-            /* HIDE ELEMENTS */
-            .glass-pill, .hero-right-col, .hero-stats-bar {
-                display: none !important;
             }
 
             /* NAVBAR LAYOUT FOR PHONE */
