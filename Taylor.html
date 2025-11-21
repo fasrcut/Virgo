@@ -49,20 +49,20 @@
         /* --- GO BACK BUTTON --- */
         .go-back-btn {
             position: fixed;
-            top: 30px;
-            left: 30px;
+            top: 20px;
+            left: 20px;
             z-index: 10000;
-            padding: 12px 25px;
+            padding: 10px 20px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             color: white;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
@@ -87,7 +87,7 @@
 
         .shape {
             position: absolute;
-            filter: blur(120px);
+            filter: blur(100px);
             opacity: 0.4;
             border-radius: 50%;
             animation: floatShape 10s infinite alternate;
@@ -102,7 +102,7 @@
             100% { transform: translate(50px, 50px) rotate(20deg); }
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR (Desktop Only) --- */
         header {
             position: fixed;
             top: 20px;
@@ -193,7 +193,7 @@
         .image-card:hover img { transform: scale(1.05); }
 
         /* --- GENERAL SECTIONS --- */
-        section { padding: 100px 10%; } /* Default Desktop Padding */
+        section { padding: 100px 10%; }
         .section-title { font-size: 3rem; margin-bottom: 60px; text-align: center; font-weight: 700; }
         .section-title span { color: var(--primary); }
 
@@ -211,7 +211,7 @@
         .stat-box h2 { font-size: 3rem; color: var(--primary); margin-bottom: 10px; }
         .stat-box p { color: var(--text-grey); }
 
-        /* --- SERVICES, TIMELINE, SKILLS (Simplified for brevity) --- */
+        /* --- SERVICES, TIMELINE, SKILLS, REVIEWS, FOOTER --- */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .service-card { background: var(--glass); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border); transition: 0.4s; }
         .service-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 20px; }
@@ -220,11 +220,14 @@
 
         .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
         .timeline-item { background: var(--glass); padding: 25px; border-radius: 15px; border-left: 4px solid var(--primary); margin-bottom: 25px; }
-        
+        .year { font-size: 0.9rem; color: var(--accent); font-weight: 600; margin-bottom: 10px; display: inline-block; }
+        .timeline-item h4 { font-size: 1.2rem; margin-bottom: 5px; }
+        .timeline-item span { font-size: 0.9rem; color: #ccc; display: block; margin-bottom: 15px; }
+        .timeline-item p { color: var(--text-grey); font-size: 0.95rem; line-height: 1.6; }
+
         .skills-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 15px; }
         .skill-tag { padding: 12px 25px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; color: var(--text-white); }
-        
         .lang-item { margin-bottom: 20px; }
         .lang-info { display: flex; justify-content: space-between; margin-bottom: 8px; }
         .progress-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden; }
@@ -232,93 +235,111 @@
 
         .references-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .ref-card { background: var(--glass); padding: 30px; border-radius: 20px; border: 1px solid var(--glass-border); position: relative; }
-        .client-info { display: flex; align-items: center; gap: 15px; margin-top: 20px; }
+        .ref-card i { font-size: 2rem; color: var(--glass-border); position: absolute; top: 20px; right: 20px; }
+        .ref-text { color: var(--text-grey); font-style: italic; line-height: 1.6; margin-bottom: 20px; }
+        .client-info { display: flex; align-items: center; gap: 15px; }
         .client-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
 
         footer { padding: 50px 10%; background: #050505; text-align: center; border-top: 1px solid var(--glass-border); }
-        .socials a { display: inline-flex; width: 40px; height: 40px; border-radius: 50%; background: var(--glass); color: var(--text-white); justify-content: center; align-items: center; margin: 0 10px; }
-
+        .socials { margin-bottom: 20px; }
+        .socials a { display: inline-flex; width: 40px; height: 40px; border-radius: 50%; background: var(--glass); color: var(--text-white); justify-content: center; align-items: center; margin: 0 10px; transition: 0.3s; }
+        .socials a:hover { background: var(--primary); }
 
         /* ========================================== */
-        /* === CSS សម្រាប់ទូរស័ព្ទ (MOBILE FIXES) === */
+        /* === MOBILE OPTIMIZATION (ALL PHONES) === */
         /* ========================================== */
         @media (max-width: 991px) {
-
-            /* 1. កាត់បន្ថយគម្លាតទូទៅ (Global Spacing) */
-            section {
-                padding: 40px 5%; /* បន្ថយពី 100px មក 40px ដើម្បីឱ្យផ្នែកនីមួយៗជិតគ្នា */
-            }
-
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 30px; /* បន្ថយគម្លាតក្រោម Title */
-            }
-
-            /* 2. កែសម្រួល Hero ឱ្យប៊ូតុង និង About Me ជិតគ្នា */
+            
+            /* 1. Global Mobile Reset */
+            body { overflow-x: hidden; }
+            section { padding: 30px 20px; } /* Standard padding for all sections */
+            .navbar { display: none; }
+            
+            /* 2. Hero Section Adjustment */
             .hero {
-                padding-top: 120px; /* ទុកកន្លែងខាងលើសម្រាប់ Menu Bar */
-                padding-bottom: 20px; /* បន្ថយគម្លាតខាងក្រោម */
-                min-height: auto; /* សំខាន់! ដកកម្ពស់ 100vh ចេញ ដើម្បីកុំឱ្យវាវែងពេក */
+                padding-top: 100px;  /* Clear space for top bar */
+                padding-bottom: 0;   /* Remove bottom padding so Next section is close */
+                min-height: auto;    /* Let content define height */
                 align-items: flex-start;
             }
 
             .hero-container {
-                grid-template-columns: 1.4fr 1fr; /* រក្សា Format ឆ្វេងស្តាំដដែល */
-                gap: 10px; /* បន្ថយគម្លាតរវាងអក្សរ និងរូបភាព */
-                align-items: start;
+                grid-template-columns: 1.3fr 1fr; /* Left Text, Right Image */
+                gap: 15px;
+                align-items: center; /* Center vertically relative to each other */
             }
 
-            /* តម្រូវអក្សរក្នុង Hero */
-            .hero-text h3 { font-size: 0.8rem; margin-bottom: 5px; }
-            .hero-text h1 { font-size: 2rem; margin-bottom: 10px; }
+            /* Text Resizing for Mobile */
+            .hero-text {
+                padding-right: 5px;
+                margin-bottom: 20px; /* Add slight space below text before section ends */
+            }
+            .hero-text h3 { font-size: 0.75rem; margin-bottom: 5px; letter-spacing: 1px; }
+            .hero-text h1 { font-size: 1.8rem; line-height: 1.1; margin-bottom: 8px; }
             
             .typing-container { 
-                font-size: 0.9rem; 
-                margin-bottom: 10px; 
-                flex-wrap: wrap;
+                font-size: 0.8rem; 
+                margin-bottom: 8px; 
+                display: flex;
+                flex-direction: column; /* Stack "I build" and "text" on very small screens if needed */
+                gap: 0;
             }
             
             .hero-text p {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 line-height: 1.4;
                 margin-bottom: 15px;
-                padding-right: 5px;
+                display: -webkit-box;
+                -webkit-line-clamp: 4; /* Limit text lines so it doesn't push too far */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
 
-            /* ប៊ូតុង Hire Me Now */
             .btn-primary {
-                padding: 10px 20px;
-                font-size: 0.8rem;
+                padding: 10px 25px;
+                font-size: 0.75rem;
             }
 
-            /* រូបភាព */
+            /* Image Sizing */
             .image-card {
                 width: 100%;
-                height: 180px; /* កម្ពស់រូបភាពតូចល្មម */
-                border-radius: 60px 60px 10px 10px;
+                height: auto; /* Auto height based on width */
+                aspect-ratio: 3/4; /* Fix aspect ratio so it looks like a portrait */
+                border-radius: 50px 50px 10px 10px;
             }
 
-            /* 3. តម្រូវផ្នែកផ្សេងៗឱ្យជិតគ្នា (Compact Layout) */
+            /* 3. Connecting Hero to About (The "Gap" Fix) */
+            #about {
+                padding-top: 10px; /* Minimal top padding */
+                margin-top: 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            /* 4. Stacking other sections */
             .about-container, 
             .timeline-grid, 
-            .skills-wrapper,
+            .skills-wrapper, 
             .stats-grid {
-                grid-template-columns: 1fr; /* មួយជួរៗ */
-                gap: 30px; /* បន្ថយគម្លាតរវាងប្រអប់ */
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
 
-            .about-info h3 { font-size: 1.5rem; }
-            
-            /* ប៊ូតុង Go Back */
-            .go-back-btn {
-                top: 15px;
-                left: 15px;
-                padding: 8px 15px;
-                font-size: 0.8rem;
-            }
+            /* Fix About Me Text */
+            .about-info h3 { font-size: 1.4rem; line-height: 1.3; }
+            .personal-details { grid-template-columns: 1fr; gap: 10px; }
+        }
 
-            /* លាក់ Navbar ធំ */
-            .navbar { display: none; }
+        /* Extra Small Phones (iPhone SE, Foldables) */
+        @media (max-width: 380px) {
+            .hero-text h1 { font-size: 1.5rem; }
+            .hero-text p { font-size: 0.65rem; -webkit-line-clamp: 3; }
+            .btn-primary { padding: 8px 15px; }
+            .image-card { border-radius: 30px 30px 10px 10px; }
         }
     </style>
 </head>
@@ -580,7 +601,7 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, offset: 50 }); // Reduced offset for mobile responsiveness
+        AOS.init({ duration: 800, offset: 40 });
 
         // Typewriter Logic
         const textElement = document.querySelector('.typewriter-text');
