@@ -50,7 +50,6 @@
             overflow-x: hidden;
             position: relative;
             cursor: default;
-            /* Hide scrollbar */
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
@@ -214,6 +213,42 @@
             transform: translateY(-2px);
         }
 
+        /* --- MOBILE DROPDOWN --- */
+        .mobile-more-wrapper {
+            position: relative;
+            display: none; /* Hidden by default on desktop */
+        }
+        .mobile-dropdown-menu {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            width: 200px;
+            background: rgba(20, 20, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 1001;
+        }
+        .mobile-dropdown-item {
+            color: white;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.2s;
+            display: block;
+        }
+        .mobile-dropdown-item:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--secondary);
+        }
+
         /* --- HERO --- */
         .hero-wrapper {
             min-height: 100vh;
@@ -362,7 +397,7 @@
             box-shadow: 0 0 20px var(--secondary);
         }
 
-        /* --- FILTER TABS (GLASS STYLE) --- */
+        /* --- FILTER TABS --- */
         .filter-tabs-container {
             display: inline-flex;
             position: relative;
@@ -422,10 +457,9 @@
            MOBILE OPTIMIZATION (UPDATED)
            ========================================== */
         @media (max-width: 768px) {
-            /* 1. COMPACT SPACING */
             .hero-wrapper {
                 display: flex !important;
-                padding-top: 100px; /* Reduced top spacing */
+                padding-top: 120px;
                 padding-bottom: 10px;
                 min-height: auto;
             }
@@ -434,48 +468,32 @@
                 flex-direction: column;
                 margin-bottom: 1rem;
                 text-align: center;
-                gap: 1rem; /* Tighter gap */
+                gap: 1rem;
             }
 
-            /* 2. TITLE: ONE LINE & SMALLER */
+            /* 1. STRICTLY ONE LINE TEXT */
             .hero-text h1 {
-                font-size: 2rem !important; /* Smaller font */
+                font-size: 1.7rem !important;
                 line-height: 1.1;
                 margin-bottom: 0.5rem;
-                white-space: nowrap; /* Force one line */
+                white-space: nowrap !important; /* Force one line */
+                width: 100%;
             }
             
-            /* 3. PARAGRAPH: CLOSER GAP */
             .hero-wrapper p {
                 font-size: 0.9rem !important;
                 line-height: 1.4;
                 margin-bottom: 1rem !important;
             }
 
-            /* 4. BUTTONS: ONE ROW, SMALLER */
-            .hero-top-row > div:first-child > div:last-child {
-                display: flex;
-                flex-direction: row !important; /* Force Row */
-                flex-wrap: nowrap !important;   /* No Wrapping */
-                justify-content: center !important;
-                gap: 8px !important;            /* Small Gap */
-                width: 100%;
+            /* 2. HIDE THE OLD BUTTON ROW ON MOBILE (MOVED TO DROPDOWN) */
+            .hero-buttons-container {
+                display: none !important;
             }
 
-            .btn-primary, .btn-glass-nav {
-                padding: 8px 12px !important;   /* Small padding */
-                font-size: 0.75rem !important;  /* Small text */
-                width: auto !important;         /* Content width */
-                white-space: nowrap;            /* No text wrap */
-                height: 38px;                   /* Uniform height */
-                display: flex;
-                align-items: center;
-            }
-
-            /* 5. SELECTED PORTFOLIOS: SMALLER */
-            .section-title {
-                font-size: 1.8rem !important;
-                margin-bottom: 0.8rem !important;
+            /* 3. SHOW THE DROPDOWN TRIGGER */
+            .mobile-more-wrapper {
+                display: block !important;
             }
 
             /* HIDE ELEMENTS */
@@ -483,17 +501,30 @@
                 display: none !important;
             }
 
-            /* NAVBAR */
+            /* NAVBAR LAYOUT FOR PHONE */
             .navbar {
                 width: 95%;
                 padding: 10px 15px;
                 top: 15px;
+                /* Adjust justify content to hold Logo, Hire Me, More */
+                justify-content: space-between;
             }
-            .logo { font-size: 1.3rem; }
+            .nav-right-actions {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+            
+            .logo { font-size: 1.2rem; }
             .nav-links { display: none; }
+            
+            .btn-glass-nav {
+                padding: 8px 15px !important;
+                font-size: 0.8rem !important;
+            }
 
             /* GRID & OTHERS */
-            #showcase { padding-top: 20px !important; } /* Closer to hero */
+            #showcase { padding-top: 20px !important; }
             .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
             .contact-cards-row { flex-direction: column; gap: 1.5rem; }
             .contact-action-card { min-width: 100%; padding: 2rem; }
@@ -552,6 +583,46 @@
             transition: { duration: 0.7, ease: "easeOut" }
         };
 
+        const Navbar = () => {
+            const [moreOpen, setMoreOpen] = useState(false);
+
+            return (
+                <motion.nav initial={{ y: -100, x: "-50%" }} animate={{ y: 0, x: "-50%" }} className="navbar">
+                    <div className="logo">VIRGO<span style={{ color: 'var(--primary)' }}>PRO</span></div>
+                    
+                    <div className="nav-right-actions" style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+                        <a href="#contact"><button className="btn-glass-nav">Hire Me</button></a>
+                        
+                        {/* --- MOBILE "MORE" DROPDOWN --- */}
+                        <div className="mobile-more-wrapper">
+                            <button 
+                                className="btn-glass-nav" 
+                                onClick={() => setMoreOpen(!moreOpen)}
+                                style={{background: moreOpen ? 'rgba(255,255,255,0.3)' : ''}}
+                            >
+                                More <i className={`fa-solid fa-chevron-${moreOpen ? 'up' : 'down'}`} style={{fontSize: '0.7rem', marginLeft: '5px'}}></i>
+                            </button>
+
+                            <AnimatePresence>
+                                {moreOpen && (
+                                    <motion.div 
+                                        initial={{opacity: 0, y: 10, scale: 0.95}}
+                                        animate={{opacity: 1, y: 0, scale: 1}}
+                                        exit={{opacity: 0, y: 10, scale: 0.95}}
+                                        className="mobile-dropdown-menu"
+                                    >
+                                        <a href="#contact" className="mobile-dropdown-item" onClick={() => setMoreOpen(false)}>Contact Me</a>
+                                        <a href="#showcase" className="mobile-dropdown-item" onClick={() => setMoreOpen(false)}>Portfolios</a>
+                                        <a href="https://www.cvhub.lol/" className="mobile-dropdown-item" onClick={() => setMoreOpen(false)}>CV Temple Web</a>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                </motion.nav>
+            );
+        };
+
         const HeroSection = () => {
             const x = useMotionValue(0);
             const y = useMotionValue(0);
@@ -578,7 +649,9 @@
                             <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginBottom: '2.5rem', lineHeight: '1.7', maxWidth: '550px' }}>
                                 We have Professional Portfolio & CV Services.
                             </p>
-                            <div style={{ display: 'flex', gap: '20px', justifyContent: 'flex-start' }}>
+                            
+                            {/* Only visible on Desktop, Hidden on Mobile via CSS .hero-buttons-container */}
+                            <div className="hero-buttons-container" style={{ display: 'flex', gap: '20px', justifyContent: 'flex-start' }}>
                                 <a href="#contact"><button className="btn-primary">Contact Me</button></a>
                                 <a href="#showcase"><button className="btn-glass-nav">Portfolios</button></a>
                                 <a href="https://www.cvhub.lol/"><button className="btn-glass-nav">CV Temple Web</button></a>
@@ -730,13 +803,6 @@
                     </div>
                 </div>
             </section>
-        );
-
-        const Navbar = () => (
-            <motion.nav initial={{ y: -100, x: "-50%" }} animate={{ y: 0, x: "-50%" }} className="navbar">
-                <div className="logo">VIRGO<span style={{ color: 'var(--primary)' }}>PRO</span></div>
-                <a href="#contact"><button className="btn-glass-nav">Hire Me</button></a>
-            </motion.nav>
         );
 
         function App() {
