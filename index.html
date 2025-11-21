@@ -362,16 +362,14 @@
             box-shadow: 0 0 20px var(--secondary);
         }
 
-        /* --- FILTER TABS (UPDATED TO GLASS STYLE) --- */
+        /* --- FILTER TABS (GLASS STYLE) --- */
         .filter-tabs-container {
             display: inline-flex;
             position: relative;
             z-index: 2;
             margin-bottom: 0.1rem;
             border-radius: 60px;
-            padding: 4px; /* Add padding for the inner pill */
-            
-            /* Glass Effect matching Navbar */
+            padding: 4px;
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(25px) saturate(150%);
             -webkit-backdrop-filter: blur(25px) saturate(150%);
@@ -421,67 +419,81 @@
         }
 
         /* ==========================================
-           MOBILE OPTIMIZATION (FIXED & CLEANED)
+           MOBILE OPTIMIZATION (UPDATED)
            ========================================== */
         @media (max-width: 768px) {
-            /* 1. SHOW HERO WRAPPER BUT ADJUST SPACING */
+            /* 1. COMPACT SPACING */
             .hero-wrapper {
                 display: flex !important;
-                padding-top: 130px;
-                padding-bottom: 20px;
+                padding-top: 100px; /* Reduced top spacing */
+                padding-bottom: 10px;
                 min-height: auto;
             }
 
-            /* 2. ADJUST LAYOUT TO CENTERED COLUMN */
             .hero-top-row {
                 flex-direction: column;
                 margin-bottom: 1rem;
                 text-align: center;
+                gap: 1rem; /* Tighter gap */
             }
 
-            /* 3. HIDE SPECIFIC ELEMENTS AS REQUESTED */
-            .glass-pill,         /* OPEN FOR OPPORTUNITIES */
-            .hero-right-col,     /* The 3D Image Panel */
-            .hero-stats-bar {    /* The Stats Bar */
-                display: none !important;
-            }
-
-            /* 4. RESIZE TEXT FOR PHONE */
+            /* 2. TITLE: ONE LINE & SMALLER */
             .hero-text h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
+                font-size: 2rem !important; /* Smaller font */
+                line-height: 1.1;
+                margin-bottom: 0.5rem;
+                white-space: nowrap; /* Force one line */
             }
             
+            /* 3. PARAGRAPH: CLOSER GAP */
             .hero-wrapper p {
-                font-size: 1rem !important;
-                line-height: 1.6;
-                margin-bottom: 1.5rem !important;
+                font-size: 0.9rem !important;
+                line-height: 1.4;
+                margin-bottom: 1rem !important;
             }
 
-            /* 5. BUTTONS CONTAINER */
+            /* 4. BUTTONS: ONE ROW, SMALLER */
             .hero-top-row > div:first-child > div:last-child {
+                display: flex;
+                flex-direction: row !important; /* Force Row */
+                flex-wrap: nowrap !important;   /* No Wrapping */
                 justify-content: center !important;
-                flex-wrap: wrap;
-                gap: 15px !important;
+                gap: 8px !important;            /* Small Gap */
+                width: 100%;
             }
 
             .btn-primary, .btn-glass-nav {
-                padding: 12px 30px;
-                font-size: 0.9rem;
-                width: 100%;
-                max-width: 300px;
+                padding: 8px 12px !important;   /* Small padding */
+                font-size: 0.75rem !important;  /* Small text */
+                width: auto !important;         /* Content width */
+                white-space: nowrap;            /* No text wrap */
+                height: 38px;                   /* Uniform height */
+                display: flex;
+                align-items: center;
+            }
+
+            /* 5. SELECTED PORTFOLIOS: SMALLER */
+            .section-title {
+                font-size: 1.8rem !important;
+                margin-bottom: 0.8rem !important;
+            }
+
+            /* HIDE ELEMENTS */
+            .glass-pill, .hero-right-col, .hero-stats-bar {
+                display: none !important;
             }
 
             /* NAVBAR */
             .navbar {
                 width: 95%;
-                padding: 12px 20px;
+                padding: 10px 15px;
                 top: 15px;
             }
             .logo { font-size: 1.3rem; }
             .nav-links { display: none; }
 
             /* GRID & OTHERS */
+            #showcase { padding-top: 20px !important; } /* Closer to hero */
             .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
             .contact-cards-row { flex-direction: column; gap: 1.5rem; }
             .contact-action-card { min-width: 100%; padding: 2rem; }
