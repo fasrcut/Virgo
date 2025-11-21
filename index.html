@@ -460,38 +460,52 @@
             .hero-wrapper {
                 display: flex !important;
                 padding-top: 120px;
-                padding-bottom: 10px;
+                padding-bottom: 0px !important; /* Removed bottom padding for tighter spacing */
                 min-height: auto;
             }
 
             .hero-top-row {
                 flex-direction: column;
-                margin-bottom: 1rem;
+                margin-bottom: 0.5rem !important; /* Minimum margin */
                 text-align: center;
                 gap: 1rem;
             }
 
-            /* 1. STRICTLY ONE LINE TEXT */
+            /* 1. STRICTLY ONE LINE TEXT (UPDATED) */
             .hero-text h1 {
-                font-size: 1.7rem !important;
-                line-height: 1.1;
+                font-size: 1.5rem !important; /* Reduced font size to fit one line */
+                line-height: 1;
                 margin-bottom: 0.5rem;
                 white-space: nowrap !important; /* Force one line */
                 width: 100%;
+                overflow: hidden; /* Safety */
             }
             
+            /* 2. TIGHTER SPACING FOR PARAGRAPH */
             .hero-wrapper p {
                 font-size: 0.9rem !important;
                 line-height: 1.4;
+                margin-bottom: 0.5rem !important; /* Reduced margin bottom */
+            }
+
+            /* 3. PULL UP "SELECTED PORTFOLIOS" */
+            #showcase {
+                padding-top: 0 !important; /* Remove top padding */
+                margin-top: 0 !important;
+            }
+
+            /* 4. SMALLER SECTION TITLE */
+            .section-title {
+                font-size: 1.4rem !important; /* Smaller size */
                 margin-bottom: 1rem !important;
             }
 
-            /* 2. HIDE THE OLD BUTTON ROW ON MOBILE (MOVED TO DROPDOWN) */
+            /* HIDE THE OLD BUTTON ROW ON MOBILE (MOVED TO DROPDOWN) */
             .hero-buttons-container {
                 display: none !important;
             }
 
-            /* 3. SHOW THE DROPDOWN TRIGGER */
+            /* SHOW THE DROPDOWN TRIGGER */
             .mobile-more-wrapper {
                 display: block !important;
             }
@@ -506,7 +520,6 @@
                 width: 95%;
                 padding: 10px 15px;
                 top: 15px;
-                /* Adjust justify content to hold Logo, Hire Me, More */
                 justify-content: space-between;
             }
             .nav-right-actions {
@@ -524,7 +537,6 @@
             }
 
             /* GRID & OTHERS */
-            #showcase { padding-top: 20px !important; }
             .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
             .contact-cards-row { flex-direction: column; gap: 1.5rem; }
             .contact-action-card { min-width: 100%; padding: 2rem; }
