@@ -185,17 +185,6 @@
             position: relative;
         }
 
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 4rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative;
-            z-index: 2;
-        }
-
         /* --- NAVBAR --- */
         .navbar {
             position: fixed;
@@ -249,7 +238,6 @@
         .mobile-more-wrapper {
             position: relative;
             display: none;
-            /* Hidden by default on desktop */
         }
 
         .mobile-dropdown-menu {
@@ -370,7 +358,8 @@
         /* --- PORTFOLIO & CONTACT --- */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* --- UPDATED: FORCE 2 COLUMNS ON COMPUTER --- */
+            grid-template-columns: repeat(2, 1fr);
             gap: 2.5rem;
         }
 
@@ -492,95 +481,63 @@
             box-shadow: 0 5px 15px rgba(139, 92, 246, 0.5);
         }
 
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 8rem;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 4rem 5% 2rem;
-            backdrop-filter: blur(15px);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         /* ==========================================
-           MOBILE OPTIMIZATION (UPDATED)
+           MOBILE OPTIMIZATION
            ========================================== */
         @media (max-width: 768px) {
             .hero-wrapper {
                 display: flex !important;
                 padding-top: 120px;
                 padding-bottom: 0px !important;
-                /* Removed bottom padding for tighter spacing */
                 min-height: auto;
             }
 
             .hero-top-row {
                 flex-direction: column;
                 margin-bottom: 0.5rem !important;
-                /* Minimum margin */
                 text-align: center;
                 gap: 1rem;
             }
 
-            /* 1. STRICTLY ONE LINE TEXT (UPDATED) */
             .hero-text h1 {
                 font-size: 1.5rem !important;
-                /* Reduced font size to fit one line */
                 line-height: 1;
                 margin-bottom: 0.5rem;
                 white-space: nowrap !important;
-                /* Force one line */
                 width: 100%;
                 overflow: hidden;
-                /* Safety */
             }
 
-            /* 2. TIGHTER SPACING FOR PARAGRAPH */
             .hero-wrapper p {
                 font-size: 0.9rem !important;
                 line-height: 1.4;
                 margin-bottom: 0.5rem !important;
-                /* Reduced margin bottom */
             }
 
-            /* 3. PULL UP "SELECTED PORTFOLIOS" */
             #showcase {
                 padding-top: 0 !important;
-                /* Remove top padding */
                 margin-top: 0 !important;
             }
 
-            /* 4. SMALLER SECTION TITLE */
             .section-title {
                 font-size: 1.4rem !important;
-                /* Smaller size */
                 margin-bottom: 1rem !important;
             }
 
-            /* HIDE THE OLD BUTTON ROW ON MOBILE (MOVED TO DROPDOWN) */
             .hero-buttons-container {
                 display: none !important;
             }
 
-            /* SHOW THE DROPDOWN TRIGGER */
             .mobile-more-wrapper {
                 display: block !important;
             }
 
-            /* HIDE ELEMENTS */
             .glass-pill,
             .hero-right-col,
             .hero-stats-bar {
                 display: none !important;
             }
 
-            /* NAVBAR LAYOUT FOR PHONE */
             .navbar {
                 width: 95%;
                 padding: 10px 15px;
@@ -598,18 +555,14 @@
                 font-size: 1.2rem;
             }
 
-            .nav-links {
-                display: none;
-            }
-
             .btn-glass-nav {
                 padding: 8px 15px !important;
                 font-size: 0.8rem !important;
             }
 
-            /* GRID & OTHERS */
+            /* --- PORTFOLIO ON MOBILE --- */
             .portfolio-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Force 1 column on mobile */
                 gap: 2rem;
             }
 
@@ -621,17 +574,6 @@
             .contact-action-card {
                 min-width: 100%;
                 padding: 2rem;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 2rem;
-            }
-
-            .footer-grid .logo {
-                justify-content: center;
-                display: flex;
             }
 
             .floater {
@@ -820,7 +762,7 @@
                     { id: 1, type: 'simple', title: 'Resume Pro', price: '$18', img: 'https://images.unsplash.com/photo-1517292987719-0369a794ec0f?q=80&w=1000', link: '#' },
                     { id: 2, type: 'simple', title: 'V-Card', price: '$18', img: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=1000', link: '#' },
                     { id: 3, type: 'pro', title: 'Taylor', price: '$28', img: 'image/Taylor.png', link: 'Taylor.html' },
-                    { id: 4, type: 'pro', title: 'E-Commerce API', price: '$28', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000', link: '#' },
+                    { id: 4, type: 'pro', title: 'Chan Dara', price: '$28', img: 'image/chandara.png', link: 'chandara.html' },
                     { id: 5, type: 'pro', title: 'Crypto Wallet', price: '$28', img: 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=1000', link: '#' },
                     { id: 6, type: 'simple', title: 'Blog Clean', price: '$18', img: 'https://images.unsplash.com/photo-1499750310159-5b600aaf032d?q=80&w=1000', link: '#' },
                 ];
