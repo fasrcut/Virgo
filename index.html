@@ -362,16 +362,23 @@
             box-shadow: 0 0 20px var(--secondary);
         }
 
+        /* --- FILTER TABS (UPDATED TO GLASS STYLE) --- */
         .filter-tabs-container {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1px;
-            border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 0.1rem;
             display: inline-flex;
-            backdrop-filter: blur(10px);
             position: relative;
             z-index: 2;
+            margin-bottom: 0.1rem;
+            border-radius: 60px;
+            padding: 4px; /* Add padding for the inner pill */
+            
+            /* Glass Effect matching Navbar */
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), inset 0 4px 20px rgba(255, 255, 255, 0.1);
         }
         .filter-tabs button {
             background: transparent;
@@ -414,46 +421,44 @@
         }
 
         /* ==========================================
-           MOBILE OPTIMIZATION (FIXED)
+           MOBILE OPTIMIZATION (FIXED & CLEANED)
            ========================================== */
         @media (max-width: 768px) {
-
-            /* 1. SHOW HERO SECTION (UNHIDDEN) & ADJUST PADDING */
+            /* 1. SHOW HERO WRAPPER BUT ADJUST SPACING */
             .hero-wrapper {
-                display: flex !important; /* បង្ហាញមកវិញ */
-                padding-top: 130px; /* ទុកចន្លោះខាងលើសម្រាប់ Navbar */
+                display: flex !important;
+                padding-top: 130px;
+                padding-bottom: 20px;
                 min-height: auto;
-                padding-bottom: 40px;
             }
 
-            /* 2. ADJUST HERO LAYOUT TO COLUMN (VERTICAL) */
+            /* 2. ADJUST LAYOUT TO CENTERED COLUMN */
             .hero-top-row {
                 flex-direction: column;
-                gap: 2.5rem;
-                margin-bottom: 2.5rem;
-                text-align: center; /* ដាក់អក្សរនៅកណ្តាល */
+                margin-bottom: 1rem;
+                text-align: center;
             }
 
-            /* 3. RESIZE TEXT FOR PHONE (អក្សរតូចល្មមស្អាត) */
+            /* 3. HIDE SPECIFIC ELEMENTS AS REQUESTED */
+            .glass-pill,         /* OPEN FOR OPPORTUNITIES */
+            .hero-right-col,     /* The 3D Image Panel */
+            .hero-stats-bar {    /* The Stats Bar */
+                display: none !important;
+            }
+
+            /* 4. RESIZE TEXT FOR PHONE */
             .hero-text h1 {
-                font-size: 2.5rem; /* បន្ថយទំហំចំណងជើង */
+                font-size: 2.5rem;
                 line-height: 1.2;
             }
             
             .hero-wrapper p {
-                font-size: 1rem !important; /* បន្ថយទំហំអត្ថបទ */
+                font-size: 1rem !important;
                 line-height: 1.6;
                 margin-bottom: 1.5rem !important;
             }
 
-            /* 4. HIDE THE RIGHT 3D IMAGE TO KEEP IT CLEAN (OPTIONAL) */
-            /* ដើម្បីឱ្យមើលទៅស្អាតលើទូរស័ព្ទ យើងគួរលាក់រូប 3D ខាងស្តាំ */
-            .hero-right-col {
-                display: none; 
-            }
-
             /* 5. BUTTONS CONTAINER */
-            /* តម្រូវប៊ូតុងឱ្យនៅកណ្តាល */
             .hero-top-row > div:first-child > div:last-child {
                 justify-content: center !important;
                 flex-wrap: wrap;
@@ -463,11 +468,11 @@
             .btn-primary, .btn-glass-nav {
                 padding: 12px 30px;
                 font-size: 0.9rem;
-                width: 100%; /* ប៊ូតុងពេញមួយជួរលើទូរស័ព្ទ */
-                max-width: 300px; /* ប៉ុន្តែមិនធំពេក */
+                width: 100%;
+                max-width: 300px;
             }
 
-            /* NAVBAR ADJUSTMENTS */
+            /* NAVBAR */
             .navbar {
                 width: 95%;
                 padding: 12px 20px;
@@ -476,7 +481,7 @@
             .logo { font-size: 1.3rem; }
             .nav-links { display: none; }
 
-            /* GRID ADJUSTMENTS */
+            /* GRID & OTHERS */
             .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
             .contact-cards-row { flex-direction: column; gap: 1.5rem; }
             .contact-action-card { min-width: 100%; padding: 2rem; }
