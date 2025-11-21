@@ -602,66 +602,25 @@
             background: var(--primary);
         }
 
-        /* -------------------------------------- */
-        /* --- CSS សម្រាប់ PHONE (Responsive) --- */
-        /* -------------------------------------- */
+        /* Responsive */
         @media (max-width: 991px) {
-            
-            .hero {
-                /* រុញអក្សរចុះក្រោម Menu Bar បន្តិច */
-                padding-top: 140px; 
-                padding-left: 20px;
-                padding-right: 20px;
-                align-items: flex-start; /* ដាក់ឱ្យនៅផ្នែកខាងលើ */
-            }
 
-            .hero-container {
-                /* ដាក់អក្សរ និងរូបភាពនៅបន្ទាប់គ្នា (ឆ្វេង ស្តាំ) */
-                display: flex;
-                flex-direction: row; 
-                align-items: center;
-                justify-content: space-between;
-                gap: 10px;
-            }
-
-            /* កំណត់ទំហំអក្សរនៅខាងឆ្វេង */
-            .hero-text {
-                width: 60%;
+            .hero-container,
+            .about-container,
+            .timeline-grid,
+            .skills-wrapper {
+                grid-template-columns: 1fr;
             }
 
             .hero-text h1 {
-                font-size: 2.2rem; /* បន្ថយទំហំអក្សរ */
-            }
-
-            .hero-text h3 {
-                font-size: 1rem;
-            }
-
-            .typing-container {
-                font-size: 1.1rem;
-                margin-bottom: 15px;
-            }
-
-            .hero-text p {
-                font-size: 0.8rem;
-                margin-bottom: 20px;
-                line-height: 1.4;
-            }
-
-            .btn-primary {
-                padding: 10px 20px;
-                font-size: 0.8rem;
-            }
-
-            /* កំណត់ទំហំរូបភាពឱ្យតូច និងនៅខាងស្តាំ */
-            .image-card {
-                width: 38%; /* រូបភាពយក 38% នៃអេក្រង់ */
-                height: auto;
-                aspect-ratio: 3/4; /* រក្សាសមាមាត្ររូបភាព */
-                border-radius: 20px; /* បន្ថយភាពកោងនៃជ្រុង */
+                font-size: 3.5rem;
             }
 
             .navbar {
+                display: none;
+            }
+
+            .hero-img-wrapper {
                 display: none;
             }
 
@@ -672,11 +631,7 @@
                 font-size: 0.8rem;
             }
 
-            .about-container,
-            .timeline-grid,
-            .skills-wrapper {
-                grid-template-columns: 1fr;
-            }
+            /* Smaller on mobile */
         }
     </style>
 </head>
