@@ -28,7 +28,6 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
             -webkit-tap-highlight-color: transparent;
-            /* Remove tap highlight on mobile */
         }
 
         body {
@@ -36,7 +35,6 @@
             color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
-            /* Prevent horizontal scroll */
         }
 
         a {
@@ -114,6 +112,26 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
+            /* Space between items */
+        }
+
+        /* --- GO BACK BUTTON STYLE (ADDED) --- */
+        .go-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: var(--transition);
+            margin-right: 10px;
+        }
+
+        .go-back-btn:hover {
+            color: var(--primary-green);
+            transform: translateX(-3px);
+            /* Slight move left on hover */
         }
 
         .logo {
@@ -121,6 +139,8 @@
             font-weight: 700;
             color: var(--text-dark);
             letter-spacing: -0.5px;
+            margin-right: auto;
+            /* Pushes nav links to the center/right */
         }
 
         /* Desktop Nav */
@@ -226,7 +246,6 @@
         .products-grid-new {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            /* Auto fit for mobile */
             gap: 30px;
         }
 
@@ -513,9 +532,7 @@
             display: flex;
             gap: 30px;
             max-height: 90vh;
-            /* Max height for mobile */
             overflow-y: auto;
-            /* Scroll on mobile */
             transform: translateY(20px);
             transition: transform 0.3s ease;
         }
@@ -561,7 +578,23 @@
                 padding: 50px 0;
             }
 
-            /* Header */
+            /* Header Adjustments */
+            .logo {
+                font-size: 18px;
+                margin-right: 0;
+            }
+
+            /* Adjust logo on mobile */
+            .go-back-btn span {
+                display: none;
+            }
+
+            /* Optional: Hide text "Go Back" on very small screens, keep icon only */
+            .go-back-btn {
+                font-size: 18px;
+                margin-right: 5px;
+            }
+
             .nav-links {
                 position: fixed;
                 top: 70px;
@@ -574,13 +607,11 @@
                 gap: 25px;
                 box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
                 clip-path: inset(0 0 100% 0);
-                /* Hidden by default */
                 transition: clip-path 0.4s ease-in-out;
             }
 
             .nav-links.mobile-active {
                 clip-path: inset(0 0 0 0);
-                /* Reveal */
             }
 
             .hamburger {
@@ -590,8 +621,6 @@
             .header-actions .btn {
                 display: none;
             }
-
-            /* Hide 'Cart' btn on very small nav */
 
             /* Hero */
             .hero {
@@ -627,7 +656,6 @@
                 height: 300px;
                 width: 100%;
                 order: -1;
-                /* Image on top */
             }
 
             .clean-text {
@@ -651,7 +679,6 @@
                 display: none;
             }
 
-            /* Hide decor on mobile */
             .newsletter-form {
                 flex-direction: column;
                 border-radius: 15px;
@@ -703,7 +730,6 @@
 
             .products-grid-new {
                 grid-template-columns: 1fr;
-                /* 1 column on very small phones */
             }
 
             .review-card {
@@ -724,6 +750,11 @@
             .footer-links {
                 justify-content: center;
             }
+
+            /* Ensure Go Back text is hidden on tiny screens to save space */
+            .go-back-btn {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -733,6 +764,10 @@
     <header>
         <div class="container">
             <nav>
+                <a href="index.html" class="go-back-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Go Back
+                </a>
+
                 <div class="logo">Bonatica</div>
 
                 <ul class="nav-links" id="navLinks">
