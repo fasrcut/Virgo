@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thomas Smith - Professional Portfolio</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS VARIABLES & THEME --- */
+        :root {
+            /* Primary Accents */
+            --primary-color: #8a2be2;
+            --primary-dark: #4b0082;
+
+            /* Backgrounds & Text (Default = Light) */
+            --bg-body: #ffffff;
+            /* Body background */
+            --bg-section: #f8f9fa;
+            /* Alternate section background */
+            --bg-card: #ffffff;
+            /* Card background */
+            --text-main: #333333;
+            /* Main Text */
+            --text-light: #ffffff;
+            /* Text on primary color */
+            --text-grey: #666666;
+            /* Secondary Text */
+            --border-color: #eeeeee;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --bg-header: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        /* --- GO BACK BUTTON --- */
+        .go-back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1100;
+            background: var(--bg-card);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .go-back-btn:hover {
+            background: var(--primary-color);
+            color: #fff;
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        /* --- THEME SWITCHER --- */
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 200px;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .theme-btn {
+            background: var(--text-main);
+            color: var(--bg-card);
+            padding: 12px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-panel {
+            background: var(--bg-card);
+            width: 220px;
+            padding: 20px;
+            box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            position: absolute;
+            right: 0;
+            top: 0;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .theme-panel.open {
+            transform: translateX(0);
+            position: relative;
+        }
+
+        .theme-panel h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            margin-top: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            color: var(--text-main);
+        }
+
+        .theme-panel h4:first-child {
+            margin-top: 0;
+        }
+
+        /* Color Pickers */
+        .color-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .color-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid var(--border-color);
+            transition: 0.2s;
+        }
+
+        .color-circle:hover {
+            transform: scale(1.1);
+            border-color: var(--text-main);
+        }
+
+        /* Background Pickers */
+        .bg-options {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .bg-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #555;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .bg-circle:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+        }
+
+        /* Visual representation of bg modes */
+        .bg-light-mode {
+            background: #fff;
+            color: #333;
+        }
+
+        .bg-dim-mode {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .bg-dark-mode {
+            background: #1a1a1a;
+            color: #fff;
+            border-color: #555;
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 50px 20px 180px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: 0.5s;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-cta {
+            background: var(--primary-color);
+            color: #fff !important;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            /* Dynamic Gradient based on Theme Variables */
+            background: linear-gradient(105deg, var(--bg-body) 55%, var(--bg-section) 55%);
+            padding-top: 80px;
+            transition: 0.5s;
+        }
+
+        .hero-content {
+            width: 50%;
+            padding-left: 8%;
+            padding-right: 20px;
+            z-index: 2;
+        }
+
+        .hero-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-grey);
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin: 10px 0;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text-grey);
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .hero-image {
+            width: 50%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-img {
+            height: 80vh;
+            object-fit: cover;
+            filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.15));
+            border-bottom: 10px solid var(--primary-color);
+        }
+
+        /* --- SECTIONS --- */
+        .section {
+            padding: 80px 10%;
+            background-color: var(--bg-body);
+        }
+
+        .bg-alt {
+            background-color: var(--bg-section);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 5px;
+            background: var(--primary-color);
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .philosophy-box {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .philosophy-box i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* --- CARDS & LISTS --- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .resume-item,
+        .cert-item {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--border-color);
+            transition: 0.3s;
+            color: var(--text-main);
+        }
+
+        .resume-item:hover {
+            border-left-color: var(--primary-color);
+        }
+
+        .resume-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary-color);
+        }
+
+        .item-place {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .item-date {
+            font-size: 0.8rem;
+            color: var(--text-grey);
+            font-style: italic;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .resume-item p {
+            color: var(--text-grey);
+        }
+
+        .tool-card {
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .tool-card i {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .achieve-item {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .achieve-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-section);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testi-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
+            color: var(--text-main);
+        }
+
+        .testi-text {
+            font-style: italic;
+            color: var(--text-grey);
+            margin-bottom: 20px;
+        }
+
+        /* --- SKILLS --- */
+        .lang-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .lang-level {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .progress-bg {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .progress-title {
+            color: var(--text-main);
+        }
+
+        /* --- CTA & FOOTER --- */
+        .cta-section {
+            background: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .btn-white {
+            background: #fff;
+            color: var(--primary-color);
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            background: #111;
+            color: #fff;
+            padding: 60px 10%;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            opacity: 0.5;
+            font-size: 0.9rem;
+        }
+
+        /* --- ANIMATION & MEDIA --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                background: var(--bg-body);
+                padding-top: 100px;
+            }
+
+            header {
+                position: fixed;
+                background: var(--bg-header);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                justify-content: flex-end;
+            }
+
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 1.5rem;
+            }
+
+            .hamburger {
+                display: block;
+                order: 2;
+            }
+
+            .go-back-btn {
+                top: 18px;
+                left: 15px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+
+            .go-back-btn span {
+                display: none;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--bg-card);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                right: 0;
+            }
+
+            .hero-content,
+            .hero-image {
+                width: 100%;
+                text-align: center;
+                padding: 0 20px;
+            }
+
+            .hero-image {
+                height: auto;
+                margin-top: 40px;
+            }
+
+            .profile-img {
+                height: 400px;
+                width: 100%;
+                object-fit: contain;
+                border-bottom: none;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .theme-switch-wrapper {
+                top: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="javascript:void(0)" onclick="history.back()" class="go-back-btn">
+        <i class="fa-solid fa-arrow-left"></i> <span>Go Back</span>
+    </a>
+
+    <div class="theme-switch-wrapper">
+        <div class="theme-btn" onclick="toggleThemePanel()">
+            <i class="fas fa-cog fa-spin"></i>
+        </div>
+        <div class="theme-panel" id="themePanel">
+
+            <h4>Theme Color</h4>
+            <div class="color-options">
+                <div class="color-circle" onclick="setTheme('#8a2be2', '#4b0082')" style="background: #8a2be2;"
+                    title="Purple"></div>
+                <div class="color-circle" onclick="setTheme('#007bff', '#0056b3')" style="background: #007bff;"
+                    title="Blue"></div>
+                <div class="color-circle" onclick="setTheme('#28a745', '#1e7e34')" style="background: #28a745;"
+                    title="Green"></div>
+                <div class="color-circle" onclick="setTheme('#e74c3c', '#c0392b')" style="background: #e74c3c;"
+                    title="Red"></div>
+                <div class="color-circle" onclick="setTheme('#fd7e14', '#bc5a00')" style="background: #fd7e14;"
+                    title="Orange"></div>
+                <div class="color-circle" onclick="setTheme('#e83e8c', '#bd2168')" style="background: #e83e8c;"
+                    title="Pink"></div>
+                <div class="color-circle" onclick="setTheme('#20c997', '#128f6b')" style="background: #20c997;"
+                    title="Teal"></div>
+                <div class="color-circle" onclick="setTheme('#f1c40f', '#c39e0b')" style="background: #f1c40f;"
+                    title="Yellow"></div>
+            </div>
+
+            <h4>Background</h4>
+            <div class="bg-options">
+                <div class="bg-circle bg-light-mode" onclick="setBgMode('light')" title="Light Mode">Light</div>
+                <div class="bg-circle bg-dim-mode" onclick="setBgMode('dim')" title="Dim Mode">Dim</div>
+                <div class="bg-circle bg-dark-mode" onclick="setBgMode('dark')" title="Dark Mode">Dark</div>
+            </div>
+
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">THOMAS <span>SMITH</span></div>
+        <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <nav>
+            <ul id="nav-links">
+                <li><a href="#about" onclick="toggleMenu()">About</a></li>
+                <li><a href="#experience" onclick="toggleMenu()">Resume</a></li>
+                <li><a href="#tools" onclick="toggleMenu()">Skills</a></li>
+                <li><a href="#testimonials" onclick="toggleMenu()">Testimonials</a></li>
+                <li><a href="#contact" class="btn-cta" onclick="toggleMenu()">Contact Me</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about" class="hero">
+        <div class="hero-content reveal active">
+            <h3>Hello, I am</h3>
+            <h1>Thomas <span style="display:block;">Smith</span></h1>
+            <div class="hero-subtitle">SENIOR GRAPHIC & WEB DESIGNER</div>
+
+            <div class="contact-info-hero">
+                <div class="contact-item"><i class="fas fa-envelope"></i> hello@thomassmith.design</div>
+                <div class="contact-item"><i class="fas fa-phone"></i> +1 (856) 555-0123</div>
+                <div class="contact-item"><i class="fas fa-globe"></i> www.thomassmith.design</div>
+                <div class="contact-item"><i class="fab fa-linkedin"></i> linkedin.com/in/thomas</div>
+            </div>
+
+            <p style="margin-bottom: 30px; color: var(--text-grey);">
+                I craft high-performing, beautiful websites and brand identities.
+                With over 8 years of experience, I help businesses transform their vision into digital reality using
+                cutting-edge technology and creative design.
+            </p>
+
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                <a href="#contact" class="btn-cta">Download CV <i class="fas fa-download"></i></a>
+                <a href="#testimonials"
+                    style="padding: 10px 20px; border: 2px solid var(--text-main); border-radius: 30px; font-weight: bold; color: var(--text-main);">View
+                    Work</a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTGzCL3eCC8YM6p4MnrtQqkdWEa_J1CTsOYrRc5XRPLoTroUGdWwcOr6n8sMWQivydH3w&usqp=CAU"
+                alt="Thomas Smith" class="profile-img reveal">
+        </div>
+    </section>
+
+    <section class="section reveal">
+        <div class="philosophy-box">
+            <i class="fas fa-quote-left"></i>
+            <p>"I believe that great design is not just about how it looks, but how it works. My philosophy is built on
+                <strong>Quality, Reliability, and User-Centric Innovation</strong>."
+            </p>
+        </div>
+    </section>
+
+    <section id="experience" class="section bg-alt">
+        <div class="section-title reveal">My Journey</div>
+        <div class="grid-2">
+            <div class="reveal">
+                <h3 style="margin-bottom: 25px; color:var(--text-main);"><i class="fas fa-briefcase"
+                        style="color:var(--primary-color)"></i> Work Experience</h3>
+                <div class="resume-item">
+                    <div class="item-title">Senior Web Developer</div>
+                    <div class="item-place">TechSolutions Inc. | New York</div>
+                    <span class="item-date">2021 - Present</span>
+                    <p>Leading the frontend team, implementing React.js architectures.</p>
+                </div>
+                <div class="resume-item">
+                    <div class="item-title">UI/UX Designer</div>
+                    <div class="item-place">Creative Minds Agency</div>
+                    <span class="item-date">2018 - 2021</span>
+                    <p>Designed user interfaces for mobile apps and responsive websites.</p>
+                </div>
+            </div>
+
+            <div class="reveal">
+                <h3 style="margin-bottom: 25px; color:var(--text-main);"><i class="fas fa-certificate"
+                        style="color:var(--primary-color)"></i> Awards</h3>
+                <div class="cert-item">
+                    <div class="item-title">Google UX Design Certificate</div>
+                    <div class="item-place">Coursera</div>
+                    <span class="item-date">Issued 2023</span>
+                </div>
+                <div class="achieve-list" style="margin-top: 30px;">
+                    <div class="achieve-item">
+                        <div class="achieve-icon"><i class="fas fa-trophy"></i></div>
+                        <div>
+                            <div class="item-title">Best Portfolio Design</div>
+                            <div style="font-size:0.85rem;">Awwwards Winner 2024</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tools" class="section">
+        <div class="grid-2">
+            <div class="reveal">
+                <div class="section-title" style="font-size: 1.8rem; margin-bottom: 30px;">Technical Skills</div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-title"><span>HTML5 / CSS3</span> <span>95%</span></div>
+                    <div class="progress-bg">
+                        <div class="progress-fill" data-width="95%"></div>
+                    </div>
+                </div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-title"><span>JavaScript / React</span> <span>90%</span></div>
+                    <div class="progress-bg">
+                        <div class="progress-fill" data-width="90%"></div>
+                    </div>
+                </div>
+
+                <h4 style="margin-top:30px; margin-bottom:15px; color:var(--text-main);">Languages</h4>
+                <div class="lang-grid">
+                    <div class="lang-item"><span class="lang-name">English</span> <span class="lang-level">Native</span>
+                    </div>
+                    <div class="lang-item"><span class="lang-name">Khmer</span> <span class="lang-level">Advanced</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="section-title" style="font-size: 1.8rem; margin-bottom: 30px;">Tools I Use</div>
+                <div class="tools-grid">
+                    <div class="tool-card"><i class="fab fa-figma"></i>
+                        <p>Figma</p>
+                    </div>
+                    <div class="tool-card"><i class="fas fa-code"></i>
+                        <p>VS Code</p>
+                    </div>
+                    <div class="tool-card"><i class="fab fa-adobe"></i>
+                        <p>Adobe CC</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section bg-alt">
+        <div class="section-title reveal">Testimonials</div>
+        <div class="testimonials-grid reveal">
+            <div class="testi-card">
+                <p class="testi-text">"Thomas is a true professional. He transformed our outdated website into a modern
+                    masterpiece."</p>
+                <div class="testi-user">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="testi-avatar">
+                    <div class="testi-name">
+                        <h4>Sarah Jenkins</h4><span>CEO, StartUp Hub</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <p class="testi-text">"Working with Thomas was a breeze. He understood our requirements perfectly."</p>
+                <div class="testi-user">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="testi-avatar">
+                    <div class="testi-name">
+                        <h4>David Chen</h4><span>Marketing Director</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="reveal">
+            <h2>Have a Project in Mind?</h2>
+            <p>Let's collaborate to create something impactful and unique for your business.</p>
+            <a href="#contact" class="btn-white">Let's Work Together</a>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content" style="display:grid; grid-template-columns:1fr 1fr; gap:50px; margin-bottom:40px;">
+            <div class="footer-about">
+                <div class="logo" style="color:#fff;">THOMAS <span>SMITH</span></div>
+                <p style="opacity:0.7; margin-top:10px;">Creating digital experiences that help businesses grow.</p>
+            </div>
+            <div class="footer-contact">
+                <h3 style="margin-bottom:20px;">Get In Touch</h3>
+                <ul style="opacity:0.8;">
+                    <li style="margin-bottom:10px;"><i class="fas fa-envelope"></i> hello@thomassmith.design</li>
+                    <li style="margin-bottom:10px;"><i class="fas fa-phone"></i> +1 (856) 822-2156</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2025 Thomas Smith. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('nav-links').classList.toggle('active'); }
+        function toggleThemePanel() {
+            const panel = document.getElementById('themePanel');
+            panel.classList.toggle('open');
+            if (!panel.classList.contains('open')) panel.style.transform = 'translateX(100%)';
+            else panel.style.transform = 'translateX(0)';
+        }
+
+        // Function to set Primary Theme Color
+        function setTheme(primary, dark) {
+            document.documentElement.style.setProperty('--primary-color', primary);
+            document.documentElement.style.setProperty('--primary-dark', dark);
+        }
+
+        // Function to set Background Mode (Light, Dim, Dark)
+        function setBgMode(mode) {
+            const root = document.documentElement;
+            if (mode === 'light') {
+                root.style.setProperty('--bg-body', '#ffffff');
+                root.style.setProperty('--bg-section', '#f8f9fa');
+                root.style.setProperty('--bg-card', '#ffffff');
+                root.style.setProperty('--text-main', '#333333');
+                root.style.setProperty('--text-grey', '#666666');
+                root.style.setProperty('--bg-header', 'rgba(255,255,255,0.95)');
+                root.style.setProperty('--border-color', '#eeeeee');
+            } else if (mode === 'dim') {
+                root.style.setProperty('--bg-body', '#e6e6e6');
+                root.style.setProperty('--bg-section', '#dcdcdc');
+                root.style.setProperty('--bg-card', '#f0f0f0');
+                root.style.setProperty('--text-main', '#222222');
+                root.style.setProperty('--text-grey', '#555555');
+                root.style.setProperty('--bg-header', 'rgba(230,230,230,0.95)');
+                root.style.setProperty('--border-color', '#ccc');
+            } else if (mode === 'dark') {
+                root.style.setProperty('--bg-body', '#121212');
+                root.style.setProperty('--bg-section', '#1e1e1e');
+                root.style.setProperty('--bg-card', '#252525');
+                root.style.setProperty('--text-main', '#ffffff');
+                root.style.setProperty('--text-grey', '#aaaaaa');
+                root.style.setProperty('--bg-header', 'rgba(18,18,18,0.95)');
+                root.style.setProperty('--border-color', '#333');
+            }
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.querySelectorAll('.progress-fill').length > 0) {
+                        entry.target.querySelectorAll('.progress-fill').forEach(bar => { bar.style.width = bar.getAttribute('data-width'); });
+                    }
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>
