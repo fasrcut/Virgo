@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avery Davis | Creative Director & Visual Artist</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Italiana&family=Oswald:wght@300;400;600&family=Manrope:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. CORE VARIABLES --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-panel: #0a0a0a;
+            --text-white: #ffffff;
+            --text-muted: #888888;
+            --accent-primary: #FF4D4D;
+            --accent-glow: #6a00ff;
+            --accent-gold: #D4AF37;
+
+            --font-display: 'Oswald', sans-serif;
+            --font-body: 'Manrope', sans-serif;
+            --font-serif: 'Italiana', serif;
+
+            --gutter: 8vw;
+            --radius: 4px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Texture Overlay */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* --- 2. GLOBAL STYLES --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        section {
+            padding: 120px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            line-height: 1;
+        }
+
+        .serif-subtitle {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            display: block;
+            font-style: italic;
+        }
+
+        p {
+            color: var(--text-muted);
+            max-width: 650px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- 3. ANIMATION UTILS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 4. NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px var(--gutter);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(5, 5, 5, 0.7);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ccc;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        /* --- 5. HERO SECTION --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Glows */
+        .glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(80px);
+            border-radius: 50%;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .glow-1 {
+            top: -200px;
+            left: -200px;
+            background: var(--accent-primary);
+        }
+
+        .glow-2 {
+            bottom: -200px;
+            right: -200px;
+            background: var(--accent-glow);
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 0.2;
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(6rem, 15vw, 14rem);
+            line-height: 0.8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -4px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            display: block;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+            color: transparent;
+        }
+
+        .hero-title span:first-child {
+            -webkit-text-stroke: 0;
+            color: #fff;
+        }
+
+        .hero-img-float {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-5deg);
+            width: 320px;
+            height: 480px;
+            z-index: 3;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            animation: popIn 1s forwards 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hero-img-float img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -40%) scale(0.8) rotate(-10deg);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1) rotate(-5deg);
+                opacity: 1;
+            }
+        }
+
+        /* --- 6. INTRO / STATS --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 60px;
+        }
+
+        .stat-item h3 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+        }
+
+        .stat-item span {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+
+        /* --- 7. SELECTED WORKS (PROJECTS) --- */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+            margin-top: 60px;
+        }
+
+        .project {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .project.reverse {
+            grid-template-columns: 0.8fr 1.2fr;
+        }
+
+        .project.reverse .project-info {
+            order: 1;
+        }
+
+        .project-img {
+            height: 500px;
+            overflow: hidden;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .project-img img {
+            transition: transform 0.7s;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-info h3 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            border: 1px solid #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        /* --- 8. EXPERIENCE --- */
+        .exp-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 0;
+            transition: 0.3s;
+        }
+
+        .exp-row:hover {
+            background: rgba(255, 255, 255, 0.02);
+            padding-left: 20px;
+        }
+
+        .exp-year {
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .exp-role h4 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .exp-role span {
+            color: #666;
+            font-style: italic;
+        }
+
+        .exp-desc {
+            font-size: 0.95rem;
+            color: #888;
+        }
+
+        /* --- 9. CLIENTS --- */
+        .client-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 40px;
+            opacity: 0.5;
+            margin-top: 50px;
+        }
+
+        .client-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            border: 1px solid #333;
+            padding: 20px;
+        }
+
+        /* --- 10. TESTIMONIALS --- */
+        .testimonial-slider {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .testi-card {
+            background: #0f0f0f;
+            padding: 50px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .quote-mark {
+            font-size: 4rem;
+            color: #222;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: serif;
+        }
+
+        .testi-text {
+            position: relative;
+            z-index: 2;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            color: #ddd;
+        }
+
+        .testi-author {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .testi-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #333;
+        }
+
+        /* --- 11. FOOTER --- */
+        footer {
+            padding: 100px 0 50px;
+            text-align: center;
+        }
+
+        .big-email {
+            font-size: clamp(2rem, 6vw, 5rem);
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 50px;
+            display: inline-block;
+        }
+
+        .big-email:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-meta {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #222;
+            padding-top: 30px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .project,
+            .project.reverse {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .project.reverse .project-info {
+                order: 0;
+            }
+
+            .exp-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .testimonial-slider {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+
+            .hero-img-float {
+                width: 250px;
+                height: 380px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">AVERY DAVIS.</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#works">Selected Works</a>
+            <a href="#experience">Experience</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+
+        <div class="hero-content">
+            <span class="serif-subtitle" style="opacity: 0; animation: fadeIn 1s forwards 1s;">New York — Paris</span>
+            <h1 class="hero-title">
+                DIGITAL<br><span>ARTISAN</span>
+            </h1>
+            <div class="hero-img-float">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH7zbO6Dcd0LTviB79vsQY3mCbRHCCFn0YI7wolepkXCMFyLToLPZNj8gxSdIWvViSeSk&usqp=CAU"
+                    alt="Avery Portrait">
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <div class="reveal">
+            <span class="serif-subtitle">The Narrative</span>
+            <h2>Designing the Future<br>of Digital Luxury</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 80px;">
+                <p>I am a multidisciplinary Creative Director with over a decade of experience in shaping brand
+                    identities for the fashion, technology, and lifestyle sectors. My philosophy is rooted in
+                    "Essentialism"—stripping away the noise to reveal the core truth of a brand.</p>
+                <p>Formerly at Vogue International and Ogilvy, I now run an independent studio helping startups becoming
+                    unicorns through strategic design and compelling storytelling.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>12+</h3>
+                    <span>Years Experience</span>
+                </div>
+                <div class="stat-item">
+                    <h3>140+</h3>
+                    <span>Projects Completed</span>
+                </div>
+                <div class="stat-item">
+                    <h3>$50M</h3>
+                    <span>Client Revenue Generated</span>
+                </div>
+                <div class="stat-item">
+                    <h3>24</h3>
+                    <span>Industry Awards</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="works" class="container">
+        <span class="serif-subtitle reveal">Portfolio</span>
+        <h2 class="reveal">Selected Works 2023-2025</h2>
+
+        <div class="project-list">
+            <div class="project reveal">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1494959764136-6be9eb3c261e?q=80&w=1000&auto=format&fit=crop"
+                        alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <div class="tags">
+                        <span class="tag">Rebranding</span>
+                        <span class="tag">Web Design</span>
+                    </div>
+                    <h3>Ethereal Beauty Co.</h3>
+                    <p>A complete brand overhaul for a clean beauty startup based in Los Angeles. We developed a
+                        minimalist packaging system and a headless e-commerce website that increased conversion by 45%
+                        in the first quarter.</p>
+                    <a href="#" style="border-bottom: 1px solid #fff; margin-top: 20px; display: inline-block;">View
+                        Case Study</a>
+                </div>
+            </div>
+
+            <div class="project reverse reveal">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop"
+                        alt="Project 2">
+                </div>
+                <div class="project-info">
+                    <div class="tags">
+                        <span class="tag">App UI/UX</span>
+                        <span class="tag">Strategy</span>
+                    </div>
+                    <h3>Neon Bank - Fintech</h3>
+                    <p>Designed the mobile application interface for "Neon," a Gen-Z focused neobank. The goal was to
+                        gamify the saving experience. The app reached 1 million downloads within 6 months of launch.</p>
+                    <a href="#" style="border-bottom: 1px solid #fff; margin-top: 20px; display: inline-block;">View
+                        Case Study</a>
+                </div>
+            </div>
+
+            <div class="project reveal">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop"
+                        alt="Project 3">
+                </div>
+                <div class="project-info">
+                    <div class="tags">
+                        <span class="tag">Art Direction</span>
+                        <span class="tag">Campaign</span>
+                    </div>
+                    <h3>Velvet & Steel Magazine</h3>
+                    <p>Creative direction for the Fall/Winter 2024 editorial campaign. Managed a team of 15 creatives
+                        across a 3-day shoot in Tokyo, focusing on the intersection of traditional craftsmanship and
+                        cyberpunk aesthetics.</p>
+                    <a href="#" style="border-bottom: 1px solid #fff; margin-top: 20px; display: inline-block;">View
+                        Case Study</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="container">
+        <span class="serif-subtitle reveal">Career Path</span>
+        <h2 class="reveal">Work History</h2>
+
+        <div class="reveal">
+            <div class="exp-row">
+                <span class="exp-year">2023 — Present</span>
+                <div class="exp-role">
+                    <h4>Studio Avery (Founder)</h4>
+                    <span>New York, NY</span>
+                </div>
+                <p class="exp-desc">Leading a boutique design agency. Clients include Chanel, Spotify, and Tesla.
+                    Focusing on high-end digital experiences.</p>
+            </div>
+
+            <div class="exp-row">
+                <span class="exp-year">2020 — 2023</span>
+                <div class="exp-role">
+                    <h4>Senior Art Director</h4>
+                    <span>Ogilvy & Mather</span>
+                </div>
+                <p class="exp-desc">Managed the global creative account for a major automotive brand. Oversaw a team of
+                    10 designers and copywriters.</p>
+            </div>
+
+            <div class="exp-row">
+                <span class="exp-year">2018 — 2020</span>
+                <div class="exp-role">
+                    <h4>Lead UI Designer</h4>
+                    <span>Spotify (Contract)</span>
+                </div>
+                <p class="exp-desc">Contributed to the redesign of the mobile player interface and developed the
+                    "Wrapped" campaign visuals for 2019.</p>
+            </div>
+
+            <div class="exp-row">
+                <span class="exp-year">2016 — 2018</span>
+                <div class="exp-role">
+                    <h4>Visual Designer</h4>
+                    <span>Vogue International</span>
+                </div>
+                <p class="exp-desc">Designed digital layouts for web and social media. Assisted in photo retouching and
+                    typography selection for online editorials.</p>
+            </div>
+        </div>
+
+        <div class="reveal" style="margin-top: 80px;">
+            <p style="text-align: center; margin: 0 auto;">TRUSTED BY INNOVATORS</p>
+            <div class="client-grid">
+                <div class="client-logo">GOOGLE</div>
+                <div class="client-logo">NIKE LAB</div>
+                <div class="client-logo">AESOP</div>
+                <div class="client-logo">SONY MUSIC</div>
+                <div class="client-logo">HERMÈS</div>
+                <div class="client-logo">KINFOLK</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="reveal">Client Words</h2>
+        <div class="testimonial-slider reveal">
+            <div class="testi-card">
+                <span class="quote-mark">“</span>
+                <p class="testi-text">Working with Avery was a transformative experience for our brand. He didn't just
+                    design a logo; he gave our company a soul. His attention to detail is unmatched in the industry.</p>
+                <div class="testi-author">
+                    <div class="testi-avatar"
+                        style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100&auto=format&fit=crop'); background-size: cover;">
+                    </div>
+                    <div>
+                        <strong style="display: block;">Marcus Thorne</strong>
+                        <span style="font-size: 0.8rem; color: #666;">CEO, Thorne Tech</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <span class="quote-mark">“</span>
+                <p class="testi-text">Avery possesses a rare combination of artistic vision and business strategy. The
+                    campaign he directed resulted in our highest quarterly sales to date. Highly recommended.</p>
+                <div class="testi-author">
+                    <div class="testi-avatar"
+                        style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop'); background-size: cover;">
+                    </div>
+                    <div>
+                        <strong style="display: block;">Elena Rodriguez</strong>
+                        <span style="font-size: 0.8rem; color: #666;">CMO, Lume Fashion</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="reveal">
+            <span class="serif-subtitle">Recognition</span>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 20px 0;">
+                <span>2024</span>
+                <strong>Awwwards Site of the Day</strong>
+                <span style="color: #666;">Neon Bank Website</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 20px 0;">
+                <span>2023</span>
+                <strong>Clio Award - Silver</strong>
+                <span style="color: #666;">Best Art Direction</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 20px 0;">
+                <span>2022</span>
+                <strong>Type Directors Club</strong>
+                <span style="color: #666;">Typography Excellence</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 20px 0;">
+                <span>2021</span>
+                <strong>Forbes 30 Under 30</strong>
+                <span style="color: #666;">Art & Style</span>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="container">
+        <div class="reveal">
+            <span class="serif-subtitle">Available for new opportunities</span>
+            <br>
+            <a href="mailto:hello@averydavis.com" class="big-email">HELLO@AVERY.DESIGN</a>
+
+            <div style="margin-bottom: 50px;">
+                <p>New York Studio: 142 Bowery, NY 10013</p>
+                <p>Paris Office: 22 Rue de Rivoli, 75004</p>
+            </div>
+
+            <div class="footer-meta">
+                <span>© 2025 Avery Davis.</span>
+                <div style="display: flex; gap: 20px;">
+                    <a href="#">Instagram</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Behance</a>
+                </div>
+                <span>Made with Code</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>
