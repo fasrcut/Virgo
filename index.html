@@ -345,22 +345,37 @@
             overflow: hidden;
         }
 
-        /* --- PORTFOLIO --- */
+        /* --- PORTFOLIO & GRID SYSTEM --- */
+        /* Standard Portfolio Grid (Landscape) */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            /* Default 2 items per row */
             gap: 2.5rem;
+        }
+
+        /* Vertical Grid (CV/MENU) - 4 items per row on PC */
+        .portfolio-grid.vertical-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
         }
 
         .img-wrapper {
             width: 100%;
             height: 220px;
+            /* Default Landscape height */
             overflow: hidden;
             border-radius: 12px;
             position: relative;
             margin-bottom: 1.2rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Taller height for Vertical items (CV/MENU) */
+        .vertical-grid .img-wrapper {
+            height: 350px;
+            /* Portrait height */
         }
 
         .img-wrapper img {
@@ -460,7 +475,6 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        /* ----- Active Tab Pill Effect (Liquid/Glass) ----- */
         .active-tab-bg {
             position: absolute;
             inset: 0;
@@ -468,7 +482,7 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.5); 
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
             border-radius: 50px;
@@ -503,7 +517,7 @@
             transform: translateY(-2px);
         }
 
-        /* ----- Liquid/Glass Effect for PORTFOLIO, CV, MENU ----- */
+        /* Liquid/Glass Effect for PORTFOLIO, CV, MENU */
         .category-btn.active {
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
             backdrop-filter: blur(8px);
@@ -516,7 +530,7 @@
         }
 
         /* ==========================================
-            MOBILE OPTIMIZATION (UPDATED)
+            MOBILE OPTIMIZATION
             ========================================== */
         @media (max-width: 768px) {
 
@@ -526,10 +540,9 @@
                 display: none !important;
             }
 
-            /* 1. កាត់បន្ថយគម្លាត Hero ដើម្បីទាញ Portfolio ឡើងលើ */
             .hero-wrapper {
                 display: flex !important;
-                padding-top: 100px !important; /* ទុកកន្លែងសម្រាប់តែ Navbar */
+                padding-top: 100px !important;
                 padding-bottom: 0px !important;
                 min-height: auto !important;
                 margin-bottom: 0 !important;
@@ -537,31 +550,27 @@
 
             .hero-top-row {
                 flex-direction: column;
-                margin-bottom: 0px !important; /* បំបាត់គម្លាតខាងក្រោម Hero */
+                margin-bottom: 0px !important;
                 text-align: center;
                 gap: 1rem;
                 align-items: center;
                 justify-content: center;
             }
 
-            /* 2. ទាញផ្នែក Showcase ឡើងលើឱ្យជិត Navbar */
             #showcase {
                 padding-top: 10px !important;
                 margin-top: 0 !important;
             }
 
-            /* 3. បង្រួមគម្លាតប៊ូតុង PORTFOLIO/CV/MENU ទៅ Title */
             .top-category-wrapper {
                 margin-bottom: 15px !important;
             }
 
-            /* 4. បង្រួមគម្លាត Title ទៅ Filter Tabs */
             .section-title {
                 font-size: 1.4rem !important;
                 margin-bottom: 10px !important;
             }
 
-            /* 5. បង្រួមគម្លាត Filter Tabs (All/Simple) ទៅ Templates (Cards) */
             .filter-tabs-container {
                 margin-bottom: 20px !important;
             }
@@ -600,9 +609,22 @@
                 font-size: 0.8rem !important;
             }
 
+            /* MOBILE GRID LAYOUT */
             .portfolio-grid {
                 grid-template-columns: 1fr;
+                /* Portfolio: 1 item per row */
                 gap: 2rem;
+            }
+
+            /* Vertical Mode on Mobile: 2 items per row */
+            .portfolio-grid.vertical-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            /* Smaller height for mobile vertical items */
+            .vertical-grid .img-wrapper {
+                height: 220px;
             }
 
             .contact-cards-row {
@@ -803,7 +825,7 @@
             const [projects, setProjects] = useState([]);
             const [activeCategory, setActiveCategory] = useState('PORTFOLIO');
 
-            // --- DATA ត្រូវបានរក្សាទុកដដែល (OLD JS DATA) ---
+            // --- OLD JS DATA KEPT SAME ---
             const allData = {
                 PORTFOLIO: [
                     { id: 1, type: 'premium', title: 'Taylor', price: '$28', img: 'image/Taylor.png', link: 'Taylor.html' },
@@ -827,21 +849,15 @@
             };
             // ------------------------------------------------
 
-            // 2. useEffect សម្រាប់ចាប់ការផ្លាស់ប្តូរ Category ឬ Filter
             useEffect(() => {
-                // ចាប់យកទិន្នន័យតាម Category ដែលកំពុងជ្រើសរើស (PORTFOLIO, CV, ឬ MENU)
                 const currentCategoryData = allData[activeCategory] || [];
-
-                // បង្កើតការច្រោះ (Filter) តាម type (all, simple, premium)
                 let filteredData = currentCategoryData;
                 if (filter !== 'all') {
                     filteredData = currentCategoryData.filter(item => item.type === filter);
                 }
-
                 setProjects(filteredData);
-            }, [activeCategory, filter]); // រត់ម្ដងទៀតនៅពេល activeCategory ឬ filter ផ្លាស់ប្តូរ
+            }, [activeCategory, filter]);
 
-            // Logic ប្តូរចំណងជើង
             const getHeadingText = () => {
                 if (activeCategory === 'PORTFOLIO') return "Selected Portfolios";
                 if (activeCategory === 'CV') return "Selected CV";
@@ -849,11 +865,14 @@
                 return "Selected Portfolios";
             };
 
+            // Check if vertical layout is needed
+            const isVertical = activeCategory === 'CV' || activeCategory === 'MENU';
+
             return (
                 <section id="showcase" className="section-padding">
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3rem' }}>
 
-                        {/* ប៊ូតុងជ្រើសរើសប្រភេទ (PORTFOLIO, CV, MENU) */}
+                        {/* Category Buttons */}
                         <motion.div
                             initial={{ opacity: 0, y: -20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -865,7 +884,7 @@
                                     key={cat}
                                     onClick={() => {
                                         setActiveCategory(cat);
-                                        setFilter('all'); // Reset filter ទៅ all វិញពេលប្តូរ Category
+                                        setFilter('all');
                                     }}
                                     className={`category-btn ${activeCategory === cat ? 'active' : ''}`}
                                 >
@@ -878,7 +897,7 @@
                             {getHeadingText()}
                         </motion.h2>
 
-                        {/* Filter Tabs (All/Simple/Premium) - បង្ហាញគ្រប់ Category */}
+                        {/* Filter Tabs */}
                         <motion.div {...fadeInUp} className="filter-tabs-container">
                             {['all', 'simple', 'premium'].map((tab) => (
                                 <div className="filter-tabs" key={tab}>
@@ -891,7 +910,8 @@
                         </motion.div>
                     </div>
 
-                    <motion.div layout className="portfolio-grid">
+                    {/* Dynamic Grid Class based on Category */}
+                    <motion.div layout className={`portfolio-grid ${isVertical ? 'vertical-grid' : ''}`}>
                         <AnimatePresence mode='popLayout'>
                             {projects.map((item) => (
                                 <motion.div
@@ -906,11 +926,10 @@
                                 >
                                     <div className="img-wrapper">
                                         <a href={item.link} style={{ display: 'block', width: '100%', height: '100%' }}>
-                                            {/* Note: សូមប្រាកដថាអ្នកមានរូបភាពសម្រាប់ CV និង MENU នៅក្នុង Folder image/ */}
                                             <img
                                                 src={item.img}
                                                 alt={item.title}
-                                                onError={(e) => { e.target.src = 'https://via.placeholder.com/400x300/1e1e2e/ffffff?text=No+Image' }} // Fallback ករណីរកមិនឃើញរូប
+                                                onError={(e) => { e.target.src = 'https://via.placeholder.com/400x300/1e1e2e/ffffff?text=No+Image' }}
                                             />
                                         </a>
                                     </div>
@@ -924,7 +943,6 @@
                             ))}
                         </AnimatePresence>
 
-                        {/* បង្ហាញសារបើមិនមានទិន្នន័យ */}
                         {projects.length === 0 && (
                             <motion.div
                                 initial={{ opacity: 0 }}
