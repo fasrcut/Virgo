@@ -460,21 +460,26 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
+        /* ----- Active Tab Pill Effect (Liquid/Glass) ----- */
         .active-tab-bg {
             position: absolute;
             inset: 0;
-            background: var(--primary);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             z-index: -1;
-            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.5);
         }
 
         /* ==========================================
-           MOBILE OPTIMIZATION
-           ========================================== */
+            MOBILE OPTIMIZATION
+            ========================================== */
         @media (max-width: 768px) {
 
-            /* --- 1. HIDE TEXT & IMAGE ON MOBILE --- */
             .mobile-hide-text,
             .glass-pill,
             .hero-right-col {
@@ -493,7 +498,6 @@
                 margin-bottom: 0.5rem !important;
                 text-align: center;
                 gap: 1rem;
-                /* Since almost everything is hidden, this centers the remaining buttons */
                 align-items: center;
                 justify-content: center;
             }
@@ -560,6 +564,52 @@
             .floater {
                 display: none !important;
             }
+        }
+
+        /* --- TOP CATEGORY BUTTONS --- */
+        .top-category-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 10px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ----- កែត្រង់នេះសម្រាប់ PORTFOLIO, CV, MENU (Liquid/Glass Effect) ----- */
+        .category-btn.active {
+            /* Liquid Style */
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            color: white;
+
+            /* Border ស្រាលៗ និងមានពន្លឺពីលើ */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            /* Shadow និង Inner Glow ឱ្យដូចទឹក */
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
@@ -743,31 +793,86 @@
         const Portfolio = () => {
             const [filter, setFilter] = useState('all');
             const [projects, setProjects] = useState([]);
+            const [activeCategory, setActiveCategory] = useState('PORTFOLIO');
 
-            useEffect(() => {
-                const rawProjects = [
-                    { id: 1, type: 'pro', title: 'Taylor', price: '$28', img: 'image/Taylor.png', link: 'Taylor.html' },
-                    { id: 2, type: 'pro', title: 'Chan Dara', price: '$28', img: 'image/chandara.png', link: 'chandara.html' },
+            // --- DATA ត្រូវបានរក្សាទុកដដែល (OLD JS DATA) ---
+            const allData = {
+                PORTFOLIO: [
+                    { id: 1, type: 'premium', title: 'Taylor', price: '$28', img: 'image/Taylor.png', link: 'Taylor.html' },
+                    { id: 2, type: 'premium', title: 'Chan Dara', price: '$28', img: 'image/chandara.png', link: 'chandara.html' },
                     { id: 3, type: 'simple', title: 'THOMAS SMITH', price: '$18', img: 'image/THOMAS SMITH.png', link: 'THOMASSMITH.html' },
-                    { id: 4, type: 'pro', title: 'Bonatica', price: '$28', img: 'image/Bonatica.png', link: 'Bonatica.html' },
+                    { id: 4, type: 'premium', title: 'Bonatica', price: '$28', img: 'image/Bonatica.png', link: 'Bonatica.html' },
                     { id: 5, type: 'simple', title: 'avery', price: '$18', img: 'image/avery.png', link: 'avery.html' },
-                ];
-                const shuffled = [...rawProjects];
-                for (let i = shuffled.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-                }
-                setProjects(shuffled);
-            }, []);
+                ],
+                CV: [
+                    { id: 101, type: 'simple', title: 'Clean Resume', price: '$10', img: 'image/cv_clean.png', link: '#' },
+                    { id: 102, type: 'premium', title: 'Executive Pro', price: '$25', img: 'image/cv_executive.png', link: '#' },
+                    { id: 103, type: 'simple', title: 'Student Entry', price: '$12', img: 'image/cv_student.png', link: '#' },
+                    { id: 104, type: 'premium', title: 'Creative Designer', price: '$22', img: 'image/cv_creative.png', link: '#' },
+                ],
+                MENU: [
+                    { id: 201, type: 'premium', title: 'QR Digital Menu', price: '$45', img: 'image/menu_qr.png', link: '#' },
+                    { id: 202, type: 'simple', title: 'Coffee Shop PDF', price: '$20', img: 'image/menu_coffee.png', link: '#' },
+                    { id: 203, type: 'premium', title: 'Restaurant Tablet', price: '$60', img: 'image/menu_tablet.png', link: '#' },
+                    { id: 204, type: 'simple', title: 'Bar List', price: '$15', img: 'image/menu_bar.png', link: '#' },
+                ]
+            };
+            // ------------------------------------------------
 
-            const filtered = filter === 'all' ? projects : projects.filter(p => p.type === filter);
+            // 2. useEffect សម្រាប់ចាប់ការផ្លាស់ប្តូរ Category ឬ Filter
+            useEffect(() => {
+                // ចាប់យកទិន្នន័យតាម Category ដែលកំពុងជ្រើសរើស (PORTFOLIO, CV, ឬ MENU)
+                const currentCategoryData = allData[activeCategory] || [];
+
+                // បង្កើតការច្រោះ (Filter) តាម type (all, simple, premium)
+                let filteredData = currentCategoryData;
+                if (filter !== 'all') {
+                    filteredData = currentCategoryData.filter(item => item.type === filter);
+                }
+
+                setProjects(filteredData);
+            }, [activeCategory, filter]); // រត់ម្ដងទៀតនៅពេល activeCategory ឬ filter ផ្លាស់ប្តូរ
+
+            // Logic ប្តូរចំណងជើង
+            const getHeadingText = () => {
+                if (activeCategory === 'PORTFOLIO') return "Selected Portfolios";
+                if (activeCategory === 'CV') return "Selected CV";
+                if (activeCategory === 'MENU') return "Selected MENU";
+                return "Selected Portfolios";
+            };
 
             return (
                 <section id="showcase" className="section-padding">
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3rem' }}>
-                        <motion.h2 {...fadeInUp} className="section-title">Selected Portfolios</motion.h2>
+
+                        {/* ប៊ូតុងជ្រើសរើសប្រភេទ (PORTFOLIO, CV, MENU) */}
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="top-category-wrapper"
+                        >
+                            {['PORTFOLIO', 'CV', 'MENU'].map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => {
+                                        setActiveCategory(cat);
+                                        setFilter('all'); // Reset filter ទៅ all វិញពេលប្តូរ Category
+                                    }}
+                                    className={`category-btn ${activeCategory === cat ? 'active' : ''}`}
+                                >
+                                    {cat}
+                                </button>
+                            ))}
+                        </motion.div>
+
+                        <motion.h2 key={activeCategory} {...fadeInUp} className="section-title">
+                            {getHeadingText()}
+                        </motion.h2>
+
+                        {/* Filter Tabs (All/Simple/Premium) - បង្ហាញគ្រប់ Category */}
                         <motion.div {...fadeInUp} className="filter-tabs-container">
-                            {['all', 'simple', 'pro'].map((tab) => (
+                            {['all', 'simple', 'premium'].map((tab) => (
                                 <div className="filter-tabs" key={tab}>
                                     <button onClick={() => setFilter(tab)} className={filter === tab ? 'active' : ''}>
                                         {tab.toUpperCase()}
@@ -779,8 +884,8 @@
                     </div>
 
                     <motion.div layout className="portfolio-grid">
-                        <AnimatePresence>
-                            {filtered.map((item) => (
+                        <AnimatePresence mode='popLayout'>
+                            {projects.map((item) => (
                                 <motion.div
                                     layout
                                     key={item.id}
@@ -793,7 +898,12 @@
                                 >
                                     <div className="img-wrapper">
                                         <a href={item.link} style={{ display: 'block', width: '100%', height: '100%' }}>
-                                            <img src={item.img} alt={item.title} />
+                                            {/* Note: សូមប្រាកដថាអ្នកមានរូបភាពសម្រាប់ CV និង MENU នៅក្នុង Folder image/ */}
+                                            <img
+                                                src={item.img}
+                                                alt={item.title}
+                                                onError={(e) => { e.target.src = 'https://via.placeholder.com/400x300/1e1e2e/ffffff?text=No+Image' }} // Fallback ករណីរកមិនឃើញរូប
+                                            />
                                         </a>
                                     </div>
                                     <div style={{ marginTop: '20px' }}>
@@ -801,11 +911,21 @@
                                             <h3 style={{ fontSize: '1.3rem', fontWeight: '700' }}>{item.title}</h3>
                                             <span style={{ fontWeight: 'bold', color: '#a5b4fc', fontSize: '1.2rem', textShadow: '0 0 10px rgba(99, 102, 241, 0.5)' }}>{item.price}</span>
                                         </div>
-
                                     </div>
                                 </motion.div>
                             ))}
                         </AnimatePresence>
+
+                        {/* បង្ហាញសារបើមិនមានទិន្នន័យ */}
+                        {projects.length === 0 && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px', color: '#94a3b8' }}
+                            >
+                                <p>No items found for this filter.</p>
+                            </motion.div>
+                        )}
                     </motion.div>
                 </section>
             );
