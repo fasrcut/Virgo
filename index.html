@@ -468,15 +468,55 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.5); 
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             z-index: -1;
         }
 
+        /* --- TOP CATEGORY BUTTONS --- */
+        .top-category-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 10px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ----- Liquid/Glass Effect for PORTFOLIO, CV, MENU ----- */
+        .category-btn.active {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
         /* ==========================================
-            MOBILE OPTIMIZATION
+            MOBILE OPTIMIZATION (UPDATED)
             ========================================== */
         @media (max-width: 768px) {
 
@@ -486,30 +526,44 @@
                 display: none !important;
             }
 
+            /* 1. កាត់បន្ថយគម្លាត Hero ដើម្បីទាញ Portfolio ឡើងលើ */
             .hero-wrapper {
                 display: flex !important;
-                padding-top: 120px;
+                padding-top: 100px !important; /* ទុកកន្លែងសម្រាប់តែ Navbar */
                 padding-bottom: 0px !important;
-                min-height: auto;
+                min-height: auto !important;
+                margin-bottom: 0 !important;
             }
 
             .hero-top-row {
                 flex-direction: column;
-                margin-bottom: 0.5rem !important;
+                margin-bottom: 0px !important; /* បំបាត់គម្លាតខាងក្រោម Hero */
                 text-align: center;
                 gap: 1rem;
                 align-items: center;
                 justify-content: center;
             }
 
+            /* 2. ទាញផ្នែក Showcase ឡើងលើឱ្យជិត Navbar */
             #showcase {
-                padding-top: 0 !important;
+                padding-top: 10px !important;
                 margin-top: 0 !important;
             }
 
+            /* 3. បង្រួមគម្លាតប៊ូតុង PORTFOLIO/CV/MENU ទៅ Title */
+            .top-category-wrapper {
+                margin-bottom: 15px !important;
+            }
+
+            /* 4. បង្រួមគម្លាត Title ទៅ Filter Tabs */
             .section-title {
                 font-size: 1.4rem !important;
-                margin-bottom: 1rem !important;
+                margin-bottom: 10px !important;
+            }
+
+            /* 5. បង្រួមគម្លាត Filter Tabs (All/Simple) ទៅ Templates (Cards) */
+            .filter-tabs-container {
+                margin-bottom: 20px !important;
             }
 
             .hero-buttons-container {
@@ -564,52 +618,6 @@
             .floater {
                 display: none !important;
             }
-        }
-
-        /* --- TOP CATEGORY BUTTONS --- */
-        .top-category-wrapper {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .category-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-muted);
-            padding: 10px 30px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Outfit', sans-serif;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        .category-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* ----- កែត្រង់នេះសម្រាប់ PORTFOLIO, CV, MENU (Liquid/Glass Effect) ----- */
-        .category-btn.active {
-            /* Liquid Style */
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-
-            color: white;
-
-            /* Border ស្រាលៗ និងមានពន្លឺពីលើ */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.5);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-            /* Shadow និង Inner Glow ឱ្យដូចទឹក */
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
