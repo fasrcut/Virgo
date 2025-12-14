@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart E-Menu (Fixed Pop-up)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --primary: #2ECC71;
+            --primary-dark: #27AE60;
+            --primary-light: #EAFAF1;
+            --price-color: #E67E22;
+
+            --bg-body: #f8f9fa;
+            --bg-card: #ffffff;
+            --bg-input: #f0f2f5;
+            --text-main: #2D3436;
+            --text-sub: #636E72;
+            --border-color: #eee;
+            --shadow-card: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+            --radius-l: 25px;
+            --radius-m: 16px;
+            --radius-s: 10px;
+            --ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Dark Theme Override */
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-card: #1E1E1E;
+            --bg-input: #2C2C2C;
+            --text-main: #E0E0E0;
+            --text-sub: #A0A0A0;
+            --border-color: #333;
+            --primary-light: #1b3a24;
+            --shadow-card: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Kantumruy Pro', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            position: relative;
+        }
+
+        /* --- HEADER --- */
+        .header-bg {
+            background: rgba(46, 204, 113, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px 15px 10px;
+            border-bottom-left-radius: var(--radius-l);
+            border-bottom-right-radius: var(--radius-l);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(46, 204, 113, 0.25);
+        }
+
+        .header-flex-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 50px;
+            border: 2px solid transparent;
+            outline: none;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            background: white;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        /* Info Icon Pulse */
+        .info-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            backdrop-filter: blur(5px);
+            animation: softPulse 2s infinite;
+            transition: 0.3s;
+        }
+
+        .info-btn:hover {
+            background: white;
+            color: var(--primary);
+            transform: rotate(15deg);
+        }
+
+        .info-btn i {
+            font-size: 1.1rem;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .info-btn:hover i {
+            color: var(--primary);
+        }
+
+        @keyframes softPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* Categories */
+        .cat-row {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 5px 0;
+            scrollbar-width: none;
+        }
+
+        .cat-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            min-width: 65px;
+            opacity: 0.9;
+            transition: 0.3s;
+        }
+
+        .cat-card.active,
+        .cat-card:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .cat-icon-box {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cat-card.active .cat-icon-box {
+            background: white;
+            color: var(--primary);
+        }
+
+        .cat-name {
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Content */
+        .content-body {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .sec-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-left: 4px solid var(--primary);
+            padding-left: 10px;
+            color: var(--text-main);
+        }
+
+        .h-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 5px 5px 20px;
+            scrollbar-width: none;
+            margin-bottom: 10px;
+        }
+
+        .h-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card-favour {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-m);
+            min-width: 260px;
+            max-width: 260px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card-favour:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .c-img-wrap {
+            height: 140px;
+            position: relative;
+            background: #eee;
+        }
+
+        .c-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .c-body {
+            padding: 15px;
+        }
+
+        .c-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-main);
+        }
+
+        .c-kh {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            font-family: 'Kantumruy Pro';
+            margin-bottom: 8px;
+        }
+
+        .c-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 10px;
+        }
+
+        .c-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--price-color);
+        }
+
+        .c-riel {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            font-family: 'Kantumruy Pro';
+        }
+
+        .v-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 600px) {
+            .v-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 900px) {
+            .v-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .app-wrapper {
+                border-radius: 20px;
+                margin: 20px 0;
+                overflow: hidden;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            }
+
+            .header-bg {
+                border-radius: 20px 20px 0 0;
+            }
+        }
+
+        .card-list {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-m);
+            padding: 10px;
+            display: flex;
+            gap: 15px;
+            box-shadow: var(--shadow-card);
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .card-list:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
+        }
+
+        .l-img-box {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            flex-shrink: 0;
+            background: #eee;
+            border-radius: var(--radius-s);
+        }
+
+        .l-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-s);
+        }
+
+        .l-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .l-title {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        .l-kh {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            font-family: 'Kantumruy Pro';
+            margin-bottom: 5px;
+        }
+
+        .l-usd {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--price-color);
+        }
+
+        .l-riel {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            font-family: 'Kantumruy Pro';
+            margin-left: 5px;
+        }
+
+        .badge-container {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 5;
+            align-items: flex-end;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+        }
+
+        .b-spicy {
+            background: #e74c3c;
+        }
+
+        .b-best {
+            background: #f1c40f;
+            color: #333;
+        }
+
+        .sold-out-card {
+            opacity: 0.6;
+            filter: grayscale(100%);
+            pointer-events: none;
+        }
+
+        .sold-out-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 15px;
+            border: 2px solid white;
+            font-weight: 800;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .tabs-wrap {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tab-pill {
+            padding: 8px 20px;
+            border-radius: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-sub);
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+
+        .tab-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* --- INFO OVERLAY (NEW CENTERED FIX) --- */
+        .info-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            /* Backdrop Dim */
+            backdrop-filter: blur(5px);
+            z-index: 3000;
+            /* High Z-Index */
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .info-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            width: 90%;
+            max-width: 350px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .info-overlay.active .info-card {
+            transform: scale(1);
+        }
+
+        /* Close X for Info Card */
+        .info-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .info-close-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .info-row i {
+            width: 24px;
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* Theme Switcher */
+        .theme-section {
+            margin-top: 20px;
+        }
+
+        .theme-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .theme-options {
+            display: flex;
+            gap: 8px;
+            background: var(--border-color);
+            padding: 5px;
+            border-radius: 12px;
+        }
+
+        .theme-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 8px;
+            color: var(--text-sub);
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .theme-btn.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Detail Modal */
+        .detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s var(--ease);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .detail-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .detail-card {
+            background: var(--bg-card);
+            width: 100%;
+            max-width: 550px;
+            height: 90vh;
+            border-radius: 30px 30px 0 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(100%);
+            transition: transform 0.3s var(--ease);
+            position: relative;
+        }
+
+        .detail-modal.active .detail-card {
+            transform: translateY(0);
+        }
+
+        .drag-handle-bar {
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent);
+        }
+
+        .drag-pill {
+            width: 50px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .detail-modal {
+                align-items: center;
+            }
+
+            .detail-card {
+                height: auto;
+                max-height: 85vh;
+                border-radius: 20px;
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            .detail-modal.active .detail-card {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            .drag-handle-bar {
+                display: none;
+            }
+        }
+
+        .d-hero {
+            height: 260px;
+            position: relative;
+            flex-shrink: 0;
+            background: #eee;
+        }
+
+        .d-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .d-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: var(--text-main);
+            z-index: 20;
+        }
+
+        .d-content {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .d-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        .d-kh {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            font-family: 'Kantumruy Pro';
+            margin-bottom: 10px;
+        }
+
+        .d-price-box {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 10px;
+            background: var(--primary-light);
+            padding: 10px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .dp-usd {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .dp-riel {
+            font-size: 1rem;
+            color: var(--primary-dark);
+            font-family: 'Kantumruy Pro';
+        }
+
+        .opt-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .opt-name {
+            color: var(--text-main);
+        }
+
+        .d-footer-close {
+            margin-top: 20px;
+            width: 100%;
+            padding: 15px;
+            background: var(--border-color);
+            color: var(--text-main);
+            font-weight: 700;
+            text-align: center;
+            border-radius: 15px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .desc-text {
+            color: var(--text-sub);
+        }
+
+        .no-result {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-sub);
+            width: 100%;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-wrapper">
+        <header class="header-bg">
+            <div class="header-flex-row">
+                <div class="logo">Pizza hub</div>
+                <div class="search-wrap">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search..."
+                        onkeyup="handleSearch()">
+                </div>
+                <div class="info-btn" onclick="toggleInfo()">
+                    <i class="fas fa-info"></i>
+                </div>
+            </div>
+            <div class="cat-row" id="categoriesContainer"></div>
+        </header>
+
+        <div class="info-overlay" id="infoOverlay">
+            <div class="info-card">
+                <div class="info-close-btn" onclick="toggleInfo()"><i class="fas fa-times"></i></div>
+
+                <h3 style="text-align:center; margin-bottom:20px; color:var(--primary); font-weight:800;">Information
+                </h3>
+
+                <div class="info-row">
+                    <i class="fas fa-wifi"></i>
+                    <div>
+                        <div style="font-size:0.8rem; color:var(--text-sub)">WiFi Name</div>
+                        <strong>FreeGuest_5G</strong>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <i class="fas fa-key"></i>
+                    <div>
+                        <div style="font-size:0.8rem; color:var(--text-sub)">Password</div>
+                        <strong>12345678</strong>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <div style="font-size:0.8rem; color:var(--text-sub)">Open Hours</div>
+                        <strong>7:00 AM - 9:00 PM</strong>
+                    </div>
+                </div>
+
+                <div class="theme-section">
+                    <div class="theme-title">Display Theme</div>
+                    <div class="theme-options">
+                        <button class="theme-btn" id="btn-light" onclick="setTheme('light')" title="Light"><i
+                                class="fas fa-sun"></i></button>
+                        <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')" title="Dark"><i
+                                class="fas fa-moon"></i></button>
+                        <button class="theme-btn active" id="btn-system" onclick="setTheme('system')" title="System"><i
+                                class="fas fa-desktop"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <div class="sec-header">
+                <span class="sec-title">Featured / ពេញនិយម</span>
+            </div>
+            <div class="h-grid" id="featuredList"></div>
+            <div class="tabs-wrap" id="smartFilterContainer"></div>
+            <div class="v-grid" id="mainList"></div>
+        </div>
+    </div>
+
+    <div class="detail-modal" id="detailModal">
+        <div class="detail-card" id="detailCard">
+            <div class="drag-handle-bar">
+                <div class="drag-pill"></div>
+            </div>
+            <div class="d-hero">
+                <img src="" id="d-img" class="d-img">
+                <div class="d-close" onclick="closeDetail()"><i class="fas fa-times"></i></div>
+                <div class="badge-container" id="d-badges"></div>
+            </div>
+            <div class="d-content">
+                <div class="d-title" id="d-title">Title</div>
+                <div class="d-kh" id="d-kh">ឈ្មោះខ្មែរ</div>
+                <div class="d-price-box">
+                    <span class="dp-usd" id="d-usd">$0.00</span>
+                    <span class="dp-riel" id="d-riel">0 ៛</span>
+                </div>
+                <p class="desc-text" style="margin-bottom:15px;">
+                    Delicious dish prepared with fresh ingredients. <br>
+                    ម្ហូបដ៏ឈ្ងុយឆ្ងាញ់ដែលចម្អិនដោយគ្រឿងផ្សំស្រស់ៗ។
+                </p>
+                <div
+                    style="font-weight:700; margin-bottom:10px; border-bottom:1px solid var(--border-color); padding-bottom:5px; color:var(--text-main)">
+                    Options</div>
+                <div id="d-options"></div>
+                <button class="d-footer-close" onclick="closeDetail()">Close / បិទ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CONFIG = { exchange_rate: 4100, default_theme: 'system' };
+        const CATEGORY_ICONS = { "All Menu": "fas fa-th", "Burger": "fas fa-hamburger", "Pizza": "fas fa-pizza-slice", "Coffee": "fas fa-coffee", "Drinks": "fas fa-cocktail", "Chicken": "fas fa-drumstick-bite", "Rice": "fas fa-bowl-rice", "Noodles": "fas fa-utensils", "Soup": "fas fa-spoon", "Dessert": "fas fa-ice-cream", "Steak": "fas fa-bone" };
+        const FILTERS = Object.keys(CATEGORY_ICONS);
+
+        const MENU_ITEMS = [
+            // --- BURGER (1-5) ---
+            { id: 1, name_en: "Classic Beef Burger", name_kh: "ប៊ឺហ្គឺរសាច់គោបុរាណ", category: "Burger", price: 6.50, image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 2, name_en: "Double Cheese Burger", name_kh: "ប៊ឺហ្គឺរឈីសពីរជាន់", category: "Burger", price: 8.00, image: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 4, name_en: "Spicy BBQ Burger", name_kh: "ប៊ឺហ្គឺរ BBQ ហឹរ", category: "Burger", price: 7.50, image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: true, is_best_seller: false, is_available: true } },
+            { id: 5, name_en: "Veggie Mushroom Burger", name_kh: "ប៊ឺហ្គឺរបន្លែផ្សិត", category: "Burger", price: 6.00, image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+
+            // --- PIZZA (6-10) ---
+            { id: 6, name_en: "Pepperoni Feast", name_kh: "ភីហ្សាសាច់ក្រហម", category: "Pizza", price: 12.00, image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 7, name_en: "Hawaiian Paradise", name_kh: "ភីហ្សាហាវ៉ៃ", category: "Pizza", price: 11.50, image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 8, name_en: "Seafood Deluxe", name_kh: "ភីហ្សាគ្រឿងសមុទ្រ", category: "Pizza", price: 14.00, image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 9, name_en: "Four Cheese Pizza", name_kh: "ភីហ្សាឈីស ៤ មុខ", category: "Pizza", price: 10.00, image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 10, name_en: "Veggie Supreme", name_kh: "ភីហ្សាបន្លែរួម", category: "Pizza", price: 9.50, image: "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+
+            // --- COFFEE (11-15) ---
+            { id: 11, name_en: "Hot Cappuccino", name_kh: "កាពូឈីណូក្តៅ", category: "Coffee", price: 3.50, image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 12, name_en: "Iced Caramel Macchiato", name_kh: "ការ៉ាមែលម៉ាគីយ៉ាតូ", category: "Coffee", price: 4.20, image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 13, name_en: "Americano", name_kh: "អាមេរិកាណូ", category: "Coffee", price: 2.50, image: "https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 15, name_en: "Espresso Shot", name_kh: "អេសប្រេសសូ", category: "Coffee", price: 2.00, image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+
+            // --- DRINKS (16-20) ---
+            { id: 16, name_en: "Mango Passion Frappe", name_kh: "ស្វាយផាសិនក្រឡុក", category: "Drinks", price: 3.50, image: "https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 17, name_en: "Iced Lemon Tea", name_kh: "តែក្រូចឆ្មារ", category: "Drinks", price: 2.50, image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 19, name_en: "Blue Hawaii Soda", name_kh: "ប្លូហាវ៉ៃសូដា", category: "Drinks", price: 3.00, image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+
+            // --- CHICKEN (21-25) ---
+            { id: 21, name_en: "Crispy Fried Chicken", name_kh: "មាន់បំពងស្រួយ", category: "Chicken", price: 5.00, image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 22, name_en: "Spicy Korean Wings", name_kh: "ស្លាបមាន់កូរ៉េហឹរ", category: "Chicken", price: 6.50, image: "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: true, is_best_seller: true, is_available: true } },
+            { id: 24, name_en: "Grilled Chicken Chop", name_kh: "មាន់អាំងទឹកឃ្មុំ", category: "Chicken", price: 7.00, image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 25, name_en: "Chicken Popcorn", name_kh: "មាន់ប៉ុបខន", category: "Chicken", price: 3.50, image: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+
+            // --- RICE (26-30) ---
+            { id: 26, name_en: "Lok Lak Beef Rice", name_kh: "បាយឡុកឡាក់សាច់គោ", category: "Rice", price: 5.50, image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 28, name_en: "Hainanese Chicken Rice", name_kh: "បាយមាន់ហៃណាំ", category: "Rice", price: 5.00, image: "https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 29, name_en: "Basil Minced Pork Rice", name_kh: "បាយឆាក្ព្រៅសាច់ជ្រូក", category: "Rice", price: 4.50, image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: true, is_best_seller: false, is_available: true } },
+
+            // --- NOODLES (31-35) ---
+            { id: 31, name_en: "Spicy Seafood Pasta", name_kh: "ប៉ាស្តាគ្រឿងសមុទ្រហឹរ", category: "Noodles", price: 8.50, image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: true, is_best_seller: true, is_available: true } },
+            { id: 32, name_en: "Carbonara Spaghetti", name_kh: "ស្ប៉ាហ្គេទីកាបូណារ៉ា", category: "Noodles", price: 8.00, image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 33, name_en: "Beef Fried Noodles", name_kh: "មីឆាសាច់គោ", category: "Noodles", price: 5.00, image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 34, name_en: "Pad Thai", name_kh: "ផាត់ថៃ", category: "Noodles", price: 6.00, image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 35, name_en: "Japanese Ramen", name_kh: "មីរ៉ាមេនជប៉ុន", category: "Noodles", price: 7.50, image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+
+            // --- SOUP (36-40) ---
+            { id: 36, name_en: "Tom Yum Kung", name_kh: "តុងយាំគ្រឿងសមុទ្រ", category: "Soup", price: 9.00, image: "https://images.unsplash.com/photo-1546272989-40c92939c6c2?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: true, is_best_seller: true, is_available: true } },
+            { id: 39, name_en: "Miso Soup", name_kh: "ស៊ុបមីសូ", category: "Soup", price: 3.00, image: "https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 40, name_en: "Pumpkin Soup", name_kh: "ស៊ុបល្ពៅ", category: "Soup", price: 4.00, image: "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+
+            // --- DESSERT (41-45) ---
+            { id: 41, name_en: "Chocolate Lava Cake", name_kh: "នំសូកូឡាឡាវ៉ា", category: "Dessert", price: 5.00, image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 44, name_en: "Vanilla Ice Cream", name_kh: "ការ៉េមវ៉ានីឡា", category: "Dessert", price: 2.50, image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+
+            // --- STEAK (46-50) ---
+            { id: 46, name_en: "Ribeye Steak", name_kh: "សាច់គោ Ribeye អាំង", category: "Steak", price: 25.00, image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80", settings: { is_featured: true, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 47, name_en: "T-Bone Steak", name_kh: "សាច់គោ T-Bone", category: "Steak", price: 28.00, image: "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: true, is_available: true } },
+            { id: 49, name_en: "Pork Chop", name_kh: "សាច់ជ្រូកអាំង", category: "Steak", price: 12.00, image: "https://images.unsplash.com/photo-1432139555190-58524dae6a55?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } },
+            { id: 50, name_en: "Lamb Chops", name_kh: "សាច់ចៀមអាំង", category: "Steak", price: 24.00, image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80", settings: { is_featured: false, is_spicy: false, is_best_seller: false, is_available: true } }
+        ];
+        const OPTIONS_DB = [{ name: "Small Size", price: -1 }, { name: "Regular Size", price: 0 }, { name: "Large Size", price: 1.5 }];
+
+        window.onload = () => {
+            initTheme();
+            renderCategories();
+            renderFilters();
+            renderFeatured();
+            renderMainList(MENU_ITEMS);
+        };
+
+        function renderCategories() {
+            document.getElementById('categoriesContainer').innerHTML = Object.keys(CATEGORY_ICONS).filter(k => k !== "All Menu").map(key => `
+                <div class="cat-card" onclick="applySmartFilter('${key}')">
+                    <div class="cat-icon-box"><i class="${CATEGORY_ICONS[key]}"></i></div>
+                    <span class="cat-name">${key}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderFilters() {
+            document.getElementById('smartFilterContainer').innerHTML = FILTERS.map(key => `
+                <button class="tab-pill ${key === 'All Menu' ? 'active' : ''}" onclick="applySmartFilter('${key}', this)">${key}</button>
+            `).join('');
+        }
+
+        function renderFeatured() {
+            const list = MENU_ITEMS.filter(item => item.settings.is_featured);
+            document.getElementById('featuredList').innerHTML = list.map(item => createCardHTML(item, 'card-favour', true)).join('');
+        }
+
+        function renderMainList(data) {
+            if (data.length === 0) {
+                document.getElementById('mainList').innerHTML = '<div class="no-result">No items found / រកមិនឃើញ</div>';
+                return;
+            }
+            document.getElementById('mainList').innerHTML = data.map(item => createCardHTML(item, 'card-list', false)).join('');
+        }
+
+        function createCardHTML(item, className, isFeatured) {
+            const rielPrice = (item.price * CONFIG.exchange_rate).toLocaleString();
+            let badges = '';
+            if (item.settings.is_spicy) badges += `<div class="badge b-spicy"><i class="fas fa-fire"></i> Hot</div>`;
+            else if (item.settings.is_best_seller) badges += `<div class="badge b-best"><i class="fas fa-star"></i> Best</div>`;
+            const soldOutClass = item.settings.is_available ? '' : 'sold-out-card';
+            const soldOutOverlay = item.settings.is_available ? '' : `<div class="sold-out-overlay">អស់ហើយ</div>`;
+
+            if (isFeatured) {
+                return `
+                <div class="${className} ${soldOutClass}" onclick="openDetail(${item.id})">
+                    <div class="c-img-wrap"><img src="${item.image}" class="c-img">${soldOutOverlay}<div class="badge-container">${badges}</div></div>
+                    <div class="c-body"><div class="c-title">${item.name_en}</div><div class="c-kh">${item.name_kh}</div><div class="c-footer"><span class="c-price">$${item.price.toFixed(2)}</span><span class="c-riel">${rielPrice} ៛</span></div></div>
+                </div>`;
+            } else {
+                return `
+                <div class="${className} ${soldOutClass}" onclick="openDetail(${item.id})">
+                    <div class="l-img-box"><img src="${item.image}" class="l-img">${soldOutOverlay}</div>
+                    <div class="l-info"><div class="badge-container" style="top:0; right:0;">${badges}</div><div class="l-title">${item.name_en}</div><div class="l-kh">${item.name_kh}</div><div><span class="l-usd">$${item.price.toFixed(2)}</span> <span class="l-riel">${rielPrice} ៛</span></div></div>
+                </div>`;
+            }
+        }
+
+        function applySmartFilter(categoryName, btn) {
+            if (btn) {
+                document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-pill').forEach(b => {
+                    if (b.innerText === categoryName) { b.classList.add('active'); b.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); }
+                    else b.classList.remove('active');
+                });
+            }
+            if (categoryName === 'All Menu') renderMainList(MENU_ITEMS);
+            else renderMainList(MENU_ITEMS.filter(item => item.category === categoryName));
+        }
+
+        function handleSearch() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = MENU_ITEMS.filter(item => item.name_en.toLowerCase().includes(q) || item.name_kh.includes(q));
+            renderMainList(filtered);
+        }
+
+        // --- NEW TOGGLE INFO LOGIC (Fixed) ---
+        function toggleInfo() {
+            const overlay = document.getElementById('infoOverlay');
+            overlay.classList.toggle('active');
+        }
+
+        // Close Info when clicking outside card
+        document.getElementById('infoOverlay').addEventListener('click', function (e) {
+            if (e.target === this) toggleInfo();
+        });
+
+        function openDetail(id) {
+            const item = MENU_ITEMS.find(i => i.id === id);
+            document.getElementById('d-img').src = item.image;
+            document.getElementById('d-title').innerText = item.name_en;
+            document.getElementById('d-kh').innerText = item.name_kh;
+            document.getElementById('d-usd').innerText = "$" + item.price.toFixed(2);
+            document.getElementById('d-riel').innerText = (item.price * CONFIG.exchange_rate).toLocaleString() + " ៛";
+
+            let badges = '';
+            if (item.settings.is_spicy) badges += `<div class="badge b-spicy"><i class="fas fa-fire"></i> Hot</div>`;
+            if (item.settings.is_best_seller) badges += `<div class="badge b-best"><i class="fas fa-star"></i> Best Seller</div>`;
+            document.getElementById('d-badges').innerHTML = badges;
+
+            document.getElementById('d-options').innerHTML = OPTIONS_DB.map(opt => `
+                <div class="opt-item"><span class="opt-name">${opt.name}</span><span style="color:var(--text-sub)">${opt.price > 0 ? '+$' + opt.price.toFixed(2) : 'Standard'}</span></div>
+            `).join('');
+            document.getElementById('detailModal').classList.add('active');
+        }
+
+        function closeDetail() { document.getElementById('detailModal').classList.remove('active'); }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || CONFIG.default_theme;
+            setTheme(savedTheme);
+        }
+
+        function setTheme(mode) {
+            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-' + mode).classList.add('active');
+            if (mode === 'system') {
+                const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                localStorage.setItem('theme', 'system');
+            } else {
+                document.documentElement.setAttribute('data-theme', mode);
+                localStorage.setItem('theme', mode);
+            }
+        }
+
+        let touchStartY = 0;
+        const modal = document.getElementById('detailCard');
+        modal.addEventListener('touchstart', e => { touchStartY = e.changedTouches[0].screenY; }, { passive: true });
+        modal.addEventListener('touchend', e => { if (e.changedTouches[0].screenY > touchStartY + 100) closeDetail(); }, { passive: true });
+        document.getElementById('detailModal').addEventListener('click', function (e) { if (e.target === this) closeDetail(); });
+        document.addEventListener('keydown', function (e) { if (e.key === "Escape") closeDetail(); });
+
+    </script>
+</body>
+
+</html>

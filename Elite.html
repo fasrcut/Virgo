@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Dining (Smart Header)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* DARK MODE (Default) */
+            --primary: #ff4757;
+            --accent: #ffa502;
+            --dark-bg: #0f1016;
+            --card-bg: #1f222e;
+            --text-white: #ffffff;
+            --text-gray: #a4b0be;
+            --input-bg: #2f3542;
+            --sticky-bg: rgba(15, 16, 22, 0.95);
+            /* High opacity for fixed header */
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- LIGHT MODE VARIABLES --- */
+        body.light-mode {
+            --dark-bg: #f1f2f6;
+            --card-bg: #ffffff;
+            --text-white: #2f3542;
+            --text-gray: #57606f;
+            --input-bg: #dfe4ea;
+            --sticky-bg: rgba(241, 242, 246, 0.95);
+            --border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 71, 87, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(30, 144, 255, 0.05) 0%, transparent 20%);
+            color: var(--text-white);
+            min-height: 100vh;
+            /* PADDING TOP IS CRITICAL: Header(80px) + Filter(60px) space */
+            padding-top: 140px;
+        }
+
+        /* --- SMART HEADER --- */
+        header {
+            padding: 15px 20px;
+            background: var(--sticky-bg);
+            /* Use solid/blur bg */
+            backdrop-filter: blur(10px);
+            position: fixed;
+            /* Fixed position */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+            /* Smooth slide */
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Class to hide header */
+        header.hide-smart {
+            transform: translateY(-100%);
+        }
+
+        .header-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand-logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-white);
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-logo span {
+            color: var(--primary);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--input-bg);
+            border: none;
+            padding: 12px 20px;
+            padding-left: 45px;
+            padding-right: 45px;
+            border-radius: 30px;
+            color: var(--text-white);
+            font-size: 0.95rem;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 4px 20px rgba(255, 71, 87, 0.2);
+        }
+
+        .search-box .fa-search {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .search-box .theme-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px;
+            z-index: 10;
+        }
+
+        .search-box .theme-toggle:hover {
+            color: var(--primary);
+            transform: translateY(-50%) rotate(20deg);
+        }
+
+        /* --- SMART FILTER BAR --- */
+        .sticky-wrapper {
+            position: fixed;
+            /* Fixed to coordinate with header */
+            top: 78px;
+            /* Initially sits below header */
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            background: var(--sticky-bg);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: top 0.3s ease-in-out;
+            /* Smooth move */
+        }
+
+        /* Class to move filter up when header hides */
+        .sticky-wrapper.move-up {
+            top: 0;
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 5px 20px;
+            scrollbar-width: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .filter-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            background: transparent;
+            color: var(--text-gray);
+            border: 1px solid var(--text-gray);
+            padding: 8px 20px;
+            border-radius: 30px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .filter-btn:hover {
+            opacity: 1;
+            border-color: var(--text-white);
+            color: var(--text-white);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            opacity: 1;
+        }
+
+        /* --- MENU GRID --- */
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .food-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 25px;
+            }
+        }
+
+        /* --- CARD DESIGN --- */
+        .food-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 71, 87, 0.3);
+        }
+
+        .card-img-box {
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+            background: #2d3436;
+        }
+
+        .card-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .food-card:hover .card-img-box img {
+            transform: scale(1.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .badge.bestseller {
+            background: linear-gradient(45deg, #ff9f43, #ff6b6b);
+        }
+
+        .badge.spicy {
+            background: linear-gradient(45deg, #eb3b5a, #fa8231);
+        }
+
+        .badge.new {
+            background: linear-gradient(45deg, #20bf6b, #0fb9b1);
+        }
+
+        .card-details {
+            padding: 15px;
+        }
+
+        .card-header h3 {
+            font-size: 1rem;
+            line-height: 1.3;
+            color: var(--text-white);
+            margin-bottom: 5px;
+        }
+
+        .price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .card-desc {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            /* Higher Z-index than header */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 450px;
+            border-radius: 25px;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: 0.3s;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-overlay.open .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-img-wrapper {
+            position: relative;
+            height: 250px;
+            background: #2d3436;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-tags {
+            margin-bottom: 10px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(128, 128, 128, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: var(--text-gray);
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-white);
+        }
+
+        .modal-desc {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .modal-price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--input-bg);
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .m-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .m-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="header-row">
+            <div class="brand-logo">Elite<span style="color:var(--primary)">.</span></div>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-sun theme-toggle" id="theme-btn" onclick="toggleTheme()"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="sticky-wrapper" id="filter-bar">
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterMenu('all', this)">All</button>
+            <button class="filter-btn" onclick="filterMenu('main', this)">🔥 Main Dish</button>
+            <button class="filter-btn" onclick="filterMenu('snack', this)">🍟 Snacks</button>
+            <button class="filter-btn" onclick="filterMenu('drink', this)">🍹 Drinks</button>
+            <button class="filter-btn" onclick="filterMenu('dessert', this)">🍰 Dessert</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="food-grid" id="menu-container"></div>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-img-wrapper">
+                <img src="" id="m-img" class="modal-img">
+                <div class="modal-close" onclick="closeModalBtn()">&times;</div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-tags" id="m-tags"></div>
+                <h2 class="modal-title" id="m-title">Title</h2>
+                <p class="modal-desc" id="m-desc">Description</p>
+                <div class="modal-price-box">
+                    <span class="m-label">Price per portion</span>
+                    <span class="m-price" id="m-price">$0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const menuItems = [
+            // --- MAIN DISHES ---
+            { id: 1, name: "Grilled Salmon", price: 25.00, category: "main", badge: "bestseller", desc: "Fresh Atlantic salmon grilled with herbs.", img: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?q=80&w=1920" },
+            { id: 2, name: "Ribeye Steak", price: 32.50, category: "main", badge: "new", desc: "Juicy Ribeye steak served with fries.", img: "https://images.unsplash.com/photo-1546241072-48010ad2862c?q=80&w=1920" },
+            { id: 3, name: "Italian Pasta", price: 18.00, category: "main", badge: null, desc: "Classic carbonara with parmesan cheese.", img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1920" },
+            { id: 4, name: "Lobster Thermidor", price: 45.00, category: "main", badge: "bestseller", desc: "Baked lobster with creamy wine sauce.", img: "https://images.unsplash.com/photo-1599507593362-50fa5d8ddd29?q=80&w=1920" },
+            { id: 5, name: "BBQ Pork Ribs", price: 22.00, category: "main", badge: "spicy", desc: "Slow-cooked ribs with spicy BBQ glaze.", img: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920" },
+            { id: 6, name: "Roasted Chicken", price: 16.50, category: "main", badge: null, desc: "Whole roasted chicken with herbs.", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=1920" },
+            { id: 7, name: "Seafood Paella", price: 28.00, category: "main", badge: null, desc: "Spanish rice dish with shrimp and mussels.", img: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?q=80&w=1920" },
+            { id: 8, name: "Lamb Chops", price: 30.00, category: "main", badge: "new", desc: "Grilled lamb chops with mint sauce.", img: "https://images.unsplash.com/photo-1615937691194-97dbd3f3e29b?q=80&w=1920" },
+            { id: 9, name: "Sushi Platter", price: 24.00, category: "main", badge: null, desc: "Assorted fresh sashimi and nigiri.", img: "https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1920" },
+            { id: 10, name: "T-Bone Steak", price: 35.00, category: "main", badge: null, desc: "Large T-Bone steak grilled to perfection.", img: "https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1920" },
+            { id: 11, name: "Duck Confit", price: 26.00, category: "main", badge: null, desc: "Crispy duck leg with roasted potatoes.", img: "https://images.unsplash.com/photo-1614107151491-6876eecbff89?q=80&w=1920" },
+            { id: 12, name: "Beef Lasagna", price: 15.00, category: "main", badge: null, desc: "Layers of pasta, meat sauce, and cheese.", img: "https://images.unsplash.com/photo-1574868233972-1e9c3c27e42f?q=80&w=1920" },
+            { id: 13, name: "Fish and Chips", price: 14.50, category: "main", badge: null, desc: "Battered fish with tartar sauce.", img: "https://images.unsplash.com/photo-1595678888982-f772410f9e31?q=80&w=1920" },
+            { id: 14, name: "Shrimp Scampi", price: 19.00, category: "main", badge: null, desc: "Shrimp in garlic butter lemon sauce.", img: "https://images.unsplash.com/photo-1625938145744-e38051524294?q=80&w=1920" },
+            { id: 15, name: "Mushroom Risotto", price: 17.00, category: "main", badge: null, desc: "Creamy rice with wild mushrooms.", img: "https://images.unsplash.com/photo-1633966835941-ec4608c79c88?q=80&w=1920" },
+
+            // --- SNACKS ---
+            { id: 16, name: "Classic Burger", price: 10.00, category: "snack", badge: "bestseller", desc: "Beef patty with lettuce and tomato.", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1920" },
+            { id: 17, name: "French Fries", price: 5.00, category: "snack", badge: null, desc: "Crispy salted golden fries.", img: "https://images.unsplash.com/photo-1630384060421-a431e4cad84f?q=80&w=1920" },
+            { id: 18, name: "Chicken Wings", price: 9.00, category: "snack", badge: "spicy", desc: "Spicy buffalo wings with ranch.", img: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?q=80&w=1920" },
+            { id: 19, name: "Nachos Supreme", price: 11.00, category: "snack", badge: null, desc: "Chips with cheese, jalapenos, and beef.", img: "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?q=80&w=1920" },
+            { id: 20, name: "Club Sandwich", price: 12.00, category: "snack", badge: null, desc: "Chicken, bacon, lettuce, and tomato.", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?q=80&w=1920" },
+            { id: 21, name: "Spring Rolls", price: 6.00, category: "snack", badge: null, desc: "Vegetable filled crispy rolls.", img: "https://images.unsplash.com/photo-1544681280-d2dc0c1a6089?q=80&w=1920" },
+            { id: 22, name: "Onion Rings", price: 5.50, category: "snack", badge: null, desc: "Battered and fried onion rings.", img: "https://images.unsplash.com/photo-1639024471283-03518883512d?q=80&w=1920" },
+            { id: 23, name: "Tacos", price: 8.00, category: "snack", badge: "new", desc: "Soft shell beef tacos with salsa.", img: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?q=80&w=1920" },
+            { id: 24, name: "Garlic Bread", price: 4.50, category: "snack", badge: null, desc: "Toasted bread with garlic butter.", img: "https://images.unsplash.com/photo-1619535860434-7f0863384d19?q=80&w=1920" },
+            { id: 25, name: "Caesar Salad", price: 9.00, category: "snack", badge: null, desc: "Lettuce, croutons, and parmesan.", img: "https://images.unsplash.com/photo-1546793665-c74683f339c1?q=80&w=1920" },
+            { id: 26, name: "Mozzarella Sticks", price: 7.00, category: "snack", badge: null, desc: "Fried cheese sticks with marinara.", img: "https://images.unsplash.com/photo-1548340748-6d2b7d7da280?q=80&w=1920" },
+            { id: 27, name: "Hot Dog", price: 6.50, category: "snack", badge: null, desc: "Grilled sausage in a bun.", img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1920" },
+            { id: 28, name: "Quesadilla", price: 8.50, category: "snack", badge: null, desc: "Cheese and chicken grilled tortilla.", img: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?q=80&w=1920" },
+            { id: 29, name: "Dumplings", price: 7.50, category: "snack", badge: null, desc: "Steamed pork and chive dumplings.", img: "https://images.unsplash.com/photo-1541696490865-e6f72421bfcc?q=80&w=1920" },
+            { id: 30, name: "Bruschetta", price: 6.00, category: "snack", badge: null, desc: "Toast with tomato and basil.", img: "https://images.unsplash.com/photo-1572695157363-bc3195019b61?q=80&w=1920" },
+
+            // --- DRINKS ---
+            { id: 31, name: "Mojito Lime", price: 6.00, category: "drink", badge: "bestseller", desc: "Mint, lime, sugar, and soda.", img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1920" },
+            { id: 32, name: "Iced Latte", price: 4.50, category: "drink", badge: null, desc: "Espresso with cold milk.", img: "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?q=80&w=1920" },
+            { id: 33, name: "Berry Smoothie", price: 5.50, category: "drink", badge: "new", desc: "Mixed berries blended with yogurt.", img: "https://images.unsplash.com/photo-1623594916843-094770258cb2?q=80&w=1920" },
+            { id: 34, name: "Orange Juice", price: 4.00, category: "drink", badge: null, desc: "Freshly squeezed oranges.", img: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?q=80&w=1920" },
+            { id: 35, name: "Red Wine", price: 8.00, category: "drink", badge: null, desc: "Glass of house red wine.", img: "https://images.unsplash.com/photo-1559563362-c667ba5f5480?q=80&w=1920" },
+            { id: 36, name: "Cocktail Blue", price: 7.00, category: "drink", badge: null, desc: "Blue lagoon cocktail.", img: "https://images.unsplash.com/photo-1560508180-03f285f67588?q=80&w=1920" },
+            { id: 37, name: "Green Tea", price: 3.50, category: "drink", badge: null, desc: "Hot jasmine green tea.", img: "https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?q=80&w=1920" },
+            { id: 38, name: "Lemonade", price: 4.00, category: "drink", badge: null, desc: "Ice cold homemade lemonade.", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1920" },
+            { id: 39, name: "Espresso", price: 3.00, category: "drink", badge: null, desc: "Strong shot of coffee.", img: "https://images.unsplash.com/photo-1610889556528-9a770e32630f?q=80&w=1920" },
+            { id: 40, name: "Cola", price: 2.50, category: "drink", badge: null, desc: "Chilled soda can.", img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=1920" },
+
+            // --- DESSERTS ---
+            { id: 41, name: "Choco Cake", price: 8.00, category: "dessert", badge: "bestseller", desc: "Rich chocolate lava cake.", img: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?q=80&w=1920" },
+            { id: 42, name: "Strawberry Tart", price: 7.50, category: "dessert", badge: null, desc: "Fresh strawberries on pastry.", img: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1920" },
+            { id: 43, name: "Ice Cream", price: 5.00, category: "dessert", badge: null, desc: "Vanilla and chocolate scoops.", img: "https://images.unsplash.com/photo-1560008581-09826d1de69e?q=80&w=1920" },
+            { id: 44, name: "Cheesecake", price: 7.00, category: "dessert", badge: null, desc: "New York style cheesecake.", img: "https://images.unsplash.com/photo-1508737804141-4c3b688e2546?q=80&w=1920" },
+            { id: 45, name: "Fruit Salad", price: 6.00, category: "dessert", badge: null, desc: "Mixed seasonal fruits.", img: "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?q=80&w=1920" },
+            { id: 46, name: "Pancakes", price: 8.00, category: "dessert", badge: null, desc: "Stack of pancakes with syrup.", img: "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?q=80&w=1920" },
+            { id: 47, name: "Macarons", price: 9.00, category: "dessert", badge: "new", desc: "Colorful French macarons.", img: "https://images.unsplash.com/photo-1569864358637-2d1d544bc175?q=80&w=1920" },
+            { id: 48, name: "Brownie", price: 5.50, category: "dessert", badge: null, desc: "Fudgy chocolate brownie.", img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6?q=80&w=1920" },
+            { id: 49, name: "Tiramisu", price: 8.50, category: "dessert", badge: null, desc: "Coffee flavoured Italian dessert.", img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=1920" },
+            { id: 50, name: "Donuts", price: 4.00, category: "dessert", badge: null, desc: "Glazed sweet donuts.", img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1920" }
+        ];
+
+        const container = document.getElementById('menu-container');
+
+        // --- RENDER ---
+        function displayItems(items) {
+            container.innerHTML = '';
+            items.forEach((item, index) => {
+                let badgeHtml = '';
+                if (item.badge === 'bestseller') badgeHtml = `<div class="badge bestseller">Best Seller</div>`;
+                else if (item.badge === 'spicy') badgeHtml = `<div class="badge spicy">Spicy 🌶️</div>`;
+                else if (item.badge === 'new') badgeHtml = `<div class="badge new">New</div>`;
+
+                const card = document.createElement('article');
+                card.classList.add('food-card');
+                card.style.animationDelay = `${index * 0.05}s`;
+
+                card.innerHTML = `
+                    <div class="card-img-box">
+                        ${badgeHtml}
+                        <img src="${item.img}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000'">
+                    </div>
+                    <div class="card-details">
+                        <div class="card-header">
+                            <h3>${item.name}</h3>
+                            <span class="price">$${item.price.toFixed(2)}</span>
+                        </div>
+                        <p class="card-desc">${item.desc}</p>
+                    </div>
+                `;
+                card.onclick = () => openModal(item);
+                container.appendChild(card);
+            });
+            if (items.length === 0) container.innerHTML = '<p style="color:var(--text-gray); width:200%; text-align:center; margin-top:20px;">No items found.</p>';
+        }
+
+        function searchMenu() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = menuItems.filter(item => item.name.toLowerCase().includes(query));
+            displayItems(filtered);
+        }
+
+        function filterMenu(cat, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filtered = cat === 'all' ? menuItems : menuItems.filter(i => i.category === cat);
+            displayItems(filtered);
+        }
+
+        // --- THEME ---
+        function initTheme() {
+            const btn = document.getElementById('theme-btn');
+            const body = document.body;
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+            if (savedTheme === 'light' || (!savedTheme && systemPrefersLight)) {
+                body.classList.add('light-mode');
+                btn.classList.remove('fa-sun');
+                btn.classList.add('fa-moon');
+            } else {
+                body.classList.remove('light-mode');
+                btn.classList.remove('fa-moon');
+                btn.classList.add('fa-sun');
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-btn');
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                btn.classList.remove('fa-sun');
+                btn.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                btn.classList.remove('fa-moon');
+                btn.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // --- NEW: SMART HEADER LOGIC ---
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        const filterBar = document.getElementById('filter-bar');
+
+        window.addEventListener('scroll', function () {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Prevent negative scroll (iOS bounce)
+            if (scrollTop < 0) scrollTop = 0;
+
+            if (scrollTop > lastScrollTop && scrollTop > 60) {
+                // Scroll DOWN -> Hide Header, Move Filter Up
+                header.classList.add('hide-smart');
+                filterBar.classList.add('move-up');
+            } else {
+                // Scroll UP -> Show Header, Move Filter Down
+                header.classList.remove('hide-smart');
+                filterBar.classList.remove('move-up');
+            }
+            lastScrollTop = scrollTop;
+        });
+
+        // --- MODAL ---
+        const modal = document.getElementById('modal-overlay');
+        function openModal(item) {
+            const imgElement = document.getElementById('m-img');
+            imgElement.src = item.img;
+            imgElement.onerror = function () { this.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000'; };
+            document.getElementById('m-title').innerText = item.name;
+            document.getElementById('m-desc').innerText = item.desc;
+            document.getElementById('m-price').innerText = '$' + item.price.toFixed(2);
+            let tagHtml = `<span class="tag">${item.category.toUpperCase()}</span>`;
+            if (item.badge) tagHtml += `<span class="tag" style="color:var(--primary)">${item.badge.toUpperCase()}</span>`;
+            document.getElementById('m-tags').innerHTML = tagHtml;
+            modal.classList.add('open');
+        }
+        function closeModal(e) { if (e.target === modal) modal.classList.remove('open'); }
+        function closeModalBtn() { modal.classList.remove('open'); }
+
+        // --- INIT ---
+        initTheme();
+        displayItems(menuItems);
+    </script>
+</body>
+
+</html>
